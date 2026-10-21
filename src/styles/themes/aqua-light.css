@@ -1,0 +1,250 @@
+/* ═══════════ 云水蓝白 · 洁净看板主题 ═══════════ */
+/* 作用域：<div class="theme-aqua-light"> 包裹的大屏页面 */
+/*
+  视觉基调（对齐「作业/管网」类浅蓝白看板参考稿）：
+    浅蓝灰渐变底 → 纯白卡片 + 1px 淡蓝描边 + 极轻投影 → 藏青标题与数值 + 水蓝主色点缀。
+
+  与 .theme-cockpit / .theme-cloud-light / .theme-lavender 覆盖同一批变量名，
+  所以座舱组件（PanelBox / KpiRow / StatusTag / 图表配色）无需改代码即可换肤。
+
+  图表分类色序列（水蓝调体系）：
+    主色蓝 #2F6FE0 → --ck-cyan（数值/图表主色）
+    水青   #4FC8E8 → --ck-teal
+    高亮蓝 #6FA8F5 → --ck-blue
+    辅助紫 #8F8BFA → --ck-purple
+    翠绿   #2EC98D → --ck-green
+    暖橙   #F5A03C → --ck-orange
+*/
+
+.theme-aqua-light {
+  color-scheme: light;
+
+  /* ── 主题色彩规范 ── */
+  --aq-primary: #2f6fe0; /* 主色：核心元素、图表主色 */
+  --aq-primary-deep: #16325c; /* 藏青：标题与主数值 */
+  --aq-primary-ink: #12305c; /* 更深一档：大标题 */
+  --aq-bg: #e9f1fa; /* 背景浅蓝灰 */
+  --aq-bg-soft: #f3f8fe; /* 内嵌块底色 */
+  --aq-card: #ffffff; /* 卡片色 */
+  --aq-line: #dfeaf8; /* 线框色 */
+  --aq-line-soft: #eaf2fb; /* 更淡线框 */
+  --aq-highlight: #6fa8f5; /* 高亮蓝 */
+  --aq-teal: #4fc8e8; /* 水青：图表辅助 */
+
+  /* 预警色与辅助色 */
+  --aq-red: #f0656f;
+  --aq-yellow: #f6c344;
+  --aq-purple: #8f8bfa;
+  --aq-green: #2ec98d;
+  --aq-orange: #f5a03c;
+  --aq-pink: #56c6f0;
+
+  /* ── 表面与文字 ── */
+  --surface: var(--aq-card);
+  --foreground: var(--aq-primary-deep);
+
+  --text-secondary: #5b7099;
+  --text-tertiary: #93a7c4;
+  --bg-soft: var(--aq-bg-soft);
+  --bg-hover: rgba(47, 111, 224, 0.06);
+  --border: var(--aq-line);
+  --border-light: var(--aq-line-soft);
+
+  /* ── 主题色 ── */
+  --accent: var(--aq-primary);
+  --accent-hover: var(--aq-highlight);
+  --accent-foreground: #ffffff;
+  --focus-ring: rgba(47, 111, 224, 0.24);
+
+  --accent-soft: rgba(47, 111, 224, 0.12);
+  --accent-light: rgba(47, 111, 224, 0.07);
+  --accent-subtle: rgba(47, 111, 224, 0.04);
+  --accent-strong: rgba(47, 111, 224, 0.22);
+
+  /* ── 语义色 ── */
+  --success: var(--aq-green);
+  --success-soft: rgba(46, 201, 141, 0.14);
+  --success-light: rgba(46, 201, 141, 0.08);
+
+  --danger: var(--aq-red);
+  --danger-soft: rgba(240, 101, 111, 0.14);
+  --danger-light: rgba(240, 101, 111, 0.08);
+
+  --warning: var(--aq-yellow);
+  --warning-soft: rgba(246, 195, 68, 0.16);
+  --warning-light: rgba(246, 195, 68, 0.08);
+
+  --info: var(--aq-highlight);
+  --info-soft: rgba(111, 168, 245, 0.14);
+  --info-light: rgba(111, 168, 245, 0.08);
+
+  /* ── 座舱专用 ── */
+
+  /* 屏幕底色：顶部近白、底部压一层淡蓝 */
+  --ck-screen-base: var(--aq-bg);
+  --ck-screen-glow-1: rgba(255, 255, 255, 0.9);
+  --ck-screen-glow-2: rgba(126, 172, 236, 0.28);
+
+  /* 面板：纯白卡片 */
+  --ck-panel-bg: var(--aq-card);
+  --ck-panel-bg-strong: var(--aq-card);
+  --ck-panel-border: var(--aq-line);
+  --ck-panel-inner: var(--aq-bg-soft);
+  --ck-panel-inner-border: var(--aq-line-soft);
+
+  /* 标题 */
+  --ck-title: var(--aq-primary-deep);
+  --ck-title-sub: #3f5f92;
+  --ck-marker: var(--aq-primary);
+
+  /* 数据色阶 */
+  --ck-cyan: var(--aq-primary);
+  --ck-teal: var(--aq-teal);
+  --ck-blue: var(--aq-highlight);
+  --ck-purple: var(--aq-purple);
+  --ck-green: var(--aq-green);
+  --ck-orange: var(--aq-orange);
+  --ck-red: var(--aq-red);
+  --ck-yellow: var(--aq-yellow);
+  --ck-pink: var(--aq-pink);
+
+  /* 图表辅助 */
+  --ck-grid: rgba(47, 111, 224, 0.12);
+  --ck-axis: #8fa3c0;
+
+  /* 图表提示框 */
+  --ck-tooltip-bg: rgba(18, 48, 92, 0.92);
+  --ck-tooltip-text: #eef5ff;
+
+  /* 表格：表头浅蓝底、行白／极浅蓝交替 */
+  --ck-table-head: #eff5fd;
+  --ck-table-row: #ffffff;
+  --ck-table-row-alt: #f8fbff;
+
+  /* 地图（本主题暂未使用，保持浅色体系一致） */
+  --ck-map-area: var(--aq-bg-soft);
+  --ck-map-border: var(--aq-primary);
+  --ck-map-emphasis: var(--aq-line);
+  --ck-map-world-area: #f6fafe;
+  --ck-map-world-border: rgba(143, 163, 192, 0.24);
+
+  /* ── 装饰层 ── */
+
+  /* 白卡片的轻投影：靠描边定型、靠投影分层，不做发光 */
+  --ck-panel-shadow: 0 2px 10px rgba(37, 86, 150, 0.07), 0 1px 2px rgba(37, 86, 150, 0.04);
+
+  --ck-card-from: #fbfdff;
+  --ck-card-to: var(--aq-bg-soft);
+  --ck-card-border: var(--aq-line-soft);
+  --ck-card-shadow: none;
+
+  --ck-icon-from: #eef5ff;
+  --ck-icon-to: #dcebfd;
+  --ck-icon-glow: none;
+
+  --ck-track: #e8f0fa;
+
+  --ck-header-glow: rgba(111, 168, 245, 0.16);
+  --ck-header-rule: rgba(47, 111, 224, 0.2);
+
+  --ck-title-from: var(--aq-primary-ink);
+  --ck-title-to: #2a63c4;
+  --ck-title-shadow: none;
+
+  /* 浅底不做发光，否则数字会糊 */
+  --ck-num-glow: none;
+
+  /* 面板圆角 */
+  --ck-panel-radius: 12px;
+
+  /* KPI 卡数值色：本主题用藏青大字，靠同比胶囊承担色彩 */
+  --ck-kpi-text: var(--ck-title);
+
+  /* 实心标签底色为主色系深色，文字用白 */
+  --ck-on-solid: #ffffff;
+
+  /* 主按钮渐变：主色蓝 → 水青 */
+  --ck-btn-from: var(--aq-primary);
+  --ck-btn-to: #4fa8ee;
+
+  --scrollbar-thumb: #d4e3f6;
+  --scrollbar-track: transparent;
+}
+
+/* ── 屏幕底色：极淡蓝白渐变 + 顶部柔光 ─────────────────────── */
+
+.theme-aqua-light .ck-screen {
+  background-color: var(--ck-screen-base);
+  background-image:
+    radial-gradient(ellipse 62% 46% at 50% -10%, rgba(255, 255, 255, 0.96) 0%, transparent 74%),
+    radial-gradient(ellipse 44% 40% at 92% 8%, rgba(150, 196, 245, 0.22) 0%, transparent 72%),
+    radial-gradient(ellipse 48% 42% at 4% 96%, rgba(150, 196, 245, 0.24) 0%, transparent 74%),
+    linear-gradient(180deg, #f5f9fe 0%, #e9f1fa 54%, #e2ecf8 100%);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+/* ── 画布外框：只留一圈细描边，保持看板的干净感 ───────────── */
+
+.theme-aqua-light .ck-frame {
+  position: absolute;
+  inset: 6px;
+  pointer-events: none;
+  border: 1px solid rgba(196, 216, 240, 0.9);
+  border-radius: 16px;
+}
+
+/* ── 面板：纯白 + 1px 淡蓝描边 + 轻投影 ───────────────────── */
+
+.theme-aqua-light .ck-panel {
+  background: var(--ck-panel-bg);
+  border: 1px solid var(--ck-panel-border);
+  box-shadow: var(--ck-panel-shadow);
+}
+
+/* 面板标题：藏青 + 略微收紧的字距 */
+.theme-aqua-light .ck-panel h3 {
+  color: var(--ck-title);
+  letter-spacing: 0.01em;
+}
+
+/* 标题下的分隔线：淡到接近留白，避免和描边叠成脏线 */
+.theme-aqua-light .ck-head-rule {
+  background: linear-gradient(90deg, rgba(47, 111, 224, 0.16) 0%, rgba(47, 111, 224, 0) 100%);
+}
+
+/* 四角 L 形装饰是深色大屏语言，与本主题的干净卡片冲突，整体隐藏 */
+.theme-aqua-light .ck-corner,
+.theme-aqua-light .ck-kpi-corner {
+  display: none;
+}
+
+/* ── 内嵌小卡：极浅蓝底 + 淡描边，扁平不加投影 ─────────────── */
+
+.theme-aqua-light .ck-card {
+  background: var(--ck-panel-inner);
+  border-color: var(--ck-panel-inner-border);
+  border-radius: 10px;
+}
+
+/*
+  小圆角收敛：深色大屏用 2~5px 硬朗小圆角，与本主题 12px 卡片放在一起会显毛边。
+  这里统一收敛成 10px / 7px，让所有内嵌块与卡片同一语言。
+  这些圆角都是 Tailwind 的 rounded-[3px] 这类工具类，按类名匹配即可，
+  不影响深色与其它浅色主题。
+*/
+.theme-aqua-light [class*='rounded-[3px]'],
+.theme-aqua-light [class*='rounded-[4px]'],
+.theme-aqua-light [class*='rounded-[5px]'] {
+  border-radius: 10px;
+}
+
+.theme-aqua-light [class*='rounded-[2px]'] {
+  border-radius: 7px;
+}
+
+/* 原生下拉在浅色主题下的选项底色 */
+.theme-aqua-light select option {
+  background: var(--aq-card);
+  color: var(--aq-primary-deep);
+}

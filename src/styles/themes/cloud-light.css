@@ -1,0 +1,287 @@
+/* ═══════════ 云境蓝白主题 ═══════════ */
+/* 浅蓝白大屏配色方案，作用域：<div class="theme-cloud-light"> */
+/*
+  与 .theme-cockpit 覆盖同一批变量名，因此组件代码无需改动即可换肤。
+
+  视觉基调（见 _refs/live/31~33 浅蓝白风格参考）：
+    浅蓝灰渐变底 → 白色大圆角卡片 + 柔和蓝色投影 → 卡片之间留白清爽。
+    不做深色大屏的霓虹发光，所有 glow 类变量都收敛成投影或 none。
+
+  关于 清透青 #6EDFEA 的用法：规范里它的定位是「数据图表、正向状态」，
+  属于图表色而非文字色——白底上用作数值文字对比度不足。
+  所以承担文字职责的 --ck-cyan 映射到主色 #2A66E8，
+  清透青单独放在 --ck-teal，供图表按需取用。
+
+  图表分类色序列（规范「图表分类色示例」）：
+    系列一 #2A66E8 → --ck-cyan
+    系列二 #6EDFEA → --ck-teal
+    系列三 #8B6CFF → --ck-purple
+    系列四 #3BCB7F → --ck-green
+    系列五 #FF9F43 → --ck-orange
+*/
+
+.theme-cloud-light {
+  color-scheme: light;
+
+  /* ── 主题色彩规范 ── */
+  --cl-primary: #2a66e8; /* 主色：核心元素、重要标题 */
+  --cl-primary-deep: #1b2f63; /* 深主色：顶部栏、重要容器 */
+  --cl-bg: #f7fbff; /* 背景白：整体页面背景 */
+  --cl-bg-soft: #e8f1ff; /* 浅底色：页面分区、交替底色 */
+  --cl-card: #ffffff; /* 卡片色 */
+  --cl-line: #cfe2ff; /* 线框色：分割线、描边 */
+  --cl-highlight: #5d93ff; /* 高亮蓝：按钮、选中态 */
+  --cl-teal: #6edfea; /* 清透青：图表、正向状态 */
+
+  /* 预警色与辅助色 */
+  --cl-red: #f45b69; /* 预警红：严重异常 */
+  --cl-yellow: #f6c445; /* 预警黄：一般异常 */
+  --cl-purple: #8b6cff; /* 辅助紫 */
+  --cl-green: #3bcb7f; /* 辅助绿 */
+  --cl-orange: #ff9f43; /* 辅助橙 */
+
+  /* 卡片描边：比线框色更淡，让白卡片靠投影而非描边浮起来 */
+  --cl-line-soft: #e6effd;
+
+  /* ── 表面与文字 ── */
+  --surface: var(--cl-card);
+  --foreground: var(--cl-primary-deep);
+
+  --text-secondary: #5a7099;
+  --text-tertiary: #8ca3c4;
+  --bg-soft: var(--cl-bg-soft);
+  --bg-hover: rgba(42, 102, 232, 0.07);
+  --border: var(--cl-line);
+  --border-light: var(--cl-bg-soft);
+
+  /* ── 主题色 ── */
+  --accent: var(--cl-primary);
+  --accent-hover: var(--cl-highlight);
+  --accent-foreground: #ffffff;
+  --focus-ring: rgba(42, 102, 232, 0.28);
+
+  --accent-soft: rgba(42, 102, 232, 0.14);
+  --accent-light: rgba(42, 102, 232, 0.08);
+  --accent-subtle: rgba(42, 102, 232, 0.05);
+  --accent-strong: rgba(42, 102, 232, 0.26);
+
+  /* ── 语义色（状态颜色示例）── */
+  --success: var(--cl-green);
+  --success-soft: rgba(59, 203, 127, 0.16);
+  --success-light: rgba(59, 203, 127, 0.1);
+
+  --danger: var(--cl-red);
+  --danger-soft: rgba(244, 91, 105, 0.16);
+  --danger-light: rgba(244, 91, 105, 0.1);
+
+  --warning: var(--cl-yellow);
+  --warning-soft: rgba(246, 196, 69, 0.18);
+  --warning-light: rgba(246, 196, 69, 0.1);
+
+  --info: var(--cl-highlight);
+  --info-soft: rgba(93, 147, 255, 0.16);
+  --info-light: rgba(93, 147, 255, 0.1);
+
+  /* ── 座舱专用 ── */
+
+  /* 屏幕底色：浅蓝灰渐变——顶部透白、底部压一层淡蓝 */
+  --ck-screen-base: #e3edfa;
+  --ck-screen-glow-1: rgba(255, 255, 255, 0.88);
+  --ck-screen-glow-2: rgba(150, 189, 243, 0.55);
+
+  /* 面板：纯白大圆角卡片 */
+  --ck-panel-bg: var(--cl-card);
+  --ck-panel-bg-strong: var(--cl-card);
+  --ck-panel-border: var(--cl-line);
+  --ck-panel-inner: #f4f9ff;
+  --ck-panel-inner-border: var(--cl-line-soft);
+
+  /* 标题 */
+  --ck-title: var(--cl-primary-deep);
+  --ck-title-sub: var(--cl-primary);
+  --ck-marker: var(--cl-primary);
+
+  /* 数据色阶 —— 对齐规范的图表分类色序列 */
+  --ck-cyan: var(--cl-primary); /* 系列一／数值文字主色 */
+  --ck-teal: var(--cl-teal); /* 系列二 清透青 */
+  --ck-blue: var(--cl-highlight);
+  --ck-purple: var(--cl-purple); /* 系列三 */
+  --ck-green: var(--cl-green); /* 系列四 */
+  --ck-orange: var(--cl-orange); /* 系列五 */
+  --ck-red: var(--cl-red);
+  --ck-yellow: var(--cl-yellow);
+  --ck-pink: var(--cl-teal);
+
+  /* 图表辅助 */
+  --ck-grid: rgba(42, 102, 232, 0.1);
+  --ck-axis: #5a7099;
+
+  /* 图表提示框 */
+  --ck-tooltip-bg: rgba(27, 47, 99, 0.9);
+  --ck-tooltip-text: #eaf2ff;
+
+  /* 表格：表头浅底、行白／浅交替 */
+  --ck-table-head: var(--cl-bg-soft);
+  --ck-table-row: var(--cl-card);
+  --ck-table-row-alt: var(--cl-bg);
+
+  /* 地图 */
+  /* 中国陆地：要比屏底(#DCE9FB)明显深一档，否则整块地图糊在背景里 */
+  --ck-map-area: #b9d4f7;
+  --ck-map-border: #2a66e8;
+  --ck-map-emphasis: #9cc3f3;
+  /* 周边国家底图：只作衬底，必须明显淡于中国地图本身
+     （地图舞台倾斜后轮廓被压扁，略提一点对比才看得见周边国家） */
+  /* 周边国家：比陆地淡、但要能看出轮廓 */
+  --ck-map-world-area: #d3e4fa;
+  --ck-map-world-border: rgba(90, 140, 200, 0.55);
+
+  /* ── 装饰层 ── */
+
+  /* 白卡片的柔和蓝色投影（浅蓝白风格的核心观感） */
+  --ck-panel-shadow: 0 10px 28px rgba(42, 102, 232, 0.1), 0 2px 6px rgba(42, 102, 232, 0.05);
+
+  --ck-card-from: var(--cl-card);
+  --ck-card-to: #f2f8ff;
+  --ck-card-border: var(--cl-line-soft);
+  --ck-card-shadow: 0 2px 8px rgba(42, 102, 232, 0.07);
+
+  --ck-icon-from: #e9f2ff;
+  --ck-icon-to: #d2e4ff;
+  --ck-icon-glow: 0 2px 6px rgba(42, 102, 232, 0.12);
+
+  --ck-track: var(--cl-bg-soft);
+
+  --ck-header-glow: rgba(42, 102, 232, 0.1);
+  --ck-header-rule: rgba(42, 102, 232, 0.3);
+
+  --ck-title-from: var(--cl-primary-deep);
+  --ck-title-to: var(--cl-primary);
+  --ck-title-shadow: none;
+
+  /* 白底不做发光，否则数字会糊 */
+  --ck-num-glow: none;
+
+  /* 面板圆角：浅蓝白风格是大圆角卡片 */
+  --ck-panel-radius: 14px;
+
+  /* 实心标签底色为主色系深色，文字用白 */
+  --ck-on-solid: #ffffff;
+
+  /* 主按钮渐变：主色 → 高亮蓝 */
+  --ck-btn-from: var(--cl-primary);
+  --ck-btn-to: var(--cl-highlight);
+
+  --scrollbar-thumb: var(--cl-line);
+  --scrollbar-track: transparent;
+}
+
+/* 白卡片：描边收淡，层次全部交给投影 */
+.theme-cloud-light .ck-panel {
+  border-color: var(--cl-line-soft);
+  box-shadow: var(--ck-panel-shadow);
+}
+
+/*
+  PanelBox 的四角 L 形装饰是深色大屏的语言，和大圆角白卡片冲突
+  （圆角越大越会探出卡片外），浅色主题整体隐藏。
+  靠 PanelCorners 自带的 .ck-corner 类精确命中，不依赖 DOM 层级。
+*/
+.theme-cloud-light .ck-corner {
+  display: none;
+}
+
+/* 内嵌小卡：极淡的蓝底 + 柔描边 */
+.theme-cloud-light .ck-card {
+  background: var(--ck-panel-inner);
+  border-color: var(--ck-panel-inner-border);
+}
+
+/* 原生下拉在浅色主题下的选项底色 */
+.theme-cloud-light select option {
+  background: var(--cl-card);
+  color: var(--cl-primary-deep);
+}
+
+/*
+  ═══════════ 作业管理平台专用作用域 ═══════════
+
+  本主题同时服务首页全景座舱（`src/pages/cockpit/index.tsx`）和作业管理平台，
+  所以「把蓝加重」只能收在 `.job-board` 这一层，不能动主题根变量，否则首页跟着变。
+
+  覆盖的是 `--ck-*` 卡片／底纹类变量，靠 CSS 变量继承生效，
+  作用范围 = 作业页「共享财务」面板内部的全部子卡与 SVG 图形。
+  注意：ECharts 取色走 `useChartColors()`，它在主题根元素上取计算样式，
+  所以图表色不受这里影响——图表配色请改 `jobCharts.ts` 引用的变量。
+*/
+.theme-cloud-light .job-board {
+  /* 面板底：从纯白换成浅底色，整块「共享财务」先有蓝 */
+  --ck-panel-bg: #e9f2ff;
+  --ck-panel-border: #c7dbf8;
+
+  /* 子卡：顶白底蓝的竖向渐变，白卡片在浅蓝面板上浮起来 */
+  --ck-card-from: #ffffff;
+  --ck-card-to: #e9f1ff;
+  --ck-card-border: #cfe0fb;
+  --ck-card-shadow: 0 2px 8px rgba(42, 102, 232, 0.1);
+
+  /* 子卡里再内嵌的小行（已出具量 / 协同退回卡）用纯白压回层次 */
+  --job-inset-bg: #ffffff;
+  --job-inset-border: #d7e6ff;
+
+  /* 子卡标题带 */
+  --job-head-from: rgba(42, 102, 232, 0.2);
+  --job-head-to: rgba(42, 102, 232, 0);
+  --job-head-rule: rgba(42, 102, 232, 0.14);
+
+  /* 仪表／圆环底槽：比卡片底再深一档，浅蓝上才看得出进度 */
+  --ck-track: #c9ddfa;
+
+  /* 立体底座与光锥 */
+  --job-pedestal-top: #8fc0ff;
+  --job-pedestal-side: #2f6ae9;
+}
+
+/*
+  ══ 整页加重的蓝 ══
+
+  原先只作用于作业管理页（`.job-page`），用户确认后提升为全主题默认：
+  16 个页面共用同一套配色，跨页才协调。
+
+  用 `.theme-cloud-light.theme-cloud-light` 提高一级特异性，
+  确保这批值稳定覆盖上面根选择器里的同名变量。
+*/
+.theme-cloud-light.theme-cloud-light {
+  /* 屏底压一档浅蓝，白卡片才浮得起来 */
+  --ck-screen-base: #dce9fb;
+
+  /* 面板底 */
+  --ck-panel-bg: #e9f2ff;
+  --ck-panel-border: #c7dbf8;
+
+  /* 面板内嵌的小卡 */
+  --ck-panel-inner: #f3f8ff;
+  --ck-panel-inner-border: #d2e2fb;
+
+  /* 卡片：顶白底蓝竖向渐变 */
+  --ck-card-from: #ffffff;
+  --ck-card-to: #e9f1ff;
+  --ck-card-border: #cfe0fb;
+  --ck-card-shadow: 0 2px 8px rgba(42, 102, 232, 0.1);
+
+  /* 图标底盘 */
+  --ck-icon-from: #dcebff;
+  --ck-icon-to: #c3dbff;
+
+  /* 表格：表头蓝、行白／浅蓝交替 */
+  --ck-table-head: #d8e8ff;
+  --ck-table-row: #ffffff;
+  --ck-table-row-alt: #f2f7ff;
+
+  /* 共享组件字号：标题保持深色主题原值，只放大正文类 */
+  --ck-fs-panel-title: 17px; /* 面板大标题，与深色主题一致 */
+  --ck-fs-section-title: 14px; /* 区块小标题，与深色主题一致 */
+  --ck-fs-tag: 16px; /* 状态标签/进度百分比等正文，放大 */
+
+  --ck-track: #c9ddfa;
+}

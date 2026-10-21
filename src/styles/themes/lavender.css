@@ -1,0 +1,197 @@
+/* ═══════════ 薰衣草紫 · 白玉玻璃主题 ═══════════ */
+/* 浅紫白大屏配色方案，作用域：<div class="theme-lavender"> */
+/*
+  视觉基调（对齐浅紫风格参考稿）：
+    淡紫灰渐变底 → 顶部透白、底部晕一层紫罗兰光 →
+    白色半透明大圆角玻璃卡片（blur + 柔和紫投影）→ 紫罗兰主色点缀。
+
+  与 .theme-cockpit / .theme-cloud-light 覆盖同一批变量名，
+  组件代码无需改动即可换肤。
+
+  图表分类色序列（紫调体系）：
+    主色紫 #7A5AF8   → --ck-cyan（数值文字主色）
+    靛蓝   #5B7CFF   → --ck-blue
+    青紫   #A78BFA   → --ck-purple
+    翠绿   #2FBF83   → --ck-green
+    暖橙   #F59A3C   → --ck-orange
+*/
+
+.theme-lavender {
+  color-scheme: light;
+
+  /* ── 主题色彩规范 ── */
+  --lv-primary: #7a5af8; /* 主色：紫罗兰 */
+  --lv-primary-deep: #322b5e; /* 深主色：标题、重要文字 */
+  --lv-bg: #e9e8f4; /* 背景紫灰 */
+  --lv-bg-soft: #f1effb; /* 浅底色 */
+  --lv-card: #ffffff; /* 卡片色 */
+  --lv-line: #ded9f2; /* 线框色 */
+  --lv-highlight: #9b7bff; /* 高亮紫 */
+  --lv-teal: #7fd4f0; /* 清透青：图表辅助 */
+
+  /* 预警色与辅助色 */
+  --lv-red: #f45b69;
+  --lv-yellow: #f6c445;
+  --lv-purple: #a78bfa;
+  --lv-green: #2fbf83;
+  --lv-orange: #f59a3c;
+
+  /* 卡片描边：更淡，让白卡片靠投影浮起来 */
+  --lv-line-soft: rgba(122, 90, 248, 0.12);
+
+  /* ── 表面与文字 ── */
+  --surface: var(--lv-card);
+  --foreground: var(--lv-primary-deep);
+
+  --text-secondary: #6f6a96;
+  --text-tertiary: #9c97bd;
+  --bg-soft: var(--lv-bg-soft);
+  --bg-hover: rgba(122, 90, 248, 0.07);
+  --border: var(--lv-line);
+  --border-light: var(--lv-bg-soft);
+
+  /* ── 主题色 ── */
+  --accent: var(--lv-primary);
+  --accent-hover: var(--lv-highlight);
+  --accent-foreground: #ffffff;
+  --focus-ring: rgba(122, 90, 248, 0.28);
+
+  --accent-soft: rgba(122, 90, 248, 0.14);
+  --accent-light: rgba(122, 90, 248, 0.08);
+  --accent-subtle: rgba(122, 90, 248, 0.05);
+  --accent-strong: rgba(122, 90, 248, 0.26);
+
+  /* ── 语义色 ── */
+  --success: var(--lv-green);
+  --success-soft: rgba(47, 191, 131, 0.16);
+  --success-light: rgba(47, 191, 131, 0.1);
+
+  --danger: var(--lv-red);
+  --danger-soft: rgba(244, 91, 105, 0.16);
+  --danger-light: rgba(244, 91, 105, 0.1);
+
+  --warning: var(--lv-yellow);
+  --warning-soft: rgba(246, 196, 69, 0.18);
+  --warning-light: rgba(246, 196, 69, 0.1);
+
+  --info: var(--lv-highlight);
+  --info-soft: rgba(155, 123, 255, 0.16);
+  --info-light: rgba(155, 123, 255, 0.1);
+
+  /* ── 座舱专用 ── */
+
+  /* 屏幕底色：淡紫灰渐变——顶部透白、底部晕紫 */
+  --ck-screen-base: #e9e8f4;
+  --ck-screen-glow-1: rgba(255, 255, 255, 0.92);
+  --ck-screen-glow-2: rgba(167, 139, 250, 0.38);
+
+  /* 面板：白色半透明玻璃卡片 */
+  --ck-panel-bg: rgba(255, 255, 255, 0.78);
+  --ck-panel-bg-strong: rgba(255, 255, 255, 0.92);
+  --ck-panel-border: rgba(122, 90, 248, 0.14);
+  --ck-panel-inner: #f5f3fc;
+  --ck-panel-inner-border: rgba(122, 90, 248, 0.12);
+
+  /* 标题 */
+  --ck-title: var(--lv-primary-deep);
+  --ck-title-sub: #5d5390;
+  --ck-marker: var(--lv-primary);
+
+  /* 数据色阶 —— 紫调体系 */
+  --ck-cyan: var(--lv-primary); /* 数值文字主色 */
+  --ck-teal: var(--lv-teal);
+  --ck-blue: #5b7cff;
+  --ck-purple: var(--lv-purple);
+  --ck-green: var(--lv-green);
+  --ck-orange: var(--lv-orange);
+  --ck-red: var(--lv-red);
+  --ck-yellow: var(--lv-yellow);
+  --ck-pink: #ee8fd0;
+
+  /* 图表辅助 */
+  --ck-grid: rgba(122, 90, 248, 0.12);
+  --ck-axis: #7a739e;
+
+  /* 表格：表头浅紫底、行白／浅交替 */
+  --ck-table-head: #f1eefb;
+  --ck-table-row: var(--lv-card);
+  --ck-table-row-alt: #f8f6fd;
+
+  /* 地图 */
+  --ck-map-area: #efedfb;
+  --ck-map-border: var(--lv-primary);
+  --ck-map-emphasis: #dcd3fb;
+
+  /* ── 装饰层 ── */
+
+  /* 玻璃卡片的柔和紫投影（本主题的核心观感） */
+  --ck-panel-shadow:
+    0 14px 34px rgba(96, 78, 180, 0.12), 0 2px 8px rgba(96, 78, 180, 0.06);
+
+  --ck-card-from: #ffffff;
+  --ck-card-to: #f7f5fe;
+  --ck-card-border: rgba(122, 90, 248, 0.14);
+  --ck-card-shadow: 0 3px 10px rgba(96, 78, 180, 0.08);
+
+  --ck-icon-from: #efebfe;
+  --ck-icon-to: #dcd3fb;
+  --ck-icon-glow: 0 2px 8px rgba(122, 90, 248, 0.16);
+
+  --ck-track: #eae6f8;
+
+  --ck-header-glow: rgba(139, 108, 255, 0.18);
+  --ck-header-rule: rgba(122, 90, 248, 0.35);
+
+  --ck-title-from: var(--lv-primary-deep);
+  --ck-title-to: var(--lv-primary);
+  --ck-title-shadow: none;
+
+  /* 白底不做发光，否则数字会糊 */
+  --ck-num-glow: none;
+
+  /* 面板圆角：玻璃风格是大圆角卡片 */
+  --ck-panel-radius: 16px;
+
+  /* 实心标签底色为主色系深色，文字用白 */
+  --ck-on-solid: #ffffff;
+
+  /* 主按钮渐变：主色紫 → 高亮紫 */
+  --ck-btn-from: var(--lv-primary);
+  --ck-btn-to: var(--lv-highlight);
+
+  /* 图表提示框 */
+  --ck-tooltip-bg: rgba(43, 36, 84, 0.92);
+  --ck-tooltip-text: #efebff;
+
+  --scrollbar-thumb: #d4cdf0;
+  --scrollbar-track: transparent;
+}
+
+/* 玻璃卡片：白玻璃 + 模糊 + 柔紫投影，描边收淡 */
+.theme-lavender .ck-panel {
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: var(--ck-panel-shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/*
+  PanelBox 的四角 L 形装饰是深色大屏的语言，和大圆角白卡片冲突，
+  本主题整体隐藏（与 cloud-light 同策略）。
+*/
+.theme-lavender .ck-corner {
+  display: none;
+}
+
+/* 内嵌小卡：极淡紫底 + 柔描边 + 小圆角 */
+.theme-lavender .ck-card {
+  background: var(--ck-panel-inner);
+  border-color: var(--ck-panel-inner-border);
+  border-radius: 10px;
+}
+
+/* 原生下拉在浅色主题下的选项底色 */
+.theme-lavender select option {
+  background: var(--lv-card);
+  color: var(--lv-primary-deep);
+}

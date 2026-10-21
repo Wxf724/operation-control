@@ -1,0 +1,8 @@
+export { JobOverallDrillPage } from './JobOverallDrillPage'
+export { JobFlowDrillPage } from './JobFlowDrillPage'
+export { JobLoadDrillPage } from './JobLoadDrillPage'
+export { StaffBasicDrillPage } from './StaffBasicDrillPage'
+export { StaffQualityDrillPage } from './StaffQualityDrillPage'
+export { StaffJobDrillPage } from './StaffJobDrillPage'
+export { StaffEfficiencyDrillPage } from './StaffEfficiencyDrillPage'
+export { StaffServiceDrillPage } from './StaffServiceDrillPage'

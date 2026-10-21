@@ -1,0 +1,1 @@
+export { EnterpriseBoardPage } from './EnterpriseBoardPage'

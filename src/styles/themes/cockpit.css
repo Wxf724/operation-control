@@ -1,0 +1,241 @@
+/* ═══════════ 运营调控大屏 · 深色座舱主题 ═══════════ */
+/* 作用域：<div class="theme-cockpit"> 包裹的大屏页面 */
+
+.theme-cockpit {
+  color-scheme: dark;
+
+  /* 表面色（面板/弹窗背景 + 主文字） */
+  --surface: #0b2347;
+  --foreground: #e9f4ff;
+
+  --text-secondary: #9ec3e8;
+  --text-tertiary: #6b92bd;
+  --bg-soft: #0a1c38;
+  --bg-hover: rgba(42, 212, 255, 0.1);
+  --border: rgba(64, 150, 230, 0.3);
+  --border-light: rgba(64, 150, 230, 0.16);
+
+  /* 主题色（accent）——座舱青 */
+  --accent: #2ad4ff;
+  --accent-hover: #5ee0ff;
+  --accent-foreground: #04203c;
+  --focus-ring: rgba(42, 212, 255, 0.35);
+
+  --accent-soft: rgba(42, 212, 255, 0.16);
+  --accent-light: rgba(42, 212, 255, 0.1);
+  --accent-subtle: rgba(42, 212, 255, 0.06);
+  --accent-strong: rgba(42, 212, 255, 0.3);
+
+  /* 语义色 */
+  --success: #27d08a;
+  --success-soft: rgba(39, 208, 138, 0.16);
+  --success-light: rgba(39, 208, 138, 0.1);
+
+  --danger: #ff5a5a;
+  --danger-soft: rgba(255, 90, 90, 0.16);
+  --danger-light: rgba(255, 90, 90, 0.1);
+
+  --warning: #ffb13d;
+  --warning-soft: rgba(255, 177, 61, 0.16);
+  --warning-light: rgba(255, 177, 61, 0.1);
+
+  --info: #3d9bff;
+  --info-soft: rgba(61, 155, 255, 0.16);
+  --info-light: rgba(61, 155, 255, 0.1);
+
+  /* ═══════════ 座舱专用变量 ═══════════ */
+
+  /* 屏幕底色 */
+  --ck-screen-base: #030b1c;
+  --ck-screen-glow-1: rgba(14, 62, 128, 0.55);
+  --ck-screen-glow-2: rgba(8, 36, 84, 0.65);
+
+  /* 面板外壳 */
+  --ck-panel-bg: rgba(10, 36, 76, 0.52);
+  --ck-panel-bg-strong: rgba(12, 44, 90, 0.78);
+  --ck-panel-border: rgba(54, 134, 220, 0.34);
+  --ck-panel-inner: rgba(16, 52, 104, 0.45);
+  --ck-panel-inner-border: rgba(58, 140, 225, 0.22);
+
+  /* 标题 */
+  --ck-title: #ffffff;
+  --ck-title-sub: #bfe2ff;
+  --ck-marker: #35c8ff;
+
+  /* 数据色阶 */
+  --ck-cyan: #35e0ff;
+  --ck-teal: #35e0ff;
+  --ck-blue: #3d9bff;
+  --ck-green: #27d08a;
+  --ck-orange: #ffb13d;
+  --ck-red: #ff5a5a;
+  --ck-purple: #a98bff;
+  --ck-yellow: #ffd645;
+  --ck-pink: #ff7ac8;
+
+  /* 图表辅助 */
+  --ck-grid: rgba(70, 150, 230, 0.16);
+  --ck-axis: rgba(150, 200, 245, 0.55);
+
+  /* 图表提示框 */
+  --ck-tooltip-bg: rgba(8, 30, 62, 0.92);
+  --ck-tooltip-text: #e9f4ff;
+
+  /* 表格 */
+  --ck-table-head: rgba(26, 86, 168, 0.5);
+  --ck-table-row: rgba(14, 46, 94, 0.32);
+  --ck-table-row-alt: rgba(14, 46, 94, 0.12);
+
+  /* 地图 */
+  --ck-map-area: rgba(14, 54, 110, 0.55);
+  --ck-map-border: rgba(78, 180, 255, 0.75);
+  --ck-map-emphasis: rgba(28, 92, 170, 0.8);
+  /* 周边国家底图：只作衬底，必须明显淡于中国地图本身 */
+  --ck-map-world-area: rgba(40, 72, 120, 0.35);
+  --ck-map-world-border: rgba(140, 178, 218, 0.22);
+
+  /* ── 装饰层（卡片渐变 / 图标底座 / 轨道 / 辉光）──
+     这些原先散落在各组件的字面 rgba()，提成变量后浅色主题才能整体换肤 */
+
+  /* 面板阴影 */
+  --ck-panel-shadow: inset 0 0 28px rgba(28, 96, 180, 0.18), 0 0 0 1px rgba(8, 26, 56, 0.6);
+
+  /* 内嵌卡片：渐变底 + 描边 + 阴影 */
+  --ck-card-from: rgba(22, 78, 152, 0.6);
+  --ck-card-to: rgba(12, 42, 88, 0.8);
+  --ck-card-border: rgba(60, 150, 240, 0.4);
+  --ck-card-shadow: inset 0 1px 0 rgba(120, 200, 255, 0.22);
+
+  /* 图标底座 */
+  --ck-icon-from: rgba(46, 140, 230, 0.5);
+  --ck-icon-to: rgba(20, 70, 140, 0.5);
+  --ck-icon-glow: 0 0 12px rgba(42, 180, 255, 0.35);
+
+  /* 进度条 / 环形图轨道底色 */
+  --ck-track: rgba(90, 150, 220, 0.22);
+
+  /* 顶栏辉光与分隔线 */
+  --ck-header-glow: rgba(40, 130, 230, 0.42);
+  --ck-header-rule: rgba(70, 170, 255, 0.65);
+
+  /* 主标题渐变字 */
+  --ck-title-from: #ffffff;
+  --ck-title-to: #9fd4ff;
+  --ck-title-shadow: 0 0 30px rgba(60, 170, 255, 0.45);
+
+  /* 发光数字的光晕强度；浅色主题置为 none */
+  --ck-num-glow: 0 0 10px currentColor, 0 0 24px rgba(53, 224, 255, 0.35);
+
+  /* ── 共享组件字号（由主题驱动，浅色主题整体放大一档）── */
+  --ck-fs-panel-title: 17px;   /* PanelBox 面板大标题 */
+  --ck-fs-section-title: 14px; /* SectionTitle 区块小标题 */
+  --ck-fs-tag: 12px;           /* StatusTag / 进度百分比 */
+
+  /* 面板圆角：深色大屏走硬朗的小圆角 */
+  --ck-panel-radius: 4px;
+
+  /* KPI 卡数值色：深色大屏用数据青，浅色主题各自覆盖 */
+  --ck-kpi-text: var(--ck-cyan);
+
+  /* 实心状态标签上的文字色（底色为高饱和数据色） */
+  --ck-on-solid: #06182f;
+
+  /* 主按钮渐变（AI助手等） */
+  --ck-btn-from: #2f7ce0;
+  --ck-btn-to: #27b7e8;
+
+  /* 滚动条 */
+  --scrollbar-thumb: rgba(70, 150, 230, 0.45);
+  --scrollbar-track: transparent;
+}
+
+/* ── 座舱通用原子类 ───────────────────────────────── */
+
+@layer components {
+  /* 大屏根容器底色：深蓝 + 两处辉光 */
+  .ck-screen {
+    background-color: var(--ck-screen-base);
+    background-image:
+      radial-gradient(ellipse 55% 70% at 50% 0%, var(--ck-screen-glow-1) 0%, transparent 70%),
+      radial-gradient(ellipse 80% 60% at 50% 100%, var(--ck-screen-glow-2) 0%, transparent 75%);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+  }
+
+  /* 面板外壳：半透明底 + 细描边 + 四角装饰由 PanelBox 负责 */
+  .ck-panel {
+    background: var(--ck-panel-bg);
+    border: 1px solid var(--ck-panel-border);
+    box-shadow: var(--ck-panel-shadow);
+  }
+
+  /* 内嵌小卡：比面板更实一点 */
+  .ck-card {
+    background: var(--ck-panel-inner);
+    border: 1px solid var(--ck-panel-inner-border);
+  }
+
+  /* 发光数字 */
+  .ck-glow-num {
+    text-shadow: var(--ck-num-glow);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 标题渐隐下划线 */
+  .ck-head-rule {
+    background: linear-gradient(90deg, var(--ck-panel-border) 0%, transparent 100%);
+  }
+
+  /* 细滚动条（深色） */
+  .ck-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  }
+
+  .ck-scroll::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  .ck-scroll::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 2px;
+  }
+
+  /* 主标题：中间亮、两侧偏蓝的渐变字 */
+  .ck-main-title {
+    background: linear-gradient(180deg, var(--ck-title-from) 30%, var(--ck-title-to) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: 0.08em;
+    text-shadow: var(--ck-title-shadow);
+  }
+
+  /* 扫描线动画：用于"自动抓取中"等状态环 */
+  @keyframes ck-spin-slow {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .ck-spin-slow {
+    animation: ck-spin-slow 8s linear infinite;
+  }
+
+  @keyframes ck-pulse-dot {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.45;
+      transform: scale(0.82);
+    }
+  }
+
+  .ck-pulse-dot {
+    animation: ck-pulse-dot 2s ease-in-out infinite;
+  }
+}
