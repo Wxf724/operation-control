@@ -17,6 +17,7 @@ import {
 import { EnterpriseBoardPage } from '@/pages/enterprise-board'
 import { PlatformPage } from '@/pages/platform'
 import { PolicyAnalysisPage } from '@/pages/policy-analysis'
+import { StaffDashboardPage } from '@/pages/staff-dashboard'
 import { TaskAdjustPage } from '@/pages/task-adjust'
 
 const NotFound = lazy(() => import('../pages/NotFound'))
@@ -45,6 +46,9 @@ const routes: RouteObject[] = [
   { path: '/drill/staff-job', element: <StaffJobDrillPage /> },
   { path: '/drill/staff-efficiency', element: <StaffEfficiencyDrillPage /> },
   { path: '/drill/staff-service', element: <StaffServiceDrillPage /> },
+
+  /* 员工管理平台「基本情况」面板右上角「员工个人管理看板」按钮跳转 */
+  { path: '/staff-dashboard', element: <StaffDashboardPage /> },
 
   /* 首页左栏「各驻企财务团队运行情况」页签里的企业链接跳转的企业数据看板 */
   { path: '/enterprise-board', element: <EnterpriseBoardPage /> },

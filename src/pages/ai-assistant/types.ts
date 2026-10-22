@@ -36,25 +36,51 @@ export interface KeyIndicator {
   icon: string
 }
 
-/** 右栏决策树里的一个判定结果叶子 */
-export interface TreeLeaf {
-  /** 分支标签：否 / 是 */
-  branch: string
-  /** 阈值说明，如 (<=1000笔) */
-  threshold: string
-  /** 判定结果文案第一行，如「判定1:」 */
-  verdictTitle: string
-  /** 判定结果文案第二行，如「单据量正常」 */
-  verdictText: string
-  /** 正常绿 / 异常红 */
-  tone: 'normal' | 'abnormal'
+/* ───────────── 第三栏上 · 模型一因子评价关系图 ───────────── */
+
+/** 因子与模型评价的相关程度：主要 / 次要 / 无关 */
+export type FactorTone = 'major' | 'minor' | 'none'
+
+/**
+ * 放射状关系图里的一个因子节点。
+ *
+ * 位置用极坐标表达，渲染时按椭圆展开：
+ * `x = cx + rx * radius * cos(angle)`，`y = cy + ry * radius * sin(angle)`。
+ * 角度以「正东」为 0°、顺时针（屏幕坐标系向下为正）递增。
+ */
+export interface FactorNode {
+  label: string
+  tone: FactorTone
+  /** 极角，单位度 */
+  angle: number
+  /** 相对椭圆半径的比例，1 = 贴着外圈 */
+  radius: number
 }
 
-/** 右栏决策树的一条分支（指标 → 判断 → 两个叶子） */
-export interface TreeBranch {
-  /** 分支指标节点文案，可多行 */
+/* ───────────── 第三栏下 · 推荐方案 ───────────── */
+
+/** 推荐方案卡里的一条键值 */
+export interface PlanRow {
   label: string
-  /** 菱形判断框文案，可多行 */
-  condition: string
-  leaves: [TreeLeaf, TreeLeaf]
+  value: string
+}
+
+/** 备选方案的一张编号卡 */
+export interface AltPlan {
+  /** 卡片序号，1 起 */
+  index: number
+  name: string
+  /** 卡片下方的灰色小字 */
+  note: string
+}
+
+/* ───────────── 第四栏 · AI 助手 ───────────── */
+
+/** AI 回答里「指标：异常（阈值）」的一行 */
+export interface AiVerdictRow {
+  label: string
+  /** 判定文案，如「异常」 */
+  verdict: string
+  /** 阈值说明，如「（>1000笔）」 */
+  threshold: string
 }

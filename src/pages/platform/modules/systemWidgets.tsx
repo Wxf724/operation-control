@@ -25,7 +25,7 @@ function RateCaption({ label }: { label: string }) {
 }
 
 /** 整圈环形图：网络连通成功率这类 */
-export function RingStat({ item, size = 84 }: { item: SystemRateItem; size?: number }) {
+export function RingStat({ item, size = 96 }: { item: SystemRateItem; size?: number }) {
   const thickness = 13
   const r = (size - thickness) / 2
   const circumference = 2 * Math.PI * r
@@ -68,8 +68,8 @@ export function RingStat({ item, size = 84 }: { item: SystemRateItem; size?: num
 }
 
 /** 底部开口的进度圆环：核心功能操作稳定性第一排 */
-export function ArcGauge({ item, size = 84 }: { item: SystemRateItem; size?: number }) {
-  const thickness = 11
+export function ArcGauge({ item, size = 96 }: { item: SystemRateItem; size?: number }) {
+  const thickness = 12
   const sweep = 0.78
   const r = (size - thickness) / 2
   const circumference = 2 * Math.PI * r
@@ -111,7 +111,7 @@ export function ArcGauge({ item, size = 84 }: { item: SystemRateItem; size?: num
 }
 
 /** 液面填充球：核心功能操作稳定性第二排 */
-export function LiquidBall({ item, size = 80 }: { item: SystemRateItem; size?: number }) {
+export function LiquidBall({ item, size = 92 }: { item: SystemRateItem; size?: number }) {
   const r = size / 2 - 3
   const cx = size / 2
   const level = size / 2 - r + 2 * r * (1 - item.value / 100)
@@ -165,11 +165,11 @@ function rampColor(t: number) {
 
 /** 彩色半圆仪表盘：资源承载率 / 业务承载率 */
 export function ColorHalfGauge({ label, value }: { label: string; value: number }) {
-  const width = 196
+  const width = 232
   const cx = width / 2
-  const cy = 104
-  const bandIn = 60
-  const bandOut = 76
+  const cy = 122
+  const bandIn = 72
+  const bandOut = 92
   const segments = 48
   const ticks = 40
   const needle = Math.PI + (Math.PI * value) / 100

@@ -53,5 +53,11 @@ export interface PlatformMeta {
   /** 主题类名，默认深色座舱主题；浅色页传 `theme-cloud-light` */
   theme?: string
   /** 中间业务区的组件；未建设时为空，渲染占位 */
-  Content?: () => ReactElement
+  Content?: (props: PlatformContentProps) => ReactElement
+}
+
+/** 中间业务区组件收到的 props：顶栏当前选中的组织范围 */
+export interface PlatformContentProps {
+  /** 顶栏「组织范围」下拉当前值，按需渲染不同面板组 */
+  org?: string
 }

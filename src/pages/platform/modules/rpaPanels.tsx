@@ -4,7 +4,12 @@ import type { ReactNode } from 'react'
 
 import { PanelBox, useChartColors } from '@/components/cockpit-ui'
 
-import { buildRunStatusOption, buildStageBotOption, buildTaskOption } from './rpaChartOptions'
+import {
+  buildManualRingOption,
+  buildRunStatusOption,
+  buildStageBotOption,
+  buildTaskOption,
+} from './rpaChartOptions'
 import {
   RPA_CONTRIB_GAUGE,
   RPA_CONTRIB_STAGES,
@@ -211,64 +216,71 @@ function RunStatusBlock() {
   )
 }
 
+/** 图例小圆点的颜色与双层环的两段扇区一一对应 */
 const MANUAL_LEGEND = [
-  { label: '转人工处理单据量', value: RPA_MANUAL.handled },
-  { label: '未人工干预单据量', value: RPA_MANUAL.untouched },
+  { label: '转人工处理单据量', value: RPA_MANUAL.handled, dot: 'var(--ck-cyan)' },
+  { label: '未人工干预单据量', value: RPA_MANUAL.untouched, dot: 'var(--ck-track)' },
 ]
 
 function TaskBlock() {
   const c = useChartColors()
   const option = useMemo(() => buildTaskOption(c), [c])
 
+  const ringOption = useMemo(() => buildManualRingOption(c), [c])
+
   return (
-    <section className="flex min-w-0 flex-1 flex-col gap-2.5">
+    <section className="flex min-w-0 flex-1 flex-col gap-3">
       <PanelSectionTitle>RPA作业情况</PanelSectionTitle>
 
-      <div className="h-[204px] shrink-0">
+      <div className="h-[210px] shrink-0">
         <ReactECharts option={option} {...CHART_PROPS} />
       </div>
 
-      <div className="flex min-h-0 flex-1 items-center justify-center gap-10">
-        <div className="relative shrink-0" style={{ width: 148, height: 148 }}>
+      {/* 转人工占比：双层环在左，原有的两个单据量读数在右 */}
+      <div className="flex min-h-0 flex-1 items-center justify-center gap-9 pb-1.5">
+        <div className="relative shrink-0" style={{ width: 176, height: 176 }}>
           <span
-            className="pointer-events-none absolute inset-[24px] rounded-full"
+            className="pointer-events-none absolute inset-[26px] rounded-full"
             style={{
               background:
-                'radial-gradient(circle, color-mix(in srgb, var(--ck-cyan) 12%, transparent) 0%, transparent 72%)',
+                'radial-gradient(circle, color-mix(in srgb, var(--ck-cyan) 14%, transparent) 0%, transparent 72%)',
             }}
           />
-          {/* 外圈虚线：给单薄的小比例环加一点刻度感 */}
+          {/* 最外圈虚线刻度，和相邻柱状图的视觉重量对齐 */}
           <svg
             className="absolute inset-0"
-            width="148"
-            height="148"
-            viewBox="0 0 148 148"
+            width="176"
+            height="176"
+            viewBox="0 0 176 176"
             aria-hidden
           >
             <circle
-              cx="74"
-              cy="74"
-              r="70"
+              cx="88"
+              cy="88"
+              r="84"
               fill="none"
               stroke="var(--ck-panel-inner-border)"
               strokeWidth="1.5"
               strokeDasharray="2 7"
             />
           </svg>
-          <Ring size={148} stroke={13} percent={RPA_MANUAL.rate} color="var(--ck-cyan)" />
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 leading-none">
-            <span className="ck-glow-num text-[30px] font-bold text-(--ck-title)">
+          <ReactECharts option={ringOption} {...CHART_PROPS} />
+          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-2 leading-none">
+            <span className="ck-glow-num text-[32px] font-bold text-(--ck-title)">
               {RPA_MANUAL.rate}%
             </span>
-            <span className="text-[12px] text-(--text-secondary)">RPA转人工率</span>
+            <span className="text-[11.5px] text-(--text-secondary)">RPA转人工率</span>
           </div>
         </div>
 
-        <div className="flex flex-col gap-6">
+        <div className="flex shrink-0 flex-col gap-2">
           {MANUAL_LEGEND.map((item) => (
-            <div key={item.label} className="flex flex-col gap-2">
+            <div key={item.label} className="flex flex-col gap-1.5">
               <span className="flex items-center gap-1.5 whitespace-nowrap">
-                <i className="h-[7px] w-[7px] shrink-0 rounded-full bg-(--ck-green)" />
+                <i
+                  className="h-[7px] w-[7px] shrink-0 rounded-full"
+                  style={{ background: item.dot }}
+                />
                 <span className="text-[12px] leading-none text-(--text-secondary)">
                   {item.label}
                 </span>

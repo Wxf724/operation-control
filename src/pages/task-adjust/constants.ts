@@ -170,25 +170,42 @@ export const ORIGIN_PROGRESS = { label: '当前完成率', value: 68 } as const
 /* ───────────────── 任务调整 ───────────────── */
 
 export const ADJUST_ITEMS: AdjustItem[] = [
-  { label: '责任调整', prefix: '负责人', from: '张昊', to: '李晨', weight: 60 },
-  { label: '牵头部门', prefix: '运营部门', to: '运营组', note: '(增加负责人直管)', weight: 60 },
-  { label: '协同调整', text: '无', weight: 59 },
-  { label: '时间调整', prefix: '完成时限', from: '06/18 18:00', to: '06/18 22:00', weight: 61 },
+  { label: '责任调整', prefix: '负责人', from: '张昊', to: '李晨', weight: 60, editor: 'employee' },
+  {
+    label: '牵头部门',
+    prefix: '运营部门',
+    to: '运营组',
+    note: '(增加负责人直管)',
+    weight: 60,
+    editor: 'department',
+  },
+  { label: '协同调整', text: '无', weight: 59, editor: 'input' },
+  {
+    label: '时间调整',
+    prefix: '完成时限',
+    from: '06/18 18:00',
+    to: '06/18 22:00',
+    weight: 61,
+    editor: 'datetime',
+  },
   {
     label: '范围调整',
     text: '由"全部4982笔"调整为\n优先处理高风险1870笔+待分配1052笔',
     weight: 116,
     gapBefore: true,
+    editor: 'textarea',
   },
   {
     label: '反馈要求',
     text: '每2小时反馈一次进展，\n22:00前提交处置结果与复盘',
     weight: 96,
+    editor: 'textarea',
   },
   {
     label: '调整依据',
     text: '当前任务范围过大，资源与时限不匹配，\n宜优先保障高风险任务清零',
     weight: 115,
+    editor: 'textarea',
   },
 ]
 
@@ -252,3 +269,31 @@ export const COMPARE_ROWS: CompareRow[] = [
     afterTone: 'green',
   },
 ]
+
+/* ───────────────── 编辑控件候选数据 ───────────────── */
+
+/** 责任调整下拉的人员候选 */
+export const EMPLOYEE_OPTIONS = [
+  '李晨',
+  '张昊',
+  '王美丽',
+  '刘强',
+  '陈思',
+  '赵敏',
+  '孙伟',
+  '周杰',
+  '吴倩',
+  '郑浩',
+] as const
+
+/** 牵头部门下拉的部门候选 */
+export const DEPARTMENT_OPTIONS = [
+  '运营组',
+  '运营部门',
+  '质量组',
+  '财务组',
+  '技术部',
+  '风控组',
+  '审计部',
+  '人力组',
+] as const

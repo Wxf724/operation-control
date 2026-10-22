@@ -48,9 +48,9 @@ import {
 /** 服务管理平台的中间业务区（对应 `_refs/live/17-服务管理平台.png`） */
 export function ServicePlatformContent() {
   return (
-    <div className="flex min-h-0 flex-1 gap-2.5">
-      <div className="flex min-w-0 flex-1 flex-col gap-2.5">
-        <div className="flex h-[458px] shrink-0 gap-2.5">
+    <div className="flex min-h-0 flex-1 gap-3">
+      <div className="flex min-w-0 flex-1 flex-col gap-3">
+        <div className="flex min-h-0 flex-[1.16] gap-3">
           <ServiceStatusPanel className="w-[642px] shrink-0" />
           <SlaPanel className="min-w-0 flex-1" />
         </div>
@@ -69,9 +69,9 @@ function ServiceStatusPanel({ className = '' }: { className?: string }) {
 
   return (
     <PanelBox title="服务情况" className={`flex flex-col ${className}`}>
-      <div className="flex h-full flex-col px-3.5 pt-1.5 pb-2">
-        <div className="flex h-[186px] shrink-0 items-start gap-2">
-          <div className="flex w-[196px] shrink-0 flex-col">
+      <div className="flex h-full flex-col px-4 pt-2 pb-2.5">
+        <div className="flex min-h-0 flex-[0.95] items-start gap-1">
+          <div className="flex w-[186px] shrink-0 flex-col">
             <span className="text-[14px] leading-none font-medium text-(--ck-title-sub)">
               完成咨询总量（人工）
             </span>
@@ -79,7 +79,7 @@ function ServiceStatusPanel({ className = '' }: { className?: string }) {
               value={SERVICE_CONSULT_TOTAL.toLocaleString('en-US')}
               unit="个"
               valueTone="cyan"
-              width={150}
+              width={142}
               className="mt-3"
             />
             <div className="mt-2 flex flex-col gap-3">
@@ -102,10 +102,10 @@ function ServiceStatusPanel({ className = '' }: { className?: string }) {
 
           <Donut
             slices={SERVICE_TRANSFER_RING}
-            size={152}
+            size={156}
             thickness={20}
             innerRing
-            className="mt-2"
+            className="mt-2 shrink-0"
             center={
               <>
                 <span className="ck-glow-num text-[28px] leading-none font-bold text-(--foreground)">
@@ -156,10 +156,10 @@ function SlaPanel({ className = '' }: { className?: string }) {
 
   return (
     <PanelBox title="服务水平协议履约情况" className={`flex flex-col ${className}`}>
-      <div className="flex h-full flex-col px-3.5 pt-1.5 pb-2">
+      <div className="flex h-full flex-col px-4 pt-2 pb-2.5">
         <SectionTitle className="shrink-0">服务达成情况</SectionTitle>
 
-        <div className="flex h-[124px] shrink-0 items-center gap-3 pt-1">
+        <div className="flex min-h-0 flex-[0.82] items-center gap-3.5 pt-1">
           <div className="flex w-[218px] shrink-0 items-center gap-2.5">
             <span className="relative flex h-[48px] w-[52px] shrink-0 items-end justify-center">
               <svg
@@ -203,7 +203,7 @@ function SlaPanel({ className = '' }: { className?: string }) {
           <div className="flex min-w-0 flex-1 flex-col justify-center gap-3.5">
             {SERVICE_SLA_RATES.map((rate) => (
               <div key={rate.label} className="flex items-center gap-2.5">
-                <span className="ck-card flex h-[42px] w-[112px] shrink-0 flex-col items-center justify-center gap-1 rounded-[3px] px-1 text-center">
+                <span className="ck-card flex h-[48px] w-[122px] shrink-0 flex-col items-center justify-center gap-1 rounded-[3px] px-1 text-center">
                   {splitLabel(rate.label).map((line) => (
                     <span
                       key={line}
@@ -224,7 +224,7 @@ function SlaPanel({ className = '' }: { className?: string }) {
                     </span>
                   </span>
                   <span
-                    className="relative h-[8px] overflow-hidden rounded-full"
+                    className="relative h-[9px] overflow-hidden rounded-full"
                     style={{ background: 'var(--ck-track)' }}
                   >
                     <i
@@ -274,7 +274,7 @@ function SlaPanel({ className = '' }: { className?: string }) {
           <div className="flex w-[348px] shrink-0 items-center gap-4">
             <Donut
               slices={SERVICE_COLLECT_RING}
-              size={160}
+              size={180}
               thickness={18}
               innerRing
               center={
@@ -329,7 +329,7 @@ function SatisfactionPanel({ className = '' }: { className?: string }) {
 
   return (
     <PanelBox title="客户体验与满意度情况" className={`flex flex-col ${className}`}>
-      <div className="flex h-full gap-4 px-3.5 pt-1 pb-2.5">
+      <div className="flex h-full gap-5 px-4 pt-1.5 pb-3">
         {/* 随单评价占比 */}
         <div className="flex w-[420px] shrink-0 flex-col">
           <SectionTitle className="shrink-0">随单评价占比</SectionTitle>
@@ -337,7 +337,7 @@ function SatisfactionPanel({ className = '' }: { className?: string }) {
           <div className="flex min-h-0 flex-1 items-center gap-5 pt-1">
             <Donut
               slices={SERVICE_ORDER_RING}
-              size={176}
+              size={196}
               thickness={22}
               gap={6}
               center={
@@ -367,7 +367,7 @@ function SatisfactionPanel({ className = '' }: { className?: string }) {
           <div className="flex min-h-0 flex-1 items-center gap-5 pt-1">
             <Donut
               slices={SERVICE_SATISFIED_RING}
-              size={176}
+              size={196}
               thickness={22}
               gap={10}
               center={

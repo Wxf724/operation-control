@@ -16,6 +16,20 @@ import {
 import type { ProcessSeries } from './processData'
 import { IconStatCard, StageCard, StageLine, SubTitle, TabPills } from './processWidgets'
 
+/**
+ * 第二列 / 第三列的上下配比。
+ *
+ * 两列原来都把 `TrendBlock` 挂在 `flex-1` 上，图表独占剩余空间（第二列吃掉约 67% 列高、
+ * 第三列约 52%），上方环节行与数字卡只剩最小内容高。现在改成按权重分配：
+ * 折线图拿固定的小权重，其余权重回流给上部各块，列底边仍与相邻列齐平、上下都不留白。
+ *
+ * 第二列只有一个环节、图例又占两行，所以环节块权重压低、图表比第三列略高。
+ */
+const TEAM_STAGE_W = 'min-h-0 flex-[0.8]'
+const TEAM_CARD_W = 'min-h-0 flex-[1.05]'
+const TEAM_TREND_W = 'min-h-0 flex-[2.15]'
+const CENTER_TREND_H = 'h-[230px] shrink-0'
+
 /** 第二列 · 驻企财务管理团队业务处理情况 */
 export function TeamColumn({ className = '' }: { className?: string }) {
   const [tab, setTab] = useState(0)
@@ -24,25 +38,33 @@ export function TeamColumn({ className = '' }: { className?: string }) {
   return (
     <div className={`flex min-h-0 flex-col gap-2.5 ${className}`}>
       <SectionTitle className="shrink-0">驻企财务管理团队业务处理情况</SectionTitle>
-      <TabPills labels={PROCESS_STAGE_TAB_LABELS} active={tab} onChange={setTab} />
+      <TabPills labels={PROCESS_STAGE_TAB_LABELS} active={tab} onChange={setTab} size="lg" />
 
-      <div className="flex shrink-0 flex-col gap-2">
+      {/* 只有一个环节，按权重分摊折线图让出的高度，避免被拉空 */}
+      <div className={`flex flex-col gap-2 ${TEAM_STAGE_W}`}>
         {items.map((item) => (
-          <StageCard key={item.label} item={item} tone="green" />
+          <StageCard
+            key={item.label}
+            item={item}
+            tone="green"
+            size="lg"
+            className="min-h-0 flex-1"
+          />
         ))}
       </div>
 
-      <SubTitle>月末结账申请单提交情况</SubTitle>
+      <SubTitle size="lg">月末结账申请单提交情况</SubTitle>
 
       <IconStatCard
-        className="shrink-0"
+        className={TEAM_CARD_W}
+        size="lg"
         label={TEAM_SUBMIT_CARD.label}
         value={TEAM_SUBMIT_CARD.value}
         unit={TEAM_SUBMIT_CARD.unit}
         icon={TEAM_SUBMIT_CARD.icon}
       />
 
-      <TrendBlock className="min-h-0 flex-1" series={TEAM_SUBMIT_SERIES} />
+      <TrendBlock className={TEAM_TREND_W} series={TEAM_SUBMIT_SERIES} />
     </div>
   )
 }
@@ -55,25 +77,27 @@ export function CenterColumn({ className = '' }: { className?: string }) {
   return (
     <div className={`flex min-h-0 flex-col gap-2.5 ${className}`}>
       <SectionTitle className="shrink-0">分中心业务处理情况</SectionTitle>
-      <TabPills labels={PROCESS_STAGE_TAB_LABELS} active={tab} onChange={setTab} />
+      <TabPills labels={PROCESS_STAGE_TAB_LABELS} active={tab} onChange={setTab} size="lg" />
 
-      <div className="grid shrink-0 grid-cols-2 gap-x-4 gap-y-3">
+      {/* 八个环节四行，auto-rows-fr 让四行平分折线图让出的高度 */}
+      <div className="grid min-h-0 flex-1 auto-rows-fr grid-cols-2 gap-x-4 gap-y-2">
         {items.map((item) => (
-          <StageLine key={item.label} item={item} tone="cyan" />
+          <StageLine key={item.label} item={item} tone="cyan" size="lg" />
         ))}
       </div>
 
-      <SubTitle>月末结账申请单审核情况</SubTitle>
+      <SubTitle size="lg">月末结账申请单审核情况</SubTitle>
 
       <IconStatCard
         className="shrink-0"
+        size="lg"
         label={CENTER_AUDIT_CARD.label}
         value={CENTER_AUDIT_CARD.value}
         unit={CENTER_AUDIT_CARD.unit}
         icon={CENTER_AUDIT_CARD.icon}
       />
 
-      <TrendBlock className="min-h-0 flex-1" series={CENTER_AUDIT_SERIES} />
+      <TrendBlock className={CENTER_TREND_H} series={CENTER_AUDIT_SERIES} />
     </div>
   )
 }

@@ -41,6 +41,14 @@ export interface DetailRow {
   tone?: TagTone
 }
 
+/**
+ * 卡片「调整后」值的编辑控件类型：
+ * - `employee` / `department`：可搜索下拉框，从候选列表里挑
+ * - `datetime`：单日期 + 时分选择器
+ * - `textarea` / `input`：多行 / 单行纯文本
+ */
+export type AdjustEditor = 'employee' | 'department' | 'datetime' | 'textarea' | 'input'
+
 /** 任务调整项：一条调整建议 */
 export interface AdjustItem {
   label: string
@@ -57,6 +65,8 @@ export interface AdjustItem {
   weight: number
   /** 与上一张卡片之间是否留出更大的间距 */
   gapBefore?: boolean
+  /** 双击进入编辑态时使用的控件 */
+  editor: AdjustEditor
 }
 
 /** 调整影响确认的一行 */

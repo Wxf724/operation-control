@@ -13,14 +13,14 @@ import { TabGroup } from './qualityWidgets'
 /** 质量管理平台的中间业务区（对应 `_refs/live/15-质量管理平台.png`） */
 export function QualityPlatformContent() {
   return (
-    <div className="flex min-h-0 flex-1 gap-2.5">
-      <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-2.5">
-        <div className="flex h-[338px] shrink-0 gap-2.5">
+    <div className="flex min-h-0 flex-1 gap-3">
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3">
+        <div className="flex min-h-0 flex-[0.92] gap-3">
           <SamplingPanel className="w-[760px] shrink-0" />
           <EfficiencyPanel className="min-w-0 flex-1" />
         </div>
 
-        <div className="flex min-h-0 flex-1 gap-2.5">
+        <div className="flex min-h-0 flex-1 gap-3">
           <BusinessQualityPanel className="w-[760px] shrink-0" />
           <AppealPanel className="w-[420px] shrink-0" />
           <RectifyPanel className="min-w-0 flex-1" />
@@ -49,7 +49,7 @@ function SamplingPanel({ className = '' }: { className?: string }) {
         />
       }
     >
-      <div className="h-full px-2 pt-1 pb-2">
+      <div className="h-full px-3 pt-1.5 pb-2.5">
         <ReactECharts
           option={option}
           style={{ height: '100%', width: '100%' }}
@@ -160,7 +160,7 @@ function EfficiencyPanel({ className = '' }: { className?: string }) {
         />
       }
     >
-      <div className="h-full px-2 pt-1 pb-2">
+      <div className="h-full px-3 pt-1.5 pb-2.5">
         <ReactECharts
           option={option}
           style={{ height: '100%', width: '100%' }}

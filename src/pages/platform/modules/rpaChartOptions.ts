@@ -1,6 +1,6 @@
 import type { ChartVarName } from '@/components/cockpit-ui'
 
-import { RPA_RUN_TREND, RPA_STAGE_BOTS, RPA_TASK_TREND } from './rpaData'
+import { RPA_MANUAL, RPA_RUN_TREND, RPA_STAGE_BOTS, RPA_TASK_TREND } from './rpaData'
 
 /** `useChartColors()` 解析出来的主题色表 */
 export type ChartColors = Record<ChartVarName, string>
@@ -241,6 +241,86 @@ export function buildTaskOption(c: ChartColors) {
         RPA_TASK_TREND.map((d) => d.rate),
         false
       ),
+    ],
+  }
+}
+
+
+/* ───────────── 运行情况 · RPA作业情况 · 转人工占比 ───────────── */
+
+/**
+ * 转人工占比双层环。
+ *
+ * 数据只有 `RPA_MANUAL` 里原有的转人工率与两个单据量，没有额外指标：
+ * 外层厚环按「转人工 / 未人工干预」两段分，内层细环同一组数据做底衬，
+ * 两层叠出层次感，解决原来单层 1px 细弧视觉过轻的问题。
+ * 中心汇总数字由 React 侧覆盖一层 DOM 绘制。
+ *
+ * 色值都已由 `useChartColors()` 解析成具体颜色，这里不能再出现
+ * `var()` 或 `color-mix()`：canvas 渲染解析不了。
+ */
+export function buildManualRingOption(c: ChartColors) {
+  const split = [
+    { name: '转人工处理单据量', value: RPA_MANUAL.rate, color: c['--ck-cyan'] },
+    { name: '未人工干预单据量', value: 100 - RPA_MANUAL.rate, color: c['--ck-track'] },
+  ]
+
+  /** 两层共用的扇区定义，只有配色深浅不同 */
+  const slices = (dim: boolean) =>
+    split.map((d) => ({
+      name: d.name,
+      value: d.value,
+      itemStyle: { color: d.color, opacity: dim ? 0.38 : 1 },
+    }))
+
+  return {
+    ...NO_ANIMATION,
+    backgroundColor: 'transparent',
+    textStyle: { fontFamily: 'Noto Sans SC, sans-serif' },
+    tooltip: {
+      trigger: 'item' as const,
+      backgroundColor: c['--ck-tooltip-bg'],
+      borderWidth: 0,
+      padding: [8, 12],
+      textStyle: { color: c['--ck-tooltip-text'], fontSize: 12 },
+      extraCssText: 'border-radius:10px;',
+      valueFormatter: (v: number) => `${v}%`,
+    },
+    series: [
+      {
+        // 内层细环：同一组数据的底衬，只负责加一层厚度
+        name: '转人工占比',
+        type: 'pie' as const,
+        center: ['50%', '50%'],
+        radius: ['42%', '52%'],
+        silent: true,
+        label: { show: false },
+        labelLine: { show: false },
+        itemStyle: { borderColor: c['--ck-panel-bg-strong'], borderWidth: 2 },
+        data: slices(true),
+      },
+      {
+        // 外层主环：加粗、圆角、扇区间留缝
+        name: '转人工占比',
+        type: 'pie' as const,
+        center: ['50%', '50%'],
+        radius: ['58%', '84%'],
+        minAngle: 6,
+        padAngle: 2,
+        label: { show: false },
+        labelLine: { show: false },
+        itemStyle: {
+          borderColor: c['--ck-panel-bg-strong'],
+          borderWidth: 1.5,
+          borderRadius: 4,
+        },
+        emphasis: {
+          scale: true,
+          scaleSize: 6,
+          itemStyle: { shadowBlur: 12, shadowColor: c['--ck-grid'] },
+        },
+        data: slices(false),
+      },
     ],
   }
 }

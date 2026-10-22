@@ -7,12 +7,11 @@
 
 export type NodeTone = 'green' | 'yellow' | 'red'
 
+/** 右栏清单里的一行：左指标名、右数值 + 单位 */
 export interface ProcessCard {
   label: string
   value: string
   unit?: string
-  /** 占格：half 半宽 / full 整行（3 列网格里 half 即 1/3 宽） */
-  span?: 'half' | 'full'
 }
 
 export interface ClosingRow {
@@ -27,12 +26,9 @@ export interface ProcessNode {
   tone: NodeTone
   /** 路面上方的两行小指标 */
   flow: { label: string; value: string; unit: string }[]
-  /** 右栏指标卡 */
-  cols: 1 | 2 | 3
-  /** cols=1 时的卡片形态：row 紧凑行（标签左/数值右）、block 大块卡（标签上/数值下） */
-  variant?: 'row' | 'block'
+  /** 右栏清单项：所有节点统一用「指标名 ──── 数值 + 单位」的长条行 */
   cards: ProcessCard[]
-  /** 无卡片网格的补充说明（03 上传附件） */
+  /** 清单之外的补充说明（03 上传附件），同样按清单行渲染 */
   note?: { label: string; value: string; unit: string }
   /** 17 结转：月末关账事项确认表 */
   closing?: { rows: ClosingRow[] }
@@ -52,14 +48,13 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '单据待提交量', value: '5,000', unit: '笔' },
       { label: '单据提报完成率', value: '90%', unit: '' },
     ],
-    cols: 2,
     cards: [
       { label: '单据填报量', value: '6,720', unit: '笔' },
       { label: '单据完成量', value: '6,720', unit: '笔' },
       { label: '单据待提交量', value: '6,720', unit: '笔' },
       { label: '单据平均时长', value: '30', unit: '分钟' },
-      { label: '应提交但未提交单据量', value: '6,720', unit: '笔', span: 'full' },
-      { label: '单据平均停留时长', value: '30', unit: '分钟', span: 'full' },
+      { label: '应提交但未提交单据量', value: '6,720', unit: '笔' },
+      { label: '单据平均停留时长', value: '30', unit: '分钟' },
     ],
     ...NONE,
   },
@@ -71,7 +66,6 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '待上传影像单量', value: '2,700', unit: '笔' },
       { label: '影像上传完成率', value: '90%', unit: '' },
     ],
-    cols: 2,
     cards: [{ label: '上传附件总量', value: '6,720', unit: '笔' }],
     note: { label: '其他中:需要涉及档案邮寄等的单据数量', value: '6,720', unit: '笔' },
     ...NONE,
@@ -84,13 +78,12 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '待查验发票数量', value: '3,600', unit: '笔' },
       { label: '发票验真成功率', value: '90%', unit: '' },
     ],
-    cols: 2,
     cards: [
       { label: '发票总量', value: '6,720', unit: '笔' },
       { label: '发票查验总量', value: '6,720', unit: '笔' },
       { label: '发票查验失败量', value: '720', unit: '笔' },
       { label: '发票查验成功量', value: '1,930', unit: '笔' },
-      { label: '平均查验时长', value: '16', unit: '小时', span: 'full' },
+      { label: '平均查验时长', value: '16', unit: '小时' },
     ],
     ...NONE,
   },
@@ -102,14 +95,13 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '待审核单据量', value: '4,000', unit: '笔' },
       { label: '业务审核完成率', value: '75%', unit: '' },
     ],
-    cols: 2,
     cards: [
       { label: '单据审核完成量', value: '6,720', unit: '笔' },
       { label: '审核时长异常单据量', value: '620', unit: '笔' },
       { label: '业务单据审核平均时长', value: '20', unit: '小时' },
       { label: '单据审核退单率', value: '90.00%', unit: '' },
-      { label: '协同退单率', value: '93.00%', unit: '', span: 'full' },
-      { label: '单据平均停留时长', value: '30', unit: '分钟', span: 'full' },
+      { label: '协同退单率', value: '93.00%', unit: '' },
+      { label: '单据平均停留时长', value: '30', unit: '分钟' },
     ],
     ...NONE,
   },
@@ -121,7 +113,6 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '待邮寄档案单据量', value: '4,500', unit: '笔' },
       { label: '邮寄及时率', value: '75%', unit: '' },
     ],
-    cols: 3,
     cards: [
       { label: '待邮寄室单据量', value: '6,720', unit: '笔' },
       { label: '已邮寄已签收单据', value: '7,620', unit: '笔' },
@@ -143,10 +134,9 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '已邮寄未签收单据量', value: '1,200', unit: '笔' },
       { label: '已邮寄已签收完成率', value: '88%', unit: '' },
     ],
-    cols: 2,
     cards: [
-      { label: '已邮寄未签收单据量', value: '6,720', unit: '笔', span: 'full' },
-      { label: '已邮寄已签收单据量', value: '9,720', unit: '笔', span: 'full' },
+      { label: '已邮寄未签收单据量', value: '6,720', unit: '笔' },
+      { label: '已邮寄已签收单据量', value: '9,720', unit: '笔' },
     ],
     ...NONE,
   },
@@ -158,7 +148,6 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '待档案比对量', value: '3,900', unit: '笔' },
       { label: '档案比对完成率', value: '90%', unit: '' },
     ],
-    cols: 3,
     cards: [
       { label: '待档案比对量', value: '9,720', unit: '笔' },
       { label: '档案比对完成率', value: '90.00%', unit: '' },
@@ -179,11 +168,10 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '待分配单据量', value: '900', unit: '笔' },
       { label: '单据分配完成率', value: '90%', unit: '' },
     ],
-    cols: 2,
     cards: [
-      { label: '单据分配完成率', value: '90.00%', unit: '', span: 'full' },
-      { label: '单据平均分配时长', value: '20', unit: '小时', span: 'full' },
-      { label: '已分配单据量', value: '6,720', unit: '笔', span: 'full' },
+      { label: '单据分配完成率', value: '90.00%', unit: '' },
+      { label: '单据平均分配时长', value: '20', unit: '小时' },
+      { label: '已分配单据量', value: '6,720', unit: '笔' },
     ],
     ...NONE,
   },
@@ -195,7 +183,6 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '初审待办量', value: '1,300', unit: '笔' },
       { label: '共享初审完成率', value: '95%', unit: '' },
     ],
-    cols: 3,
     cards: [
       { label: '初审待办量', value: '1,720', unit: '笔' },
       { label: '共享初审完成率', value: '95.00%', unit: '' },
@@ -216,7 +203,6 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '复审待办量', value: '2,200', unit: '笔' },
       { label: '共享复审完成率', value: '55%', unit: '' },
     ],
-    cols: 3,
     cards: [
       { label: '复审待办量', value: '1,720', unit: '笔' },
       { label: '共享复审完成率', value: '55.00%', unit: '' },
@@ -240,7 +226,6 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '待制证凭证量', value: '800', unit: '笔' },
       { label: '凭证制证完成率', value: '75%', unit: '' },
     ],
-    cols: 2,
     cards: [
       { label: '待制证凭证量', value: '6,720', unit: '笔' },
       { label: '凭证制证完成率', value: '75.00%', unit: '' },
@@ -259,7 +244,6 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '待审核凭证量', value: '1,000', unit: '笔' },
       { label: '凭证审核完成率', value: '90%', unit: '' },
     ],
-    cols: 2,
     cards: [
       { label: '待审核凭证量', value: '6,720', unit: '笔' },
       { label: '凭证审核完成量', value: '6,720', unit: '笔' },
@@ -278,11 +262,10 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '待付单据量', value: '1,800', unit: '笔' },
       { label: '待付单据完成率', value: '90%', unit: '' },
     ],
-    cols: 2,
     cards: [
-      { label: '待付单据量', value: '6,720', unit: '笔', span: 'full' },
-      { label: '待付资金量', value: '720', unit: '笔', span: 'full' },
-      { label: '平均待付时长', value: '20', unit: '小时', span: 'full' },
+      { label: '待付单据量', value: '6,720', unit: '笔' },
+      { label: '待付资金量', value: '720', unit: '笔' },
+      { label: '平均待付时长', value: '20', unit: '小时' },
     ],
     ...NONE,
   },
@@ -294,11 +277,10 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '待资金支付单据量', value: '2,300', unit: '笔' },
       { label: '资金支付A点任务完成率', value: '90%', unit: '' },
     ],
-    cols: 2,
     cards: [
-      { label: '待资金支付单据量', value: '6,720', unit: '笔', span: 'full' },
-      { label: '资金支付A点完成单据量', value: '720', unit: '笔', span: 'full' },
-      { label: '支付A点平均处理时长', value: '20', unit: '小时', span: 'full' },
+      { label: '待资金支付单据量', value: '6,720', unit: '笔' },
+      { label: '资金支付A点完成单据量', value: '720', unit: '笔' },
+      { label: '支付A点平均处理时长', value: '20', unit: '小时' },
     ],
     ...NONE,
   },
@@ -310,12 +292,11 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '待资金支付单据量', value: '800', unit: '笔' },
       { label: '资金支付C点支付成功率', value: '94%', unit: '' },
     ],
-    cols: 2,
     cards: [
       { label: '待资金支付单据量', value: '6,720', unit: '笔' },
       { label: '资金支付C点支付失败量', value: '620', unit: '笔' },
-      { label: '资金支付C点完成单据量', value: '720', unit: '笔', span: 'full' },
-      { label: '资金支付C点平均处理时长', value: '20', unit: '小时', span: 'full' },
+      { label: '资金支付C点完成单据量', value: '720', unit: '笔' },
+      { label: '资金支付C点平均处理时长', value: '20', unit: '小时' },
     ],
     ...NONE,
   },
@@ -327,7 +308,6 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '待结转企业数量', value: '230', unit: '家' },
       { label: '结转完成率', value: '78%', unit: '' },
     ],
-    cols: 2,
     cards: [
       { label: '月末结账申请单待提交量', value: '120', unit: '笔' },
       { label: '月末结账申请单待审核量', value: '80', unit: '笔' },
@@ -351,8 +331,6 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '待出具报表量', value: '600', unit: '笔' },
       { label: '报表出具完成率', value: '90%', unit: '' },
     ],
-    cols: 1,
-    variant: 'row',
     cards: [
       { label: '管理口径主报表已出具量', value: '120', unit: '笔' },
       { label: '管理口径主报表待出具量', value: '120', unit: '笔' },
@@ -375,8 +353,6 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '待披露报表量', value: '700', unit: '笔' },
       { label: '报表披露完成率', value: '91%', unit: '' },
     ],
-    cols: 1,
-    variant: 'block',
     cards: [
       { label: '报表披露完成量', value: '640', unit: '笔' },
       { label: '报表披露及时率', value: '91.00%', unit: '' },
@@ -391,8 +367,6 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '应预成册量', value: '1,000', unit: '笔' },
       { label: '预成册完成率', value: '92%', unit: '' },
     ],
-    cols: 1,
-    variant: 'block',
     cards: [
       { label: '应预成册量', value: '1,000', unit: '笔' },
       { label: '待预成册单报总量', value: '80', unit: '笔' },
@@ -407,8 +381,6 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '应正式成册量', value: '3,000', unit: '笔' },
       { label: '正式成册完成率', value: '90%', unit: '' },
     ],
-    cols: 1,
-    variant: 'block',
     cards: [
       { label: '正式成册完成量', value: '2,700', unit: '笔' },
       { label: '应正式成册量', value: '3,000', unit: '笔' },
@@ -423,8 +395,6 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '应装订档案量', value: '3,400', unit: '笔' },
       { label: '档案装订完成率', value: '91%', unit: '' },
     ],
-    cols: 1,
-    variant: 'block',
     cards: [
       { label: '档案装订完成量', value: '3,100', unit: '笔' },
       { label: '应装订档案量', value: '3,400', unit: '笔' },
@@ -439,8 +409,6 @@ export const PROCESS_NODES: ProcessNode[] = [
       { label: '待正式归档量', value: '3,100', unit: '笔' },
       { label: '正式归档完成率', value: '90%', unit: '' },
     ],
-    cols: 1,
-    variant: 'block',
     cards: [{ label: '待正式归档量', value: '3,100', unit: '笔' }],
     ...NONE,
   },

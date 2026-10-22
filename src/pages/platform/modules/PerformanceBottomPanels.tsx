@@ -91,26 +91,26 @@ export function ServiceEnterprisePanel({ className = '' }: { className?: string 
 export function SatisfactionPanel({ className = '' }: { className?: string }) {
   return (
     <PanelBox title="服务满意度情况" className={`flex flex-col ${className}`}>
-      <div className="flex h-full flex-col justify-around px-4 py-2">
+      <div className="flex h-full flex-col justify-between px-4 py-3">
         {PERF_SATISFACTION.map((item) => (
-          <div key={item.label} className="flex flex-col items-center gap-1">
+          <div key={item.label} className="flex flex-col items-center gap-2">
             <LabelBand>{item.label}</LabelBand>
-            <div className="flex items-center gap-3">
-              <span className="relative flex h-[46px] w-[46px] items-center justify-center">
+            <div className="flex items-center gap-5">
+              <span className="relative flex h-[68px] w-[68px] items-center justify-center">
                 <span
-                  className="absolute inset-0 rounded-[8px]"
+                  className="absolute inset-0 rounded-[10px]"
                   style={{
                     background: `color-mix(in srgb, var(--ck-${item.tone}) 14%, transparent)`,
                     border: `1px solid color-mix(in srgb, var(--ck-${item.tone}) 38%, transparent)`,
                   }}
                 />
                 <i
-                  className={`${item.icon} relative text-[26px]`}
+                  className={`${item.icon} relative text-[34px]`}
                   style={{ color: `var(--ck-${item.tone})` }}
                   aria-hidden
                 />
               </span>
-              <Pedestal value={item.value} tone={item.tone} size="sm" />
+              <Pedestal value={item.value} tone={item.tone} size="md" />
             </div>
           </div>
         ))}

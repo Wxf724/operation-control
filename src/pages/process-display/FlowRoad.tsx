@@ -28,11 +28,18 @@ const CY_LEFT = (ROW_Y[1] + ROW_Y[2]) / 2
 const R_RIGHT = (ROW_Y[1] - ROW_Y[0]) / 2
 const R_LEFT = (ROW_Y[2] - ROW_Y[1]) / 2
 
-/** 路面配色：目标稿以绿色为主，黄色只有 05/06/12/17，红色只有 11 共享复审 */
+/**
+ * 路面配色：目标稿以绿色为主，黄色只有 05/06/12/17，红色只有 11 共享复审。
+ *
+ * 目标稿是深色底，用的是低明度高饱和的墨绿／土黄／暗红；同一组色直接放到
+ * 浅蓝白底上会发脏发闷。这里保留三档语义色相，但按浅底重新调：
+ * 路面提亮到主题的绿／黄／红一档（`--cl-green` / `--cl-yellow` / `--cl-red` 附近），
+ * 描边取同色深一档当轮廓——白底上靠深色细边收口，比亮边更干净。
+ */
 const ROAD: Record<NodeTone, { fill: string; edge: string }> = {
-  green: { fill: '#267d6a', edge: '#59e1a1' },
-  yellow: { fill: '#b5931c', edge: '#e1d33f' },
-  red: { fill: '#a24b5c', edge: '#d8868f' },
+  green: { fill: '#3fb98a', edge: '#2a8f69' },
+  yellow: { fill: '#edb133', edge: '#c58b14' },
+  red: { fill: '#ef6b7b', edge: '#cb4257' },
 }
 
 /**
@@ -50,9 +57,9 @@ const TEXT_TONE: Record<NodeTone, string> = {
 /**
  * 路面中心线。
  *
- * 路面本身保留目标稿的绿／金／暗红饱和色块（语义配色，浅色主题下不动），
- * 中心线仍得是白色才有对比；浅色主题下把不透明度从 0.88 提到 1，
- * 免得淡化后的虚线在金色路段上糊成一片。
+ * 路面提亮适配白底后，中心线继续用纯白（`--ck-on-solid`）——白线压在
+ * 绿／琥珀／珊瑚三档路面上都还有足够反差，而且是最贴近真实路面标线的画法；
+ * 改成淡蓝或半透明白反而会在琥珀路段上糊掉。
  */
 const DASH = { stroke: 'var(--ck-on-solid)', strokeWidth: 3.5, strokeDasharray: '26 24' }
 
@@ -164,6 +171,7 @@ const LABELS: LabelSpec[] = [
   { id: 5, panel: 0, align: 'left', x: 708, width: 171 },
   { id: 6, panel: 0, align: 'left', x: 879, width: 163 },
   { id: 7, panel: 0, align: 'left', x: 1042, width: 175 },
+  { id: 8, panel: 0, align: 'left', x: 1223, width: 181, top: 180 },
   { id: 9, panel: 1, align: 'left', x: 1236, width: 181, top: 50 },
   { id: 10, panel: 1, align: 'left', x: 1013, width: 175 },
   { id: 11, panel: 1, align: 'left', x: 844, width: 169 },
@@ -180,9 +188,6 @@ const LABELS: LabelSpec[] = [
   { id: 22, panel: 2, align: 'left', x: 1029, width: 194 },
   { id: 23, panel: 2, align: 'left', x: 1223, width: 168 },
 ]
-
-/** 08 档案对比：挂在第 1 段末端弯道右侧的高亮小卡 */
-const CARD_8 = { x: 1223, y: 174, w: 175, h: 115 }
 
 /* ───────────────────────── 组件 ───────────────────────── */
 
@@ -303,9 +308,6 @@ export function FlowRoad({
             />
           )
         })}
-
-        {/* 08 档案对比小卡 */}
-        <ArchiveCard node={PROCESS_NODE_MAP.get(8)} selected={selected === 8} onSelect={onSelect} />
       </div>
     </div>
   )
@@ -315,12 +317,9 @@ export function FlowRoad({
 function MetricRows({
   node,
   align,
-  valueColor,
 }: {
   node: ProcessNode
   align: LabelAlign
-  /** 覆盖数值色（08 档案对比小卡用青色） */
-  valueColor?: string
 }) {
   return (
     <>
@@ -335,7 +334,7 @@ function MetricRows({
           <span className="text-[14px] text-(--ck-title-sub)">{f.label}</span>
           <span
             className="text-[24px] leading-none font-bold"
-            style={{ color: valueColor ?? TEXT_TONE[node.tone] }}
+            style={{ color: TEXT_TONE[node.tone] }}
           >
             {f.value}
           </span>
@@ -412,39 +411,3 @@ function NodeLabel({
   )
 }
 
-/** 08 档案对比：弯道右侧的高亮小卡 */
-function ArchiveCard({
-  node,
-  selected,
-  onSelect,
-}: {
-  node?: ProcessNode
-  selected: boolean
-  onSelect: (id: number) => void
-}) {
-  if (!node) return null
-  return (
-    <button
-      type="button"
-      onClick={() => onSelect(node.id)}
-      className="absolute cursor-pointer rounded-[4px] border-[1.5px] text-left"
-      style={{
-        left: CARD_8.x,
-        top: CARD_8.y,
-        width: CARD_8.w,
-        height: CARD_8.h,
-        paddingLeft: 10,
-        borderColor: selected ? 'var(--ck-cyan)' : 'var(--ck-card-border)',
-        background: 'linear-gradient(180deg, var(--ck-card-from) 0%, var(--ck-card-to) 100%)',
-        boxShadow: selected ? '0 6px 18px rgba(42, 102, 232, 0.22)' : 'var(--ck-card-shadow)',
-      }}
-    >
-      <span className="mt-[9px] block text-[22px] leading-[26px] font-bold whitespace-nowrap text-(--ck-cyan)">
-        08 {node.name}
-      </span>
-      <span className="mt-[14px] flex flex-col">
-        <MetricRows node={node} align="left" valueColor="var(--ck-cyan)" />
-      </span>
-    </button>
-  )
-}

@@ -13,23 +13,28 @@ import {
   RULE_COVERAGE_ROWS,
   RULE_COVERAGE_STATS,
   RULE_HIT_EFFECT,
-  RULE_ITERATION,
   RULE_SCENE_COVERAGE,
   RULE_ZERO_TRIGGER,
 } from './ruleData'
-import type { RuleIterationItem, RuleSceneRow, RuleStatCard, RuleTrendPoint } from './ruleData'
+import type { RuleSceneRow, RuleStatCard, RuleTrendPoint } from './ruleData'
+import { IterationPanel, RingArc } from './ruleIterationWidgets'
 
 /** 规则管理平台的中间业务区（对应 `_refs/live/13-规则管理平台.png`） */
 export function RulePlatformContent() {
   return (
-    <div className="flex min-h-0 flex-1 gap-2.5">
-      <div className="flex w-[772px] shrink-0 flex-col gap-2.5">
+    <div className="flex min-h-0 flex-1 gap-3">
+      <div className="flex w-[772px] shrink-0 flex-col gap-3">
         <CoveragePanel className="h-[445px] shrink-0" />
         <HitEffectPanel className="min-h-0 flex-1" />
       </div>
 
-      <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-2.5">
-        <CallPanel className="h-[445px] shrink-0" />
+      {/*
+        右栏上下按权重分配而非定高：原先两块各 445px 定高，「规则迭代优化管理」
+        内容只有 226px、底部空出约 90px，而「规则调用情况」被挤满。
+        1.28 : 1 让上块多拿约 100px，下块缩到刚好被卡片撑满。
+      */}
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3">
+        <CallPanel className="min-h-0 flex-[1.28]" />
         <IterationPanel className="min-h-0 flex-1" />
       </div>
     </div>
@@ -82,11 +87,11 @@ function CoveragePanel({ className = '' }: { className?: string }) {
 function CallPanel({ className = '' }: { className?: string }) {
   return (
     <PanelBox title="规则调用情况" className={`flex flex-col ${className}`}>
-      <div className="flex h-full gap-3 px-3 pt-2.5 pb-3">
-        <div className="flex min-w-0 flex-1 flex-col gap-2.5">
-          <div className="grid shrink-0 grid-cols-2 gap-2.5">
+      <div className="flex h-full gap-4 px-3.5 pt-3 pb-3.5">
+        <div className="flex min-w-0 flex-1 flex-col gap-3">
+          <div className="grid shrink-0 grid-cols-2 gap-3">
             {RULE_CALL_STATS.map((stat) => (
-              <StatCard key={stat.label} stat={stat} compact />
+              <StatCard key={stat.label} stat={stat} />
             ))}
           </div>
 
@@ -99,7 +104,7 @@ function CallPanel({ className = '' }: { className?: string }) {
           />
         </div>
 
-        <div className="flex w-[262px] shrink-0 flex-col items-center gap-2">
+        <div className="flex w-[274px] shrink-0 flex-col items-center gap-2.5">
           <ZeroTriggerRing />
 
           <span className="text-center text-[14px] leading-none text-(--ck-title-sub)">
@@ -110,16 +115,16 @@ function CallPanel({ className = '' }: { className?: string }) {
             数量（个）
           </span>
 
-          <div className="flex w-full min-h-0 flex-1 flex-col justify-start gap-2">
+          <div className="flex w-full min-h-0 flex-1 flex-col justify-between gap-2.5">
             {RULE_ZERO_TRIGGER.scenes.map((scene) => (
               <div
                 key={scene.label}
-                className="ck-card flex items-center justify-between rounded-[3px] px-3 py-2.5"
+                className="ck-card flex min-h-0 flex-1 items-center justify-between rounded-[3px] px-3.5 py-3"
               >
                 <span className="truncate text-[13px] leading-none text-(--foreground)">
                   {scene.label}
                 </span>
-                <span className="text-[17px] leading-none font-bold text-(--ck-cyan) tabular-nums">
+                <span className="text-[19px] leading-none font-bold text-(--ck-cyan) tabular-nums">
                   {scene.value}
                 </span>
               </div>
@@ -133,7 +138,7 @@ function CallPanel({ className = '' }: { className?: string }) {
 
 /** 半年内零触发规则数：蓝→青渐变半环 */
 function ZeroTriggerRing() {
-  const size = 112
+  const size = 128
   const half = size / 2
   // 中文标签经 `\W` 正则会被抹空导致 id 撞车，统一交给 useId
   const gradId = `ruleZeroRing${useId().replace(/:/g, '')}`
@@ -147,10 +152,10 @@ function ZeroTriggerRing() {
             <stop offset="100%" style={{ stopColor: 'var(--ck-cyan)' }} />
           </linearGradient>
         </defs>
-        <circle cx={half} cy={half} r={52} fill="none" stroke="var(--ck-card-border)" />
-        <RingArc c={half} r={44} w={13} stroke={`url(#${gradId})`} pct={RULE_ZERO_TRIGGER.ratio} />
+        <circle cx={half} cy={half} r={60} fill="none" stroke="var(--ck-card-border)" />
+        <RingArc c={half} r={51} w={15} stroke={`url(#${gradId})`} pct={RULE_ZERO_TRIGGER.ratio} />
       </svg>
-      <span className="ck-glow-num absolute inset-0 flex items-center justify-center text-[28px] leading-none font-bold text-(--foreground)">
+      <span className="ck-glow-num absolute inset-0 flex items-center justify-center text-[32px] leading-none font-bold text-(--foreground)">
         {RULE_ZERO_TRIGGER.value}
       </span>
     </div>
@@ -313,96 +318,11 @@ function buildTrendOption(c: Record<ChartVarName, string>, cfg: TrendOptionConfi
   }
 }
 
-/* ───────────── 右下 · 规则迭代优化管理 ───────────── */
-
-function IterationPanel({ className = '' }: { className?: string }) {
-  return (
-    <PanelBox title="规则迭代优化管理" className={`flex flex-col ${className}`}>
-      <div className="grid h-full grid-cols-3 items-center gap-2 px-3 pt-1 pb-3">
-        {RULE_ITERATION.map((item) => (
-          <IterationItem key={item.title} item={item} />
-        ))}
-      </div>
-    </PanelBox>
-  )
-}
-
-function IterationItem({ item }: { item: RuleIterationItem }) {
-  return (
-    <div className="flex flex-col items-center gap-3">
-      <span className="text-center text-[14px] leading-none font-semibold text-(--ck-title-sub)">
-        {item.title}
-      </span>
-
-      <DualRing total={item.total} smart={item.smart} manual={item.manual} />
-
-      <div className="flex flex-col gap-2">
-        <LegendRow color={BLUE} label="智能审核规则" value={item.smart} />
-        <LegendRow color={GREEN} label="人工审核规则" value={item.manual} />
-      </div>
-    </div>
-  )
-}
-
-/** 双层环：外环为智能审核规则占比，内环为人工审核规则占比 */
-function DualRing({ total, smart, manual }: { total: string; smart: number; manual: number }) {
-  const sum = smart + manual || 1
-  const size = 142
-  const c = size / 2
-
-  return (
-    <div className="relative shrink-0" style={{ width: size, height: size }}>
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        <RingArc c={c} r={60} w={10} stroke={BLUE} pct={(smart * 100) / sum} />
-        <RingArc c={c} r={47} w={9} stroke={GREEN} pct={(manual * 100) / sum} />
-      </svg>
-      <span className="ck-glow-num absolute inset-0 flex items-center justify-center text-[38px] leading-none font-bold text-(--foreground)">
-        {total}
-      </span>
-    </div>
-  )
-}
-
-/** 从 12 点方向顺时针绘制的单段圆弧，含底色轨道。c=圆心坐标，w=线宽，pct=填充 0–100 */
-function RingArc({ c, r, w, stroke, pct }: RingArcProps) {
-  const circ = 2 * Math.PI * r
-
-  return (
-    <>
-      <circle cx={c} cy={c} r={r} fill="none" stroke="var(--ck-track)" strokeWidth={w} />
-      <circle
-        cx={c}
-        cy={c}
-        r={r}
-        fill="none"
-        stroke={stroke}
-        strokeWidth={w}
-        strokeDasharray={`${(circ * pct) / 100} ${circ}`}
-        transform={`rotate(-90 ${c} ${c})`}
-        strokeLinecap="round"
-      />
-    </>
-  )
-}
-
-function LegendRow({ color, label, value }: { color: string; label: string; value: number }) {
-  return (
-    <span className="flex items-center gap-2 whitespace-nowrap">
-      <i className="h-[7px] w-[7px] shrink-0 rounded-full" style={{ background: color }} />
-      <span className="text-[13px] leading-none text-(--foreground)">{label}</span>
-      <span className="text-[19px] leading-none font-bold tabular-nums" style={{ color }}>
-        {value}
-      </span>
-      <span className="text-[12px] leading-none text-(--text-tertiary)">次</span>
-    </span>
-  )
-}
-
 /** 左侧带发光底座图标的数字卡 */
-function StatCard({ stat, compact = false }: { stat: RuleStatCard; compact?: boolean }) {
+function StatCard({ stat }: { stat: RuleStatCard }) {
   return (
     <div
-      className={`flex items-center gap-2.5 rounded-[10px] border border-(--ck-card-border) ${compact ? 'px-2.5 py-2' : 'px-3 py-2.5'}`}
+      className="flex items-center gap-2.5 rounded-[10px] border border-(--ck-card-border) px-3 py-2.5"
       style={{
         background: 'linear-gradient(180deg, var(--ck-card-from) 0%, var(--ck-card-to) 100%)',
         boxShadow: 'var(--ck-card-shadow)',
@@ -481,15 +401,6 @@ function DataTable({ columns, rows, cols, accent, className = '' }: DataTablePro
 
 const TEXT_CELL = 'text-[13px] leading-snug'
 const BLUE = 'var(--ck-blue)'
-const GREEN = 'var(--ck-green)'
-
-interface RingArcProps {
-  c: number
-  r: number
-  w: number
-  stroke: string
-  pct: number
-}
 
 interface DataTableProps {
   columns: readonly string[]

@@ -22,15 +22,13 @@ const HEADER_H = 92
 const PAD_BOTTOM = 80
 const RIGHT_W = 604
 
-const PERIOD = '2026-09-01 至 2026-09-21'
-
 /**
  * 全业务流程展示。
  *
  * 入口：作业管理平台「作业处理整体情况」右上角的「全业务流程」按钮。
  * 版面复刻线上 FineBI 同页：左侧三个环节面板里串着一条 U 型折返跑道
- * （23 个业务节点 + 4 个环节标注），右侧展示所选节点的指标卡与
- * 「现状问题 / 解决方案 / 催办状态」。默认选中 08 档案对比。
+ * （23 个业务节点 + 4 个环节标注），右侧按统一清单形态展示所选节点的指标，
+ * 下方是「现状问题 / 解决方案 / 催办状态」。默认选中 08 档案对比。
  */
 export function ProcessDisplayPage() {
   const navigate = useNavigate()
@@ -46,12 +44,6 @@ export function ProcessDisplayPage() {
             title={<span className="text-[40px] leading-none">全业务流程展示</span>}
             height={HEADER_H}
             left={<BackToJobButton onClick={() => navigate('/platform/job')} />}
-            right={
-              <span className="flex items-center gap-2 rounded-[3px] border border-(--border) bg-(--ck-panel-inner) px-3 py-[7px] text-[13px] leading-none text-(--text-secondary)">
-                <i className="ri-calendar-line text-[14px] text-(--ck-cyan)" aria-hidden />
-                {PERIOD}
-              </span>
-            }
           />
 
           <div

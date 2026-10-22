@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import {
@@ -25,6 +26,7 @@ import { getPlatformMeta } from './registry'
 export function PlatformPage() {
   const navigate = useNavigate()
   const { moduleKey } = useParams<{ moduleKey: string }>()
+  const [currentOrg, setCurrentOrg] = useState<string>(ORG_OPTIONS[2])
 
   const meta = getPlatformMeta(moduleKey)
   const kpis = moduleKey ? MODULE_METRICS[moduleKey] : undefined
@@ -53,6 +55,8 @@ export function PlatformPage() {
                   units={['日', '月', '年']}
                   defaultUnit="月"
                   orgs={ORG_OPTIONS}
+                  defaultOrg={currentOrg}
+                  onOrgChange={setCurrentOrg}
                 />
               </>
             }
@@ -64,7 +68,7 @@ export function PlatformPage() {
             <div className="flex min-h-0 flex-1 gap-3">
               {/* 中间业务区：各模块不同 */}
               {Content ? (
-                <Content />
+                <Content org={currentOrg} />
               ) : (
                 <PlaceholderPanel
                   title={meta.title}

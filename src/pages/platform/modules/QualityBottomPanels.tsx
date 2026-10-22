@@ -21,13 +21,13 @@ import { DonutStat } from './qualityWidgets'
 export function BusinessQualityPanel({ className = '' }: { className?: string }) {
   return (
     <PanelBox title="业务质量与差错情况" className={`flex flex-col ${className}`}>
-      <div className="flex h-full gap-3 px-3.5 pt-1.5 pb-3">
+      <div className="flex h-full gap-3.5 px-4 pt-2 pb-3.5">
         <div className="flex w-[300px] shrink-0 flex-col">
           <SectionTitle className="mb-1">业务处理质量情况</SectionTitle>
 
           <div className="flex flex-1 flex-col items-center justify-center gap-1.5">
             <DonutStat
-              size={116}
+              size={132}
               thickness={13}
               halo
               centerFill="var(--ck-blue)"
@@ -71,7 +71,7 @@ export function BusinessQualityPanel({ className = '' }: { className?: string })
 
           <div className="flex shrink-0 flex-col items-center justify-center gap-1.5 py-1">
             <DonutStat
-              size={116}
+              size={120}
               thickness={11}
               trackColor="var(--ck-track)"
               segments={[{ value: QUALITY_ERROR.ratio, color: 'var(--ck-green)' }]}
@@ -89,7 +89,7 @@ export function BusinessQualityPanel({ className = '' }: { className?: string })
             {QUALITY_ERROR.items.map((item) => (
               <div
                 key={item.label}
-                className="flex items-center gap-2 border-b border-(--border-light) px-2 py-[7px] last:border-b-0"
+                className="flex items-center gap-2 border-b border-(--border-light) px-2 py-[6px] last:border-b-0"
                 style={
                   item.active
                     ? { background: 'color-mix(in srgb, var(--ck-blue) 20%, transparent)' }
@@ -138,8 +138,8 @@ export function AppealPanel({ className = '' }: { className?: string }) {
 
   return (
     <PanelBox title="申诉与争议管理情况" className={`flex flex-col ${className}`}>
-      <div className="flex h-full flex-col px-3 pt-1 pb-2.5">
-        <div className="h-[186px] shrink-0">
+      <div className="flex h-full flex-col px-3.5 pt-1.5 pb-3">
+        <div className="min-h-0 flex-[1.26]">
           <ReactECharts
             option={option}
             style={{ height: '100%', width: '100%' }}
@@ -162,7 +162,7 @@ export function AppealPanel({ className = '' }: { className?: string }) {
 
         <div className="mt-2 flex min-h-0 flex-1 items-center gap-3">
           <DonutStat
-            size={104}
+            size={116}
             thickness={14}
             trackColor="var(--ck-track)"
             innerFill="var(--ck-panel-bg-strong)"
@@ -321,7 +321,7 @@ function buildAppealOption(c: Record<ChartVarName, string>) {
 export function RectifyPanel({ className = '' }: { className?: string }) {
   return (
     <PanelBox title="整改与规则转化情况" className={`flex flex-col ${className}`}>
-      <div className="flex h-full flex-col px-3.5 pt-2 pb-3">
+      <div className="flex h-full flex-col px-4 pt-2.5 pb-3.5">
         <div className="flex flex-1 items-center gap-2">
           <div className="flex min-w-0 flex-1 flex-col gap-3">
             {QUALITY_RECTIFY.stats.map((stat) => (

@@ -38,11 +38,15 @@ import {
  */
 export function ArchivePlatformContent() {
   return (
-    <div className="flex min-h-0 min-w-0 flex-1 gap-2.5">
-      <div className="flex w-[716px] shrink-0 flex-col gap-2.5">
-        <CollectPanel className="h-[300px] shrink-0" />
-        <BorrowPanel className="h-[276px] shrink-0" />
-        <StoragePanel className="min-h-0 flex-1" />
+    <div className="flex min-h-0 min-w-0 flex-1 gap-3.5">
+      {/*
+        左栏三块按权重分配高度，不再写死 `h-[NNNpx]`：
+        业务区高度一变（KPI 条换行、画布比例微调）固定高就会在底部留白。
+      */}
+      <div className="flex w-[716px] shrink-0 flex-col gap-3.5">
+        <CollectPanel className="min-h-0 flex-[1.1]" />
+        <BorrowPanel className="min-h-0 flex-[1.08]" />
+        <StoragePanel className="min-h-0 flex-[0.92]" />
       </div>
 
       <OperationPanel className="min-h-0 min-w-0 flex-1" />
@@ -66,10 +70,10 @@ function Group({
 }) {
   return (
     <section className={`flex min-h-0 min-w-0 flex-col ${className}`}>
-      <SectionTitle className="h-[18px] shrink-0" extra={extra}>
+      <SectionTitle className="h-[20px] shrink-0" extra={extra}>
         {title}
       </SectionTitle>
-      <div className={`flex min-h-0 min-w-0 flex-1 pt-2 ${bodyClassName}`}>{children}</div>
+      <div className={`flex min-h-0 min-w-0 flex-1 pt-2.5 ${bodyClassName}`}>{children}</div>
     </section>
   )
 }
@@ -84,13 +88,13 @@ function CollectPanel({ className = '' }: { className?: string }) {
     <PanelBox
       title={<span className="italic">档案收集情况</span>}
       className={`flex flex-col ${className}`}
-      bodyClassName="flex min-h-0 flex-1 gap-2.5 px-3.5 pt-2 pb-3"
+      bodyClassName="flex min-h-0 flex-1 gap-3 px-4 pt-2.5 pb-3.5"
     >
-      <Card className="min-w-0 flex-1" bodyClassName="flex-col px-1.5 pt-2 pb-1.5">
+      <Card className="min-w-0 flex-1" bodyClassName="flex-col px-2 pt-2.5 pb-2">
         <Chart option={option} />
       </Card>
 
-      <div className="flex w-[236px] shrink-0 flex-col justify-center gap-3">
+      <div className="flex w-[250px] shrink-0 flex-col justify-center gap-3.5">
         {ARCHIVE_COLLECT_CARDS.map((item) => (
           <StatRow
             key={item.label}
@@ -113,19 +117,19 @@ function BorrowPanel({ className = '' }: { className?: string }) {
     <PanelBox
       title={<span className="italic">档案借阅情况</span>}
       className={`flex flex-col ${className}`}
-      bodyClassName="flex min-h-0 flex-1 gap-3 px-3.5 pt-1.5 pb-3"
+      bodyClassName="flex min-h-0 flex-1 gap-3.5 px-4 pt-2 pb-3.5"
     >
       <Group
         title="档案借阅情况"
-        className="w-[244px] shrink-0"
-        bodyClassName="items-center justify-around gap-1"
+        className="w-[236px] shrink-0"
+        bodyClassName="items-center justify-around gap-1.5"
       >
         <PedestalStat
           value={ARCHIVE_BORROW.lent.value}
           unit={ARCHIVE_BORROW.lent.unit}
           label={ARCHIVE_BORROW.lent.label}
         />
-        <Ring ring={ARCHIVE_BORROW.response} size={82} stroke={9} labelWidth={96} />
+        <Ring ring={ARCHIVE_BORROW.response} size={122} stroke={13} labelWidth={120} />
       </Group>
 
       <span className="w-px shrink-0 self-stretch bg-(--ck-card-border)" />
@@ -133,7 +137,7 @@ function BorrowPanel({ className = '' }: { className?: string }) {
       <Group
         title="档案归还情况"
         className="min-w-0 flex-1"
-        bodyClassName="items-center justify-between gap-2"
+        bodyClassName="items-center justify-between gap-1.5"
       >
         <div className="flex shrink-0 flex-col gap-4">
           {ARCHIVE_BORROW.legends.map((item) => (
@@ -142,7 +146,7 @@ function BorrowPanel({ className = '' }: { className?: string }) {
         </div>
 
         {ARCHIVE_BORROW.rings.map((ring) => (
-          <Ring key={ring.label} ring={ring} size={108} stroke={12} labelWidth={112} />
+          <Ring key={ring.label} ring={ring} size={134} stroke={15} labelWidth={132} />
         ))}
       </Group>
     </PanelBox>
@@ -158,22 +162,22 @@ function StoragePanel({ className = '' }: { className?: string }) {
     <PanelBox
       title={<span className="italic">档案库房情况</span>}
       className={`flex flex-col ${className}`}
-      bodyClassName="flex min-h-0 flex-1 items-center gap-2 px-3.5 pt-1 pb-3"
+      bodyClassName="flex min-h-0 flex-1 items-center gap-3 px-4 pt-2 pb-3"
     >
-      <div className="flex w-[168px] shrink-0 flex-col items-center gap-2.5">
-        <PedestalIcon icon={stored.icon} tone="blue" size={54} />
-        <span className="text-[13px] leading-none text-(--text-secondary)">{stored.label}</span>
+      <div className="flex w-[186px] shrink-0 flex-col items-center gap-3.5">
+        <PedestalIcon icon={stored.icon} tone="blue" size={70} />
+        <span className="text-[15px] leading-none text-(--text-secondary)">{stored.label}</span>
         <span className="flex items-baseline gap-0.5">
-          <span className="ck-glow-num text-[28px] leading-none font-bold text-(--ck-cyan)">
+          <span className="ck-glow-num text-[34px] leading-none font-bold text-(--ck-cyan)">
             {stored.value}
           </span>
-          <span className="text-[12px] leading-none text-(--text-tertiary)">{stored.unit}</span>
+          <span className="text-[14px] leading-none text-(--text-tertiary)">{stored.unit}</span>
         </span>
       </div>
 
       {rings.map((ring) => (
         <div key={ring.label} className="flex min-w-0 flex-1 justify-center">
-          <Ring ring={ring} size={108} stroke={12} labelWidth={148} />
+          <Ring ring={ring} size={152} stroke={16} labelWidth={162} />
         </div>
       ))}
     </PanelBox>
@@ -192,13 +196,13 @@ function OperationPanel({ className = '' }: { className?: string }) {
     <PanelBox
       title={<span className="italic">档案作业情况</span>}
       className={`flex flex-col ${className}`}
-      bodyClassName="flex min-h-0 flex-1 flex-col gap-3 px-4 pt-2 pb-3"
+      bodyClassName="flex min-h-0 flex-1 flex-col gap-3.5 px-4 pt-2.5 pb-3.5"
     >
       {/* ── 单据签收情况 ── */}
-      <Group title="单据签收情况" className="h-[170px] shrink-0" bodyClassName="items-center gap-3">
-        <Ring ring={ARCHIVE_RECEIPT.total} size={118} stroke={13} labelWidth={130} />
+      <Group title="单据签收情况" className="min-h-0 flex-[1.42]" bodyClassName="items-center gap-3.5">
+        <Ring ring={ARCHIVE_RECEIPT.total} size={140} stroke={15} labelWidth={142} />
 
-        <div className="flex min-w-0 max-w-[430px] flex-1 flex-col justify-center gap-3">
+        <div className="flex min-w-0 max-w-[452px] flex-1 flex-col justify-center gap-3.5">
           {ARCHIVE_RECEIPT.breakdown.map((item) => (
             <StatRow
               key={item.label}
@@ -212,21 +216,21 @@ function OperationPanel({ className = '' }: { className?: string }) {
           ))}
         </div>
 
-        <i className="ri-arrow-right-line shrink-0 text-[22px] text-(--ck-blue)" aria-hidden />
+        <i className="ri-arrow-right-line shrink-0 text-[26px] text-(--ck-blue)" aria-hidden />
 
-        <Card className="w-[196px] shrink-0" bodyClassName="flex-col items-center gap-2 px-3 py-3">
-          <span className="flex items-center gap-1.5 text-[13px] leading-none text-(--text-secondary)">
+        <Card className="w-[212px] shrink-0" bodyClassName="flex-col items-center justify-center gap-2.5 px-3 py-3.5">
+          <span className="flex items-center gap-1.5 text-[14px] leading-none text-(--text-secondary)">
             <i
-              className={`${ARCHIVE_RECEIPT.machine.icon} text-[15px] text-(--ck-blue)`}
+              className={`${ARCHIVE_RECEIPT.machine.icon} text-[17px] text-(--ck-blue)`}
               aria-hidden
             />
             {ARCHIVE_RECEIPT.machine.label}
           </span>
           <span className="flex items-baseline gap-0.5">
-            <span className="ck-glow-num text-[26px] leading-none font-bold text-(--ck-cyan)">
+            <span className="ck-glow-num text-[30px] leading-none font-bold text-(--ck-cyan)">
               {ARCHIVE_RECEIPT.machine.value}
             </span>
-            <span className="text-[12px] leading-none text-(--text-tertiary)">
+            <span className="text-[13px] leading-none text-(--text-tertiary)">
               {ARCHIVE_RECEIPT.machine.unit}
             </span>
           </span>
@@ -234,22 +238,22 @@ function OperationPanel({ className = '' }: { className?: string }) {
       </Group>
 
       {/* ── 单据代打印情况 ── */}
-      <Group title="单据代打印情况" className="h-[104px] shrink-0">
-        <Card className="min-w-0 flex-1" bodyClassName="items-center justify-center gap-4 px-4">
+      <Group title="单据代打印情况" className="min-h-0 flex-[0.74]">
+        <Card className="min-w-0 flex-1" bodyClassName="items-center justify-center gap-5 px-4">
           <Ring
             ring={{ label: '', ratio: ARCHIVE_PRINT.ratio, text: '', tone: 'cyan' }}
-            size={46}
-            stroke={6}
+            size={54}
+            stroke={7}
             icon="ri-printer-line"
           />
-          <span className="text-[14px] leading-none text-(--text-secondary)">
+          <span className="text-[15px] leading-none text-(--text-secondary)">
             {ARCHIVE_PRINT.label}
           </span>
           <span className="flex items-baseline gap-0.5">
-            <span className="ck-glow-num text-[28px] leading-none font-bold text-(--ck-cyan)">
+            <span className="ck-glow-num text-[32px] leading-none font-bold text-(--ck-cyan)">
               {ARCHIVE_PRINT.value}
             </span>
-            <span className="text-[12px] leading-none text-(--text-tertiary)">
+            <span className="text-[13px] leading-none text-(--text-tertiary)">
               {ARCHIVE_PRINT.unit}
             </span>
           </span>
@@ -257,26 +261,26 @@ function OperationPanel({ className = '' }: { className?: string }) {
       </Group>
 
       {/* ── 纸电比对情况 ── */}
-      <Group title="纸电比对情况" className="h-[122px] shrink-0" bodyClassName="gap-2.5">
+      <Group title="纸电比对情况" className="min-h-0 flex-[1.08]" bodyClassName="gap-3">
         {ARCHIVE_PAPER_COMPARE.map((item) => (
           <Card
             key={item.label}
             className="min-w-0 flex-1"
-            bodyClassName="items-center gap-2.5 px-3"
+            bodyClassName="items-center gap-3 px-3.5"
           >
-            <PedestalIcon icon={item.icon} tone={item.tone} size={40} />
-            <span className="flex min-w-0 flex-col gap-2">
-              <span className="truncate text-[12px] leading-none text-(--text-secondary)">
+            <PedestalIcon icon={item.icon} tone={item.tone} size={46} />
+            <span className="flex min-w-0 flex-col gap-2.5">
+              <span className="truncate text-[13px] leading-none text-(--text-secondary)">
                 {item.label}
               </span>
               <span className="flex items-baseline gap-0.5">
                 <span
-                  className="ck-glow-num text-[24px] leading-none font-bold"
+                  className="ck-glow-num text-[27px] leading-none font-bold"
                   style={{ color: toneSolid(item.tone) }}
                 >
                   {item.value}
                 </span>
-                <span className="text-[12px] leading-none text-(--text-tertiary)">{item.unit}</span>
+                <span className="text-[13px] leading-none text-(--text-tertiary)">{item.unit}</span>
               </span>
             </span>
           </Card>
@@ -286,10 +290,10 @@ function OperationPanel({ className = '' }: { className?: string }) {
       {/* ── 问题档案处理情况 ── */}
       <Group
         title="问题档案处理情况"
-        className="min-h-0 flex-1"
+        className="min-h-0 flex-[2.5]"
         extra={<TabGroup tabs={ARCHIVE_PROBLEM_TABS} active={tab} onChange={setTab} />}
       >
-        <Card className="min-w-0 flex-1" bodyClassName="flex-col px-1.5 pt-2 pb-1.5">
+        <Card className="min-w-0 flex-1" bodyClassName="flex-col px-2 pt-2.5 pb-2">
           <Chart option={option} />
         </Card>
       </Group>

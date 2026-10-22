@@ -1,5 +1,3 @@
-import { useNavigate } from 'react-router-dom'
-
 import { PanelBox } from '@/components/cockpit-ui'
 
 import { COMPARE_COLUMNS, COMPARE_ROWS, IMPACT_ROWS, RISK_TIP } from '../constants'
@@ -20,8 +18,6 @@ const LABEL_COL = '243px'
 
 /** 第四列：调整影响确认 */
 export function ImpactConfirmPanel({ className = '' }: { className?: string }) {
-  const navigate = useNavigate()
-
   return (
     <PanelBox title="调整影响确认" className={`flex flex-col ${className}`}>
       <div className="flex h-full flex-col px-[29px] pt-[35px] pb-[30px]">
@@ -37,11 +33,6 @@ export function ImpactConfirmPanel({ className = '' }: { className?: string }) {
 
         <div className="mt-[30px] flex shrink-0 items-center justify-end gap-[15px]">
           <ActionButton icon="ri-checkbox-circle-line" label="确认调整" primary />
-          <ActionButton
-            icon="ri-inbox-unarchive-line"
-            label="返回任务池"
-            onClick={() => navigate('/')}
-          />
         </div>
       </div>
     </PanelBox>

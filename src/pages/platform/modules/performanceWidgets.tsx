@@ -23,9 +23,9 @@ export function CountCard({ label, value, unit }: { label: string; value: string
         border: '1px solid var(--ck-panel-inner-border)',
       }}
     >
-      <span className="truncate text-[13px] leading-none text-(--ck-title-sub)">{label}</span>
+      <span className="truncate text-[14px] leading-none text-(--ck-title-sub)">{label}</span>
       <span className="flex items-baseline gap-0.5">
-        <span className="ck-glow-num text-[22px] leading-none font-bold text-(--ck-cyan)">
+        <span className="ck-glow-num text-[25px] leading-none font-bold text-(--ck-cyan)">
           {value}
         </span>
         {unit ? (
@@ -102,7 +102,7 @@ export function Pedestal({
       <span className="relative flex items-baseline gap-0.5 pt-1">
         <span
           className={`ck-glow-num leading-none font-bold ${
-            size === 'md' ? 'text-[30px]' : 'text-[26px]'
+            size === 'md' ? 'text-[34px]' : 'text-[29px]'
           }`}
           style={{ color }}
         >
@@ -163,7 +163,7 @@ export function PlateStat({
             <i className={`${icon} relative mb-[3px] text-[22px] text-(--ck-cyan)`} aria-hidden />
           </span>
           <span className="flex items-baseline gap-0.5">
-            <span className="ck-glow-num text-[28px] leading-none font-bold text-(--ck-cyan)">
+            <span className="ck-glow-num text-[31px] leading-none font-bold text-(--ck-cyan)">
               {value}
             </span>
             <span className="text-[12px] leading-none text-(--ck-title-sub)">{unit}</span>
@@ -190,16 +190,16 @@ export function DurationRow({
 }) {
   return (
     <div
-      className="flex h-[30px] items-center gap-2 rounded-[2px] px-2.5"
+      className="flex h-[34px] items-center gap-2 rounded-[2px] px-3"
       style={{ background: striped ? 'var(--ck-table-row)' : 'transparent' }}
     >
-      <span className="w-[116px] shrink-0 truncate text-[13px] leading-none text-(--foreground)">
+      <span className="w-[126px] shrink-0 truncate text-[14px] leading-none text-(--foreground)">
         {label}
       </span>
-      <span className="w-[62px] shrink-0 text-center text-[13px] leading-none text-(--foreground) tabular-nums">
+      <span className="w-[68px] shrink-0 text-center text-[14px] leading-none text-(--foreground) tabular-nums">
         {hours.toFixed(1)} 小时
       </span>
-      <span className="relative flex h-[6px] min-w-0 flex-1 items-center">
+      <span className="relative flex h-[7px] min-w-0 flex-1 items-center">
         <span
           className="absolute inset-0 rounded-full"
           style={{ background: 'color-mix(in srgb, var(--ck-blue) 22%, transparent)' }}
@@ -213,7 +213,7 @@ export function DurationRow({
           }}
         />
         <span
-          className="absolute top-1/2 h-[9px] w-[9px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-(--ck-blue)"
+          className="absolute top-1/2 h-[10px] w-[10px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-(--ck-blue)"
           style={{ left: `${percent}%`, boxShadow: '0 0 0 2px var(--surface)' }}
         />
       </span>
@@ -223,7 +223,7 @@ export function DurationRow({
 
 /** 全流程业务处理质量：实心绿圆 + 白环 + 外圈涟漪与散点 */
 export function QualityOrb({ value }: { value: number }) {
-  const size = 168
+  const size = 196
   const cx = size / 2
   const dots = [
     { x: 34, y: 54, r: 4, color: 'var(--ck-green)' },
@@ -260,7 +260,7 @@ export function QualityOrb({ value }: { value: number }) {
         ))}
       </svg>
       <span
-        className="absolute inset-0 flex items-center justify-center text-[26px] leading-none font-bold"
+        className="absolute inset-0 flex items-center justify-center text-[30px] leading-none font-bold"
         style={{ color: 'var(--ck-screen-base)' }}
       >
         {value.toFixed(1)}%
@@ -275,7 +275,7 @@ export function SegmentBar({ value }: { value: number }) {
   const track = 'color-mix(in srgb, var(--text-tertiary) 45%, transparent)'
 
   return (
-    <div className="relative h-[16px] w-full overflow-hidden">
+    <div className="relative h-[19px] w-full overflow-hidden">
       <div
         className="absolute inset-0"
         style={{

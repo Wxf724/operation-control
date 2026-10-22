@@ -26,13 +26,13 @@ import {
 /** 系统运行管理平台的中间业务区（对应 `_refs/live/19-系统运行管理平台.png`） */
 export function SystemPlatformContent() {
   return (
-    <div className="flex min-h-0 flex-1 gap-2.5">
-      <div className="flex min-h-0 w-[910px] shrink-0 flex-col gap-2.5">
+    <div className="flex min-h-0 flex-1 gap-3">
+      <div className="flex min-h-0 w-[910px] shrink-0 flex-col gap-3">
         <BaseResourcePanel />
         <BusinessOperationPanel />
       </div>
 
-      <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-2.5">
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3">
         <KeyJobPanel />
         <SupportPanel />
       </div>
@@ -76,8 +76,8 @@ function BaseResourcePanel() {
 function BusinessOperationPanel() {
   return (
     <PanelBox title="业务操作功能管理" className="flex min-h-0 flex-1 flex-col">
-      <div className="flex h-full gap-3 px-3 pt-1.5 pb-2">
-        <div className="flex w-[236px] shrink-0 flex-col">
+      <div className="flex h-full gap-3.5 px-4 pt-2 pb-2.5">
+        <div className="flex w-[250px] shrink-0 flex-col">
           <SectionTitle className="shrink-0">用户操作体验情况</SectionTitle>
           <div className="flex min-h-0 flex-1 flex-col justify-around py-1">
             {SYSTEM_EXPERIENCE_STATS.map((stat) => (
@@ -137,8 +137,8 @@ function KeyJobPanel() {
   const option = useMemo(() => buildBizOption(c), [c])
 
   return (
-    <PanelBox title="关键作业功能监控" className="flex min-h-0 flex-1 flex-col">
-      <div className="flex h-full flex-col gap-1.5 px-3 pt-1.5 pb-2">
+    <PanelBox title="关键作业功能监控" className="flex min-h-0 flex-[1.44] flex-col">
+      <div className="flex h-full flex-col gap-2 px-4 pt-2 pb-2.5">
         <SectionTitle className="shrink-0">业务办理功能稳定情况</SectionTitle>
 
         <div className="min-h-0 flex-[1.4]">
@@ -147,7 +147,7 @@ function KeyJobPanel() {
 
         <SectionTitle className="shrink-0 pt-1">作业分配功能稳定情况</SectionTitle>
 
-        <div className="grid min-h-0 flex-1 grid-cols-2 grid-rows-2 gap-2.5 pb-1">
+        <div className="grid min-h-0 flex-1 grid-cols-2 grid-rows-2 gap-3 pb-1">
           {SYSTEM_JOB_STATS.map((stat) => (
             <PlateCard key={stat.label} stat={stat} stacked className="min-h-0" />
           ))}
@@ -161,7 +161,7 @@ function KeyJobPanel() {
 
 function SupportPanel() {
   return (
-    <PanelBox title="系统对业务支撑管理" className="flex h-[238px] shrink-0 flex-col">
+    <PanelBox title="系统对业务支撑管理" className="flex min-h-0 flex-[0.56] flex-col">
       <div className="flex h-full items-center justify-around px-4 pb-1">
         {SYSTEM_SUPPORT_GAUGES.map((g) => (
           <ColorHalfGauge key={g.label} label={g.label} value={g.value} />

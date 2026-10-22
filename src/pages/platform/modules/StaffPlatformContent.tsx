@@ -85,9 +85,20 @@ function DrillLink({ title, to }: { title: string; to: string }) {
 const CENTER_HEAD = ['中心', '在岗', '其中:|在岗作业人数', '休假', '出差', '其他']
 
 function BasicPanel({ className = '' }: { className?: string }) {
+  const navigate = useNavigate()
+
   return (
     <PanelBox
       title={<DrillLink title="基本情况" to="/drill/staff-basic" />}
+      extra={
+        <button
+          type="button"
+          onClick={() => navigate('/staff-dashboard')}
+          className="cursor-pointer rounded-[4px] bg-(--ck-cyan) px-2.5 py-1.5 text-[13px] font-medium text-white transition-opacity hover:opacity-85"
+        >
+          员工个人管理看板
+        </button>
+      }
       className={`flex flex-col ${className}`}
     >
       <div className="flex h-full gap-4 px-3.5 pt-2 pb-2.5">

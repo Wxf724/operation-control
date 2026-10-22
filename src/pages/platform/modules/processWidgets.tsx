@@ -14,14 +14,32 @@ export type ProcessTone = keyof typeof TONE_VAR
 /* ───────────── 标题与页签 ───────────── */
 
 /** 分栏里的三级小标题：实心三角 + 文案，右侧可挂单位说明 */
-export function SubTitle({ children, extra }: { children: ReactNode; extra?: ReactNode }) {
+export function SubTitle({
+  children,
+  extra,
+  size = 'md',
+}: {
+  children: ReactNode
+  extra?: ReactNode
+  size?: 'md' | 'lg'
+}) {
+  const big = size === 'lg'
+
   return (
     <div className="flex shrink-0 items-center justify-between gap-2">
       <span className="flex items-center gap-1.5">
-        <svg width="7" height="9" viewBox="0 0 7 9" fill="none" aria-hidden="true">
+        <svg
+          width={big ? 8 : 7}
+          height={big ? 10 : 9}
+          viewBox="0 0 7 9"
+          fill="none"
+          aria-hidden="true"
+        >
           <path d="M0 0L7 4.5L0 9V0Z" fill="var(--ck-marker)" />
         </svg>
-        <span className="text-[13px] leading-none font-semibold text-(--ck-title-sub)">
+        <span
+          className={`leading-none font-semibold text-(--ck-title-sub) ${big ? 'text-[14.5px]' : 'text-[13px]'}`}
+        >
           {children}
         </span>
       </span>
@@ -37,11 +55,15 @@ export function TabPills({
   labels,
   active,
   onChange,
+  size = 'md',
 }: {
   labels: readonly string[]
   active: number
   onChange: (index: number) => void
+  size?: 'md' | 'lg'
 }) {
+  const metric = size === 'lg' ? 'px-3 py-2 text-[13px]' : 'px-2.5 py-[6px] text-[12px]'
+
   return (
     <div className="flex shrink-0 items-center gap-1.5">
       {labels.map((label, i) => (
@@ -49,7 +71,7 @@ export function TabPills({
           key={label}
           type="button"
           onClick={() => onChange(i)}
-          className={`cursor-pointer rounded-[4px] border px-2.5 py-[6px] text-[12px] leading-none transition-colors ${
+          className={`cursor-pointer rounded-[4px] border leading-none transition-colors ${metric} ${
             active === i
               ? 'border-(--ck-cyan) font-semibold text-(--ck-on-solid)'
               : 'border-(--border) text-(--text-secondary)'
@@ -69,48 +91,95 @@ export function TabPills({
 
 /* ───────────── 环节行 ───────────── */
 
+/** 环节行的两档尺寸：`md` 给企业端那种多行密排，`lg` 给第二/三列放大后的分栏 */
+export type StageSize = 'md' | 'lg'
+
+const STAGE_CARD_SIZE = {
+  md: {
+    box: 'gap-2 px-3 pt-2.5 pb-2.5',
+    label: 'text-[13px]',
+    value: 'text-[19px]',
+    unit: 'text-[11px]',
+    bar: 6,
+  },
+  lg: {
+    box: 'gap-3.5 px-4 py-4',
+    label: 'text-[15px]',
+    value: 'text-[27px]',
+    unit: 'text-[12px]',
+    bar: 8,
+  },
+} as const
+
 /** 带卡片底的环节行：标签 + 数值 + 整行进度条（企业端 / 驻企团队） */
-export function StageCard({ item, tone }: { item: ProcessStageItem; tone: ProcessTone }) {
+export function StageCard({
+  item,
+  tone,
+  size = 'md',
+  className = '',
+}: {
+  item: ProcessStageItem
+  tone: ProcessTone
+  size?: StageSize
+  className?: string
+}) {
+  const z = STAGE_CARD_SIZE[size]
+
   return (
-    <div className="ck-card flex flex-col gap-2 rounded-[3px] px-3 pt-2.5 pb-2.5">
+    <div className={`ck-card flex flex-col justify-center rounded-[3px] ${z.box} ${className}`}>
       <span className="flex items-baseline justify-between gap-2">
-        <span className="truncate text-[13px] leading-none text-(--foreground)">{item.label}</span>
+        <span className={`truncate leading-none text-(--foreground) ${z.label}`}>{item.label}</span>
         <span className="flex items-baseline gap-0.5 whitespace-nowrap">
-          <span className="text-[19px] leading-none font-bold text-(--ck-cyan) tabular-nums">
+          <span className={`leading-none font-bold text-(--ck-cyan) tabular-nums ${z.value}`}>
             {item.value}
           </span>
-          <span className="text-[11px] leading-none text-(--text-secondary)">{item.unit}</span>
+          <span className={`leading-none text-(--text-secondary) ${z.unit}`}>{item.unit}</span>
         </span>
       </span>
-      <StageBar pct={item.pct} tone={tone} />
+      <StageBar pct={item.pct} tone={tone} height={z.bar} />
     </div>
   )
 }
+
+const STAGE_LINE_SIZE = {
+  md: { gap: 'gap-1.5', label: 'text-[12px]', value: 'text-[17px]', unit: 'text-[10px]', bar: 6 },
+  lg: { gap: 'gap-2.5', label: 'text-[13.5px]', value: 'text-[22px]', unit: 'text-[11px]', bar: 8 },
+} as const
 
 /** 紧凑环节行：标签 + 数值一行，下方细进度条（分中心两列） */
-export function StageLine({ item, tone }: { item: ProcessStageItem; tone: ProcessTone }) {
+export function StageLine({
+  item,
+  tone,
+  size = 'md',
+}: {
+  item: ProcessStageItem
+  tone: ProcessTone
+  size?: StageSize
+}) {
+  const z = STAGE_LINE_SIZE[size]
+
   return (
-    <div className="flex flex-col gap-1.5">
+    <div className={`flex flex-col justify-center ${z.gap}`}>
       <span className="flex items-baseline justify-between gap-2">
-        <span className="truncate text-[12px] leading-none text-(--foreground)">{item.label}</span>
+        <span className={`truncate leading-none text-(--foreground) ${z.label}`}>{item.label}</span>
         <span className="flex items-baseline gap-0.5 whitespace-nowrap">
-          <span className="text-[17px] leading-none font-bold text-(--ck-cyan) tabular-nums">
+          <span className={`leading-none font-bold text-(--ck-cyan) tabular-nums ${z.value}`}>
             {item.value}
           </span>
-          <span className="text-[10px] leading-none text-(--text-secondary)">{item.unit}</span>
+          <span className={`leading-none text-(--text-secondary) ${z.unit}`}>{item.unit}</span>
         </span>
       </span>
-      <StageBar pct={item.pct} tone={tone} />
+      <StageBar pct={item.pct} tone={tone} height={z.bar} />
     </div>
   )
 }
 
-function StageBar({ pct, tone }: { pct: number; tone: ProcessTone }) {
+function StageBar({ pct, tone, height = 6 }: { pct: number; tone: ProcessTone; height?: number }) {
   const color = TONE_VAR[tone]
   return (
     <div
-      className="h-[6px] w-full overflow-hidden rounded-[2px]"
-      style={{ background: 'var(--ck-track)' }}
+      className="w-full shrink-0 overflow-hidden rounded-[2px]"
+      style={{ height, background: 'var(--ck-track)' }}
     >
       {/* 白底不做外发光，进度段靠自身渐变区分 */}
       <div
@@ -210,6 +279,12 @@ export function DetailList({ rows, className = '' }: { rows: ProcessDetailRow[];
 
 /* ───────────── 数字卡 ───────────── */
 
+/** 数字卡的两档尺寸 */
+const STAT_CARD_SIZE = {
+  md: { box: 'gap-3 px-4 py-2.5', icon: 44, label: 'text-[14px]', value: 'text-[26px]', unit: 'text-[11px]' },
+  lg: { box: 'gap-4 px-4 py-4', icon: 54, label: 'text-[15px]', value: 'text-[32px]', unit: 'text-[12px]' },
+} as const
+
 /** 发光底座图标 + 标签 + 数值，支持横排（inline）与两行两种排布 */
 export function IconStatCard({
   label,
@@ -217,6 +292,7 @@ export function IconStatCard({
   unit,
   icon,
   inline = false,
+  size = 'md',
   valueTone = 'cyan',
   className = '',
 }: {
@@ -225,30 +301,30 @@ export function IconStatCard({
   unit: string
   icon: string
   inline?: boolean
+  size?: StageSize
   valueTone?: ProcessTone
   className?: string
 }) {
   const color = TONE_VAR[valueTone]
+  const z = STAT_CARD_SIZE[size]
 
   return (
     <div
-      className={`flex items-center gap-3 rounded-[4px] border px-4 py-2.5 ${className}`}
+      className={`flex items-center rounded-[4px] border ${z.box} ${className}`}
       style={{
         borderColor: 'var(--ck-card-border)',
         background: 'linear-gradient(135deg, var(--ck-card-from) 0%, var(--ck-card-to) 100%)',
         boxShadow: 'var(--ck-card-shadow)',
       }}
     >
-      <PedestalIcon icon={icon} />
-      <div
-        className={`flex min-w-0 ${inline ? 'items-baseline gap-2.5' : 'flex-col gap-2'}`}
-      >
-        <span className="truncate text-[14px] leading-none text-(--ck-title-sub)">{label}</span>
+      <PedestalIcon icon={icon} size={z.icon} />
+      <div className={`flex min-w-0 ${inline ? 'items-baseline gap-2.5' : 'flex-col gap-2.5'}`}>
+        <span className={`truncate leading-none text-(--ck-title-sub) ${z.label}`}>{label}</span>
         <span className="flex items-baseline gap-0.5 whitespace-nowrap">
-          <span className="ck-glow-num text-[26px] leading-none font-bold" style={{ color }}>
+          <span className={`ck-glow-num leading-none font-bold ${z.value}`} style={{ color }}>
             {value}
           </span>
-          <span className="text-[11px] leading-none text-(--text-secondary)">{unit}</span>
+          <span className={`leading-none text-(--text-secondary) ${z.unit}`}>{unit}</span>
         </span>
       </div>
     </div>

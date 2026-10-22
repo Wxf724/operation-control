@@ -285,3 +285,36 @@
 
   --ck-track: #c9ddfa;
 }
+
+/*
+  ═══════════ 绩效平台 · 共享公司组作用域 ═══════════
+
+  绩效页顶栏切到「共享公司」时，中间业务区换一组面板，视觉上要比
+  「北部中心」那组更重一档（参考稿是深色底）。
+
+  但 ECharts 取色走 `useChartColors()`，它在主题根元素上取计算样式，
+  拿不到这里的作用域变量——真把面板压成深蓝会让坐标轴、图例变成
+  「深色底 + 深色字」。所以沿用 `.job-board` 的既有做法：
+  只把面板底／子卡／底槽往深蓝推一档，文字与图表配色保持主题根值。
+*/
+.theme-cloud-light .perf-shared-board {
+  /* 面板底：比常规白卡更重的浅蓝，整组先有「深一档」的观感 */
+  --ck-panel-bg: #d8e8fd;
+  --ck-panel-border: #b3cdf2;
+
+  /* 面板内嵌小卡：压回接近白，在深蓝面板上浮起来 */
+  --ck-panel-inner: #eef5ff;
+  --ck-panel-inner-border: #c2d8f7;
+
+  /* 子卡渐变 */
+  --ck-card-from: #ffffff;
+  --ck-card-to: #e2edff;
+  --ck-card-border: #c2d8f7;
+
+  /* 进度条／圆环底槽：比面板底再深一档才看得出进度 */
+  --ck-track: #b9d2f5;
+
+  /* 九宫格表的斑马行 */
+  --ck-table-row: #ffffff;
+  --ck-table-row-alt: #edf4ff;
+}

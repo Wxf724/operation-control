@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 
 import { PanelBox, SectionTitle, useChartColors } from '@/components/cockpit-ui'
 
+import type { PlatformContentProps } from '../types'
 import {
   QualityManagementPanel,
   SatisfactionPanel,
@@ -16,15 +17,23 @@ import {
 } from './performanceData'
 import { buildDocTrendOption, buildTimelinessOption } from './performanceChartOptions'
 import { Chart, CountCard, DurationRow, Pedestal, PlateStat } from './performanceWidgets'
+import { SharedCompanyView, ShandongGroupView } from './performanceOrgViews'
 
 /** 绩效管理平台的中间业务区（对应 `_refs/live/18-绩效管理平台.png`） */
-export function PerformancePlatformContent() {
-  return (
-    <div className="flex min-h-0 flex-1 gap-2.5">
-      <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-2.5">
-        <EfficiencyPanel className="h-[458px] shrink-0" />
+export function PerformancePlatformContent({ org }: PlatformContentProps) {
+  // 共享公司 → 深色主题的作业情况 + 作业质量 + 服务企业（右栏）
+  if (org === '共享公司') return <SharedCompanyView />
 
-        <div className="flex min-h-0 flex-1 gap-2.5">
+  // 山东公司派驻组 → 浅色主题的作业质量管理（上下） + 报表税收 + 清欠（右栏）
+  if (org === '山东公司派驻组') return <ShandongGroupView />
+
+  // 其他（包括默认的「北部中心」）→ 保持原有五块
+  return (
+    <div className="flex min-h-0 flex-1 gap-3.5">
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3">
+        <EfficiencyPanel className="min-h-0 flex-[1.3]" />
+
+        <div className="flex min-h-0 flex-1 gap-3.5">
           <QualityManagementPanel className="w-[706px] shrink-0" />
           <ServiceEnterprisePanel className="w-[438px] shrink-0" />
           <SatisfactionPanel className="min-w-0 flex-1" />
@@ -39,7 +48,7 @@ export function PerformancePlatformContent() {
 function EfficiencyPanel({ className = '' }: { className?: string }) {
   return (
     <PanelBox title="效率管理情况" className={`flex flex-col ${className}`}>
-      <div className="flex h-full gap-2.5 px-3 pt-2 pb-2">
+      <div className="flex h-full gap-3 px-4 pt-2 pb-2.5">
         <QuantitySection className="w-[752px] shrink-0" />
         <span className="w-px shrink-0 self-stretch bg-(--ck-panel-inner-border)" />
         <DurationSection className="min-w-0 flex-1" />
@@ -57,7 +66,7 @@ function QuantitySection({ className = '' }: { className?: string }) {
     <div className={`flex flex-col gap-2 ${className}`}>
       <SectionTitle>数量情况</SectionTitle>
 
-      <div className="flex h-[54px] shrink-0 gap-2.5">
+      <div className="flex h-[60px] shrink-0 gap-3">
         {PERF_COUNT_CARDS.map((card) => (
           <CountCard key={card.label} label={card.label} value={card.value} unit={card.unit} />
         ))}
@@ -67,7 +76,7 @@ function QuantitySection({ className = '' }: { className?: string }) {
         <Chart option={option} />
       </div>
 
-      <div className="flex h-[92px] shrink-0 gap-2">
+      <div className="flex h-[104px] shrink-0 gap-2.5">
         {PERF_BASE_STATS.map((stat) => (
           <PlateStat
             key={stat.label}
@@ -91,9 +100,9 @@ function DurationSection({ className = '' }: { className?: string }) {
     <div className={`flex flex-col gap-2 ${className}`}>
       <SectionTitle>时长情况</SectionTitle>
 
-      <div className="flex min-h-0 flex-1 gap-3">
+      <div className="flex min-h-0 flex-1 gap-3.5">
         <div className="flex w-[384px] shrink-0 flex-col">
-          <div className="flex h-[76px] shrink-0 items-center justify-center gap-2">
+          <div className="flex h-[86px] shrink-0 items-center justify-center gap-2.5">
             <span className="text-[14px] leading-none text-(--foreground)">单据平均处理时长</span>
             <Pedestal value={PERF_AVG_DURATION} unit="小时" />
           </div>
