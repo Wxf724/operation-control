@@ -10,28 +10,19 @@ import type {
 } from './types'
 
 /**
- * 首页三页的统一设计稿尺寸：16:9。
- *
- * 原来一整屏是「左栏 914 + 中栏 1506 + 右栏 968」的超宽画布；拆成三页后每页都是
- * 一整屏，所以统一按 16:9 出稿。
+ * 首页三屏与管理平台、任务调整、政策分析使用同一画布及 fit 缩放基准。
+ * 页面切换时，字体、卡片和间距保持相同的像素比例。
  */
-export const COCKPIT_PAGE_CANVAS = { width: 1600, height: 900 } as const
+export const COCKPIT_PAGE_CANVAS = { width: 2400, height: 1080 } as const
 
 /**
- * 地图页画布再小一档（同样 16:9）：等比放大到视口后整页元素都更大，
- * 两块模块列往两边靠，地图占满中间。
+ * 三屏的外留白和模块间距对齐管理平台骨架（px-5 / gap-3 / pb-5）。
  */
-export const COCKPIT_MAP_CANVAS = { width: 1440, height: 810 } as const
-
-/**
- * 三页统一的外留白与间隙，对齐政策分析页的版面骨架（40 / 21 / 27）：
- * 左右各 40，面板之间 21，底部 27 —— 四周都留出呼吸空间，不要顶满。
- */
-export const COCKPIT_PAGE_PADDING = 40
-export const COCKPIT_PAGE_GAP = 21
-export const COCKPIT_PAGE_PAD_BOTTOM = 27
-/** 页面顶部留白（运营/模型两页没有顶栏，留一档与政策分析的 7px 顶隙观感一致） */
-export const COCKPIT_PAGE_PAD_TOP = 14
+export const COCKPIT_PAGE_PADDING = 20
+export const COCKPIT_PAGE_GAP = 12
+export const COCKPIT_PAGE_PAD_BOTTOM = 20
+/** 运营/模型两页没有顶栏，顶部与侧边使用相同的留白。 */
+export const COCKPIT_PAGE_PAD_TOP = 20
 
 /**
  * 三页的顺序，与原来没拆时的「左 → 中 → 右」一致：

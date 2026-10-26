@@ -11,8 +11,8 @@ export function QuickActionPanel({ className = '' }: { className?: string }) {
 
   return (
     <PanelBox title="智能操作面板(快速处理)" className={`flex flex-col ${className}`}>
-      {/* 四个按钮等宽铺满整行、彼此拉开间距，整体撑满面板 */}
-      <div className="grid h-full grid-cols-4 items-center gap-32 px-4 pt-1.5 pb-2">
+      {/* 四个按钮等宽，间距与页面模块保持一致。 */}
+      <div className="grid h-full grid-cols-4 items-center gap-3 px-4 pt-1.5 pb-2">
         {QUICK_ACTIONS.map((action) => (
           <ActionButton
             key={action.key}

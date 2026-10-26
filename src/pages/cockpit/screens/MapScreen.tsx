@@ -9,9 +9,10 @@ import { ChinaMap } from '../components/ChinaMap'
 import { MetricPills } from '../components/MetricPills'
 import { ModuleNav } from '../components/ModuleNav'
 import {
-  COCKPIT_MAP_CANVAS,
+  COCKPIT_PAGE_CANVAS,
   COCKPIT_PAGE_GAP,
   COCKPIT_PAGE_PADDING,
+  COCKPIT_PAGE_PAD_BOTTOM,
   COCKPIT_TITLE,
   DATE_RANGE,
   DEFAULT_ACTIVE_MODULE,
@@ -27,9 +28,7 @@ import type { ModuleEntry } from '../types'
  * 就是原首页的中栏——顶部标题、播报条、左右两组模块入口夹着中国地图，
  * 底部是随选中模块切换的指标条。
  *
- * 立成整屏后用比另两页更小的画布（`COCKPIT_MAP_CANVAS`）并按 `fill` 缩放：
- * 字号随屏幕宽度放大、高度跟视口走，四边不留空；左右留白压到 8px，两块模块列
- * 贴到屏幕边上，地图占满中间——地图本身不再额外 zoom，中国左右两端完整露出。
+ * 与另两屏及管理平台使用同一画布，顶栏 72px、模块间隔 12px，地图自适应中部空间。
  */
 export function MapScreen({ screenLayout }: { screenLayout?: ScreenLayout }) {
   const navigate = useNavigate()
@@ -42,30 +41,33 @@ export function MapScreen({ screenLayout }: { screenLayout?: ScreenLayout }) {
   return (
     <div className="theme-cloud-light">
       <ScreenScaler
-        width={COCKPIT_MAP_CANVAS.width}
-        height={COCKPIT_MAP_CANVAS.height}
-        mode="fill"
+        width={COCKPIT_PAGE_CANVAS.width}
+        height={COCKPIT_PAGE_CANVAS.height}
         layout={screenLayout}
       >
         <div className="flex h-full w-full flex-col">
-          <ScreenHeader title={COCKPIT_TITLE} height={58} right={<HeaderRight />} />
+          <ScreenHeader title={COCKPIT_TITLE} height={72} right={<HeaderRight />} />
 
           <div
             className="flex min-h-0 flex-1 flex-col"
-            style={{ paddingInline: COCKPIT_PAGE_PADDING, paddingTop: 12, paddingBottom: 24 }}
+            style={{
+              paddingInline: COCKPIT_PAGE_PADDING,
+              paddingTop: 6,
+              paddingBottom: COCKPIT_PAGE_PAD_BOTTOM,
+            }}
           >
             <AlertBanner className="h-[44px] shrink-0" />
 
             <div
               className="flex min-h-0 flex-1 items-stretch"
-              style={{ marginTop: COCKPIT_PAGE_GAP, gap: 16 }}
+              style={{ marginTop: COCKPIT_PAGE_GAP, gap: COCKPIT_PAGE_GAP }}
             >
               <ModuleNav
                 items={LEFT_MODULES}
                 activeKey={activeModule}
                 onSelect={setActiveModule}
                 onOpen={handleOpen}
-                className="w-[236px] shrink-0"
+                className="w-[280px] shrink-0"
               />
 
               <ChinaMap className="min-w-0 flex-1" />
@@ -75,13 +77,13 @@ export function MapScreen({ screenLayout }: { screenLayout?: ScreenLayout }) {
                 activeKey={activeModule}
                 onSelect={setActiveModule}
                 onOpen={handleOpen}
-                className="w-[236px] shrink-0"
+                className="w-[280px] shrink-0"
               />
             </div>
 
             <MetricPills
               items={metrics}
-              className="h-[84px] shrink-0"
+              className="h-[80px] shrink-0"
               /* 与播报条保持同款呼吸感 */
               style={{ marginTop: COCKPIT_PAGE_GAP }}
             />

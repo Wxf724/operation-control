@@ -15,21 +15,14 @@ import {
 /**
  * 首页第 1 页：运营结果区 + 各中心核心数据运行情况 + 近10日运行趋势。
  *
- * 内容是原首页左栏的三块面板，立成整屏后横向撑满、纵向按 2.4 : 2.7 : 3.4 分配。
- * 外留白与面板间隙对齐政策分析页（左右 40 / 间隙 21 / 底部 27），四周不顶满；
- * 用 `fill` 缩放，任何屏幕比例都四边铺满而内容不裁。
- * 面板标题字号用 CSS 变量就地调大一档（`--ck-fs-panel-title`），不动共用组件。
+ * 三块面板保留 2.4 : 2.7 : 3.4 的高度分配，画布、间距和标题字号与管理平台一致。
  */
 export function OverviewScreen({ screenLayout }: { screenLayout?: ScreenLayout }) {
   return (
-    <div
-      className="theme-cloud-light"
-      style={{ '--ck-fs-panel-title': '21px' } as React.CSSProperties}
-    >
+    <div className="theme-cloud-light">
       <ScreenScaler
         width={COCKPIT_PAGE_CANVAS.width}
         height={COCKPIT_PAGE_CANVAS.height}
-        mode="fill"
         layout={screenLayout}
       >
         <div

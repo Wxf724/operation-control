@@ -13,7 +13,7 @@ export interface ModuleNavProps {
 /** 中部左右两列的业务模块入口：单击切换，双击进入平台 */
 export function ModuleNav({ items, activeKey, onSelect, onOpen, className = '' }: ModuleNavProps) {
   return (
-    <nav className={`flex flex-col justify-between ${className}`}>
+    <nav className={`flex flex-col gap-3 ${className}`}>
       {items.map((item) => (
         <ModuleButton
           key={item.key}
@@ -44,7 +44,7 @@ function ModuleButton({
       onClick={onClick}
       onDoubleClick={onDoubleClick}
       title={`双击进入${item.label}平台`}
-      className="group relative flex h-[74px] cursor-pointer items-center gap-3.5 rounded-[4px] border px-5 transition-all duration-200 select-none"
+      className="group relative flex min-h-0 flex-1 cursor-pointer items-center gap-3.5 rounded-[4px] border px-5 transition-all duration-200 select-none"
       style={{
         borderColor: active ? 'var(--ck-cyan)' : 'var(--ck-panel-inner-border)',
         background: active

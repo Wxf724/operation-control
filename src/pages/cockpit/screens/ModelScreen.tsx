@@ -14,21 +14,14 @@ import {
 /**
  * 首页第 3 页：智能调控模型执行结果 + 智能操作面板（快速处理）。
  *
- * 内容是原首页右栏的两块面板，立成整屏后横向撑满：模型执行结果占满剩余高度、
- * 快捷操作固定 120px。外留白与面板间隙对齐政策分析页（左右 40 / 间隙 21 / 底部 27），
- * 四周留出呼吸空间；用 `fill` 缩放，任何比例都铺满且内容不裁。
- * 面板标题字号用 CSS 变量就地调大一档。
+ * 模型结果填满剩余高度，快捷操作固定 96px；画布、间距和标题字号与管理平台一致。
  */
 export function ModelScreen({ screenLayout }: { screenLayout?: ScreenLayout }) {
   return (
-    <div
-      className="theme-cloud-light"
-      style={{ '--ck-fs-panel-title': '21px' } as React.CSSProperties}
-    >
+    <div className="theme-cloud-light">
       <ScreenScaler
         width={COCKPIT_PAGE_CANVAS.width}
         height={COCKPIT_PAGE_CANVAS.height}
-        mode="fill"
         layout={screenLayout}
       >
         <div

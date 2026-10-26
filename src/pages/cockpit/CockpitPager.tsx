@@ -14,7 +14,7 @@ import { OverviewScreen } from './screens/OverviewScreen'
  *
  * 顺序与原来没拆时一致（左 → 中 → 右）：
  *   第 1 页 运营结果与趋势 · 第 2 页 全景座舱（地图页，**默认停在这一页**）· 第 3 页 模型执行与操作。
- * 每一页都是整屏（统一 16:9 画布，等比缩放到视口正好铺满）；`ScreenScaler` 用
+ * 每一页都使用与子页面一致的 2400×1080 画布及 fit 缩放；`ScreenScaler` 用
  * `absolute` 让它相对轨道格定位，滑到哪一页就显示哪一页。
  *
  * 当前页写进 URL 的 `?p=`（1 起）：`/?p=3` 可直落第三页，不带参数就是地图页。
@@ -252,7 +252,7 @@ export function CockpitPager() {
   )
 }
 
-/** 两侧翻屏箭头：到头时置灰不可点 */
+/** 两侧翻屏箭头收在页面外边距内，避免遮住卡片内容；到头时隐藏并禁用。 */
 function PagerArrow({
   direction,
   disabled,
@@ -273,8 +273,8 @@ function PagerArrow({
       disabled={disabled}
       aria-label={isPrev ? `上一页：${label}` : `下一页：${label}`}
       title={isPrev ? `上一页：${label}` : `下一页：${label}`}
-      className={`pointer-events-auto absolute top-1/2 flex h-[42px] w-[42px] -translate-y-1/2 items-center justify-center rounded-full transition-opacity ${
-        isPrev ? 'left-4' : 'right-4'
+      className={`pointer-events-auto absolute top-1/2 flex h-[42px] w-[20px] -translate-y-1/2 items-center justify-center rounded-[6px] transition-opacity ${
+        isPrev ? 'left-0' : 'right-0'
       } ${disabled ? 'cursor-default opacity-0' : 'cursor-pointer hover:opacity-80'}`}
       style={{
         background: 'color-mix(in srgb, var(--surface) 82%, transparent)',
@@ -284,7 +284,7 @@ function PagerArrow({
       }}
     >
       <i
-        className={`${isPrev ? 'ri-arrow-left-s-line' : 'ri-arrow-right-s-line'} text-[24px]`}
+        className={`${isPrev ? 'ri-arrow-left-s-line' : 'ri-arrow-right-s-line'} text-[20px]`}
         aria-hidden
       />
     </button>
