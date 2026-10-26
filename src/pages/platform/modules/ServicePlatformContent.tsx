@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 
 import { PanelBox, SectionTitle, useChartColors } from '@/components/cockpit-ui'
+import { splitLabelLines } from '@/utils'
 
 import {
   buildComplaintOption,
@@ -204,7 +205,7 @@ function SlaPanel({ className = '' }: { className?: string }) {
             {SERVICE_SLA_RATES.map((rate) => (
               <div key={rate.label} className="flex items-center gap-2.5">
                 <span className="ck-card flex h-[48px] w-[122px] shrink-0 flex-col items-center justify-center gap-1 rounded-[3px] px-1 text-center">
-                  {splitLabel(rate.label).map((line) => (
+                  {splitLabelLines(rate.label, 6).map((line) => (
                     <span
                       key={line}
                       className="block text-[12px] leading-none text-(--ck-title-sub)"
@@ -311,12 +312,6 @@ function SlaPanel({ className = '' }: { className?: string }) {
       </div>
     </PanelBox>
   )
-}
-
-/** 把「分项业务处理质量达成率」这类长标签折成两行 */
-function splitLabel(label: string): string[] {
-  const mid = Math.ceil(label.length / 2)
-  return [label.slice(0, mid), label.slice(mid)]
 }
 
 /* ───────────── 客户体验与满意度情况 ───────────── */

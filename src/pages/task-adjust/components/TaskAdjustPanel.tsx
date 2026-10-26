@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { PanelBox } from '@/components/cockpit-ui'
 
@@ -67,10 +68,14 @@ export function TaskAdjustPanel({ className = '' }: { className?: string }) {
   )
 }
 
+/** 面板右上角「AI助手」：跳到智能运营调控页（与各平台页右上角同款按钮一致） */
 function AiAssistButton() {
+  const navigate = useNavigate()
+
   return (
     <button
       type="button"
+      onClick={() => navigate('/ai-assistant')}
       className="flex cursor-pointer items-center gap-2 rounded-[3px] px-3 py-[7px] text-[15px] leading-none font-medium text-(--ck-on-solid) transition-opacity hover:opacity-85"
       style={{ background: 'linear-gradient(90deg, var(--ck-btn-from), var(--ck-btn-to))' }}
     >
@@ -99,7 +104,10 @@ function SaveButton({ saved, onClick }: { saved: boolean; onClick: () => void })
         boxShadow: 'var(--ck-card-shadow)',
       }}
     >
-      <i className={`${saved ? 'ri-check-double-line' : 'ri-save-3-line'} text-[19px]`} aria-hidden />
+      <i
+        className={`${saved ? 'ri-check-double-line' : 'ri-save-3-line'} text-[19px]`}
+        aria-hidden
+      />
       保存
     </button>
   )
@@ -183,7 +191,13 @@ function AdjustCard({
         {item.from ? <ValueChip value={item.from} tone="before" /> : null}
 
         {editing ? (
-          <AdjustEditorField item={item} value={value} onChange={onChange} onCancel={cancel} onCommit={onExitEdit} />
+          <AdjustEditorField
+            item={item}
+            value={value}
+            onChange={onChange}
+            onCancel={cancel}
+            onCommit={onExitEdit}
+          />
         ) : (
           <>
             {item.to ? (
@@ -341,5 +355,3 @@ function ValueChip({
     </span>
   )
 }
-
-

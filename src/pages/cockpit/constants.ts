@@ -1,14 +1,10 @@
 import type {
   CenterStatus,
-  FeedbackRow,
   MapNode,
   MetricPill,
   ModuleEntry,
   QuickAction,
-  ReminderItem,
   ResultKpi,
-  StrategyCard,
-  StrategyProgress,
   TeamLinkRow,
   TrendPoint,
 } from './types'
@@ -303,97 +299,6 @@ export const MAP_NODES: MapNode[] = [
 
 /* 数据量较大，单独放在 moduleMetrics.ts，这里转出保持引用路径不变 */
 export { MODULE_METRICS } from './moduleMetrics'
-
-/* ───────────────── 右栏 · AI 调控策略与执行反馈 ───────────────── */
-
-export const REMINDERS: ReminderItem[] = [
-  { label: '需跨中心人员调配事项量', value: '2项', tone: 'cyan' },
-  { label: '需协调业务部门事项量', value: '1项', tone: 'cyan' },
-  { label: '需确认调控方案事项量', value: '1项', tone: 'cyan' },
-  { label: '重大事项超期未闭环量', value: '0事项', tone: 'muted' },
-]
-
-export const STRATEGY_CARDS: StrategyCard[] = [
-  {
-    title: '异常预警',
-    badge: '已预警',
-    tone: 'red',
-    lines: ['本日中心名日志积压超阈值', '其中3条单据超时风险'],
-  },
-  {
-    title: '归因判断',
-    badge: '判断完成',
-    tone: 'orange',
-    lines: ['期初单据量激增叠加加班减少', '影响调度链路各局运行'],
-  },
-  {
-    title: '调控建议',
-    badge: '建议3项',
-    tone: 'cyan',
-    lines: ['建议优先调度北部中心', '释放3小时内关键资源'],
-  },
-]
-
-export const STRATEGY_PROGRESS: StrategyProgress = { done: 68, doing: 24, todo: 8 }
-
-export const FEEDBACK_COLUMNS = ['任务名称', '责任人', '开始时间', '进度', '状态', '操作'] as const
-
-export const FEEDBACK_ROWS: FeedbackRow[] = [
-  {
-    task: '待办单据处理',
-    owner: '张三',
-    startAt: '05-28 08:30',
-    progress: 65,
-    status: '执行中',
-    statusTone: 'cyan',
-    action: '跟踪',
-  },
-  {
-    task: '单据操作异常处理',
-    owner: '李四',
-    startAt: '05-28 08:30',
-    progress: 40,
-    status: '执行中',
-    statusTone: 'cyan',
-    action: '跟踪',
-  },
-  {
-    task: '协同流程滞后处理',
-    owner: '王五',
-    startAt: '05-28 08:30',
-    progress: 80,
-    status: '执行中',
-    statusTone: 'cyan',
-    action: '跟踪',
-  },
-  {
-    task: '报表出具延迟',
-    owner: '赵六',
-    startAt: '05-28 08:30',
-    progress: 100,
-    status: '已完成',
-    statusTone: 'green',
-    action: '查看',
-  },
-  {
-    task: '月末结账管理',
-    owner: '孙七',
-    startAt: '05-28 08:30',
-    progress: 20,
-    status: '执行中',
-    statusTone: 'orange',
-    action: '查看',
-  },
-  {
-    task: '任务分配与跟踪',
-    owner: '周八',
-    startAt: '05-28 08:30',
-    progress: 55,
-    status: '执行中',
-    statusTone: 'cyan',
-    action: '跟踪',
-  },
-]
 
 /* ───────────────── 右栏 · 智能操作面板 ───────────────── */
 

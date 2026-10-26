@@ -76,39 +76,6 @@ export interface MetricPill {
   asOf?: string
 }
 
-/** 右侧「提醒事项」小卡 */
-export interface ReminderItem {
-  label: string
-  value: string
-  tone: TagTone
-}
-
-/** 右侧「AI调控策略」小卡 */
-export interface StrategyCard {
-  title: string
-  badge: string
-  tone: TagTone
-  lines: string[]
-}
-
-/** 策略执行状态环 */
-export interface StrategyProgress {
-  done: number
-  doing: number
-  todo: number
-}
-
-/** 调控执行反馈表的一行 */
-export interface FeedbackRow {
-  task: string
-  owner: string
-  startAt: string
-  progress: number
-  status: string
-  statusTone: TagTone
-  action: string
-}
-
 /** 智能操作面板按钮 */
 export interface QuickAction {
   key: string

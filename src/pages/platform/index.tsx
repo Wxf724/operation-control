@@ -13,7 +13,7 @@ import { AiStrategyBlock } from './components/AiStrategyBlock'
 import { FeedbackBlock } from './components/FeedbackBlock'
 import { KpiRow } from './components/KpiRow'
 import { PlaceholderPanel } from './components/PlaceholderPanel'
-import { ORG_OPTIONS, PERIOD_RANGE, PLATFORM_CANVAS } from './constants'
+import { DEFAULT_ORG, ORG_GROUPS, PERIOD_RANGE, PLATFORM_CANVAS } from './constants'
 import { getPlatformMeta } from './registry'
 
 /**
@@ -26,7 +26,7 @@ import { getPlatformMeta } from './registry'
 export function PlatformPage() {
   const navigate = useNavigate()
   const { moduleKey } = useParams<{ moduleKey: string }>()
-  const [currentOrg, setCurrentOrg] = useState<string>(ORG_OPTIONS[2])
+  const [currentOrg, setCurrentOrg] = useState<string>(DEFAULT_ORG)
 
   const meta = getPlatformMeta(moduleKey)
   const kpis = moduleKey ? MODULE_METRICS[moduleKey] : undefined
@@ -54,7 +54,7 @@ export function PlatformPage() {
                   period={`${PERIOD_RANGE.start}  至  ${PERIOD_RANGE.end}`}
                   units={['日', '月', '年']}
                   defaultUnit="月"
-                  orgs={ORG_OPTIONS}
+                  orgGroups={ORG_GROUPS}
                   defaultOrg={currentOrg}
                   onOrgChange={setCurrentOrg}
                 />

@@ -1,13 +1,12 @@
 import type { ChartVarName } from '@/components/cockpit-ui'
 
 import {
-  SHANDONG_DEBT_CLEARANCE,
-  SHANDONG_QUALITY_TREND,
-  SHANDONG_SATISFACTION_LINES,
-  SHANDONG_SERVICE_QUALITY_LINES,
-  SHARED_DOC_TREND,
-  SHARED_RESIDENT_MENTION_RATE,
-  SHARED_RESIDENT_REPORT_RATE,
+  PERF_MONTHS,
+  SHANDONG_EFF_APPROVAL,
+  SHANDONG_LATE_FEE,
+  SHANDONG_QUAL_RECONCILE,
+  SHANDONG_QUAL_SUBITEM,
+  SHARED_DUR_CENTER,
 } from './performanceOrgData'
 
 type Colors = Record<ChartVarName, string>
@@ -119,254 +118,271 @@ function lineArea(c: Colors, color: string, top = 0.2) {
   }
 }
 
+const MONTHS = [...PERF_MONTHS]
+
 /* ───────────── 共享公司 ───────────── */
 
-/** 作业情况·数量情况：双柱 + 完成率折线 */
-export function buildSharedDocTrendOption(c: Colors) {
+/**
+ * 效率管理情况 ▸ 数量情况-中心：双柱（单据接收量 / 单据完成量）+ 右轴完成率折线。
+ * 左轴 0–25「万笔」、右轴 80–100「%」，与稿面两侧刻度一致。
+ */
+export function buildSharedQtyCenterOption(c: Colors) {
+  const received = [10, 12, 14, 15, 17, 19, 20]
+  const finished = [8, 10, 12, 13, 15, 17, 18]
+  const rate = [82, 85, 88, 90, 92, 94, 95]
+
   return {
     ...BASE,
     tooltip: { trigger: 'axis', ...tooltipSkin(c) },
     legend: {
+      data: ['单据接收量', '单据完成量', '单据完成率'],
       top: 0,
-      left: 'center',
-      itemWidth: 11,
-      itemHeight: 11,
-      itemGap: 18,
-      textStyle: { color: c['--text-secondary'], fontSize: 12 },
-      data: [
-        { name: '单据接收量', icon: 'rect' },
-        { name: '单据完成量', icon: 'rect' },
-        { name: '单据完成率', icon: 'circle' },
-      ],
+      itemWidth: 9,
+      itemHeight: 9,
+      itemGap: 12,
+      textStyle: { color: c['--text-secondary'], fontSize: 11 },
     },
-    grid: { left: 46, right: 44, top: 34, bottom: 26 },
-    xAxis: categoryAxis(
-      c,
-      SHARED_DOC_TREND.map((d) => d.month)
-    ),
+    grid: { left: 2, right: 2, top: 28, bottom: 2, containLabel: true },
+    xAxis: categoryAxis(c, MONTHS),
     yAxis: [
-      valueAxis(c, { name: '万笔', min: 0, max: 20, interval: 5 }),
-      {
-        ...valueAxis(c, { min: 80, max: 100, interval: 5 }),
-        splitLine: { show: false },
-      },
+      valueAxis(c, { name: '万笔', min: 0, max: 25, interval: 5 }),
+      { ...valueAxis(c, { min: 80, max: 100, interval: 5 }), splitLine: { show: false } },
     ],
     series: [
       {
         name: '单据接收量',
-        type: 'bar' as const,
-        barWidth: 12,
-        barGap: '12%',
-        data: SHARED_DOC_TREND.map((d) => d.received),
-        itemStyle: { color: verticalFill(c['--ck-cyan'], c['--ck-blue']) },
+        type: 'bar',
+        barWidth: 8,
+        barGap: '30%',
+        itemStyle: { color: verticalFill(alpha(c['--ck-cyan'], 1), alpha(c['--ck-cyan'], 0.3)) },
+        data: received,
       },
       {
         name: '单据完成量',
-        type: 'bar' as const,
-        barWidth: 12,
-        data: SHARED_DOC_TREND.map((d) => d.completed),
-        itemStyle: { color: verticalFill(c['--ck-cyan'], c['--ck-green']) },
+        type: 'bar',
+        barWidth: 8,
+        itemStyle: { color: verticalFill(alpha(c['--ck-green'], 1), alpha(c['--ck-green'], 0.3)) },
+        data: finished,
       },
       {
         name: '单据完成率',
-        type: 'line' as const,
+        type: 'line',
         yAxisIndex: 1,
+        smooth: true,
         symbol: 'circle',
-        symbolSize: 7,
-        data: SHARED_DOC_TREND.map((d) => d.rate),
-        lineStyle: { color: c['--ck-purple'], width: 2 },
+        symbolSize: 5,
+        lineStyle: { width: 2, color: c['--ck-purple'] },
         itemStyle: { color: c['--ck-purple'] },
+        data: rate,
       },
     ],
   }
 }
 
-/** 驻企财务·平均提报率 / 平均提及率柱状图 */
-export function buildSharedResidentBarOption(c: Colors, kind: 'report' | 'mention') {
-  const rows = kind === 'report' ? SHARED_RESIDENT_REPORT_RATE : SHARED_RESIDENT_MENTION_RATE
-  const tone = kind === 'report' ? c['--ck-cyan'] : c['--ck-teal']
+/**
+ * 质量管理情况 ▸ 报表编制准确率：四中心四条折线。
+ * 稿面纵轴 80–100，起伏才看得出来，所以不从 0 起。
+ */
+export function buildSharedReportLinesOption(c: Colors) {
+  const tones = [c['--ck-cyan'], c['--ck-green'], c['--ck-purple'], c['--ck-blue']]
+  const data = [
+    [88, 97, 92, 95, 90, 93, 98],
+    [95, 90, 96, 91, 94, 89, 92],
+    [85, 93, 88, 96, 87, 94, 90],
+    [91, 86, 94, 89, 96, 91, 95],
+  ]
 
-  return {
-    ...BASE,
-    tooltip: { trigger: 'axis', ...tooltipSkin(c) },
-    grid: { left: 38, right: 12, top: 18, bottom: 22 },
-    xAxis: categoryAxis(
-      c,
-      rows.map((d) => d.month)
-    ),
-    yAxis: valueAxis(c, { name: '%', min: 80, max: 100, interval: 5 }),
-    series: [
-      {
-        name: kind === 'report' ? '平均提报率' : '平均提及率',
-        type: 'bar' as const,
-        barWidth: 13,
-        data: rows.map((d) => d.value),
-        itemStyle: { color: verticalFill(tone, alpha(tone, 0.18)) },
-      },
-    ],
-  }
-}
-
-/* ───────────── 山东公司派驻组 ───────────── */
-
-/** 社金财务服务单位管理处理流程达成统计：双柱 + 折线，最高 25k */
-export function buildShandongQualityTrendOption(c: Colors) {
   return {
     ...BASE,
     tooltip: { trigger: 'axis', ...tooltipSkin(c) },
     legend: {
+      data: ['东部中心', '西部中心', '南部中心', '北部中心'],
       top: 0,
-      left: 'center',
-      itemWidth: 11,
-      itemHeight: 11,
+      itemWidth: 9,
+      itemHeight: 9,
       itemGap: 16,
       textStyle: { color: c['--text-secondary'], fontSize: 11 },
-      data: [
-        { name: '处理单量', icon: 'rect' },
-        { name: '达成单量', icon: 'rect' },
-        { name: '达成率', icon: 'circle' },
-      ],
     },
-    grid: { left: 52, right: 44, top: 32, bottom: 24 },
-    xAxis: categoryAxis(
-      c,
-      SHANDONG_QUALITY_TREND.map((d) => d.month)
-    ),
+    grid: { left: 2, right: 10, top: 28, bottom: 2, containLabel: true },
+    xAxis: categoryAxis(c, MONTHS, false),
+    yAxis: valueAxis(c, { min: 80, max: 100, interval: 5 }),
+    series: ['东部中心', '西部中心', '南部中心', '北部中心'].map((name, i) => ({
+      name,
+      type: 'line',
+      smooth: true,
+      symbol: 'circle',
+      symbolSize: 5,
+      lineStyle: { width: 2, color: tones[i] },
+      itemStyle: { color: tones[i] },
+      data: data[i],
+    })),
+  }
+}
+
+/** 时长情况-中心的七项费用条用的最大值（画条长用） */
+export const SHARED_DUR_MAX = Math.max(...SHARED_DUR_CENTER.bars.map((b) => b.hours))
+
+/* ───────────── 山东公司派驻组 ───────────── */
+
+/**
+ * 作业效率管理情况 ▸ 驻企财务审批单据情况统计。
+ * 单柱（单据完成量，左轴 0–20000 笔）+ 折线（单据平均处理时长，右轴 0–20 小时）。
+ */
+export function buildShandongApprovalOption(c: Colors) {
+  const { resident, rate } = SHANDONG_EFF_APPROVAL
+
+  return {
+    ...BASE,
+    tooltip: { trigger: 'axis', ...tooltipSkin(c) },
+    legend: {
+      data: ['单据完成量', '单据平均处理时长'],
+      top: 0,
+      itemWidth: 9,
+      itemHeight: 9,
+      itemGap: 14,
+      textStyle: { color: c['--text-secondary'], fontSize: 11 },
+    },
+    grid: { left: 2, right: 2, top: 28, bottom: 2, containLabel: true },
+    xAxis: categoryAxis(c, MONTHS),
     yAxis: [
-      valueAxis(c, { name: '笔', min: 0, max: 25000, interval: 5000 }),
+      valueAxis(c, { name: '笔', min: 0, max: 20000, interval: 5000 }),
       {
-        ...valueAxis(c, { min: 80, max: 100, interval: 5 }),
+        ...valueAxis(c, { name: '小时', min: 0, max: 20, interval: 5 }),
         splitLine: { show: false },
       },
     ],
     series: [
       {
-        name: '处理单量',
-        type: 'bar' as const,
-        barWidth: 12,
-        barGap: '12%',
-        data: SHANDONG_QUALITY_TREND.map((d) => d.bar1),
-        itemStyle: { color: verticalFill(c['--ck-blue'], alpha(c['--ck-blue'], 0.2)) },
+        name: '单据完成量',
+        type: 'bar',
+        barWidth: 14,
+        itemStyle: { color: verticalFill(alpha(c['--ck-cyan'], 1), alpha(c['--ck-cyan'], 0.25)) },
+        data: resident.map((v) => v * 800),
       },
       {
-        name: '达成单量',
-        type: 'bar' as const,
-        barWidth: 12,
-        data: SHANDONG_QUALITY_TREND.map((d) => d.bar2),
-        itemStyle: { color: verticalFill(c['--ck-cyan'], alpha(c['--ck-cyan'], 0.2)) },
-      },
-      {
-        name: '达成率',
-        type: 'line' as const,
+        name: '单据平均处理时长',
+        type: 'line',
         yAxisIndex: 1,
+        smooth: true,
         symbol: 'circle',
-        symbolSize: 7,
-        data: SHANDONG_QUALITY_TREND.map((d) => d.line),
-        lineStyle: { color: c['--ck-orange'], width: 2 },
-        itemStyle: { color: c['--ck-orange'] },
+        symbolSize: 5,
+        lineStyle: { width: 2, color: c['--ck-green'] },
+        itemStyle: { color: c['--ck-green'] },
+        data: rate,
       },
     ],
   }
 }
 
-/** 四条折线图：分月服务处理质量达成率 / 服务企业协同满意结绐情况 */
-export function buildShandongMultiLineOption(c: Colors, kind: 'quality' | 'satisfaction') {
-  const rows = kind === 'quality' ? SHANDONG_SERVICE_QUALITY_LINES : SHANDONG_SATISFACTION_LINES
-  const names =
-    kind === 'quality'
-      ? ['处理质量', '协同质量', '时效质量', '综合质量']
-      : ['满意度A', '满意度B', '满意度C', '满意度D']
-  const tones = [c['--ck-cyan'], c['--ck-green'], c['--ck-orange'], c['--ck-purple']]
-  const keys = ['line1', 'line2', 'line3', 'line4'] as const
-
+/**
+ * 稿面上山东组那几张「拐点带百分比标签」的折线共用一个构造器。
+ * 分项业务处理质量达成率 / 内部交易对账准确率 / 资金预算准确率都是这一种。
+ */
+function labelledLineOption(c: Colors, data: readonly number[], opts: { area?: boolean } = {}) {
   return {
     ...BASE,
     tooltip: { trigger: 'axis', ...tooltipSkin(c) },
-    legend: {
-      top: 0,
-      left: 'center',
-      itemWidth: 9,
-      itemHeight: 9,
-      itemGap: 10,
-      icon: 'circle',
-      textStyle: { color: c['--text-secondary'], fontSize: 10 },
-      data: names,
-    },
-    grid: { left: 40, right: 14, top: 30, bottom: 22 },
-    xAxis: categoryAxis(
-      c,
-      rows.map((d) => d.month),
-      false
-    ),
-    yAxis: valueAxis(c, { name: '%', min: 80, max: 100, interval: 5 }),
-    series: names.map((name, i) => ({
-      name,
-      type: 'line' as const,
-      symbol: 'circle',
-      symbolSize: 5,
-      data: rows.map((d) => d[keys[i]]),
-      lineStyle: { color: tones[i], width: 2 },
-      itemStyle: { color: tones[i] },
-      ...(i === 0 ? { areaStyle: lineArea(c, tones[i], 0.14) } : {}),
-    })),
-  }
-}
-
-/** 成本费用应答情况柱状图：金额 200 万元 */
-export function buildShandongCostBarOption(c: Colors) {
-  const labels = ['1月', '2月', '3月', '4月', '5月', '6月']
-  const values = [150, 168, 180, 192, 196, 200]
-
-  return {
-    ...BASE,
-    tooltip: { trigger: 'axis', ...tooltipSkin(c) },
-    grid: { left: 42, right: 14, top: 20, bottom: 22 },
-    xAxis: categoryAxis(c, labels),
-    yAxis: valueAxis(c, { name: '万元', min: 0, max: 250, interval: 50 }),
+    grid: { left: 2, right: 12, top: 24, bottom: 2, containLabel: true },
+    xAxis: categoryAxis(c, MONTHS, false),
+    yAxis: valueAxis(c, { min: 70, max: 100, interval: 5 }),
     series: [
       {
-        name: '成本费用金额',
-        type: 'bar' as const,
-        barWidth: 15,
-        data: values,
-        itemStyle: { color: verticalFill(c['--ck-green'], alpha(c['--ck-green'], 0.18)) },
+        type: 'line',
+        smooth: true,
+        symbol: 'circle',
+        symbolSize: 6,
+        lineStyle: { width: 2, color: c['--ck-green'] },
+        itemStyle: { color: c['--ck-green'] },
+        areaStyle: opts.area ? lineArea(c, c['--ck-green'], 0.2) : undefined,
+        label: {
+          show: true,
+          position: 'top' as const,
+          color: c['--foreground'],
+          fontSize: 11,
+          formatter: (p: { value: number }) => `${p.value.toFixed(1)}%`,
+        },
+        data: [...data],
       },
     ],
   }
 }
 
-/** 清欠情况四列柱状图 */
-export function buildShandongDebtBarOption(c: Colors) {
-  const rows = SHANDONG_DEBT_CLEARANCE.chartData
-  const names = ['本期发生', '本期清收', '期末余额', '计划清收']
-  const tones = [c['--ck-blue'], c['--ck-cyan'], c['--ck-orange'], c['--ck-green']]
-  const keys = ['bar1', 'bar2', 'bar3', 'bar4'] as const
+/** 作业质量管理情况 ▸ 分项业务处理质量达成率 */
+export function buildShandongSubitemLineOption(c: Colors) {
+  return labelledLineOption(c, SHANDONG_QUAL_SUBITEM.data)
+}
+
+/** 作业质量管理情况 ▸ 内部交易对账准确率 */
+export function buildShandongReconcileLineOption(c: Colors) {
+  return labelledLineOption(c, SHANDONG_QUAL_RECONCILE.data)
+}
+
+/** 服务企业情况 ▸ 公司资金预算执行情况：资金预算准确率折线 */
+export function buildShandongFundLineOption(c: Colors) {
+  return labelledLineOption(c, [90.0, 86.0, 91.0, 96.0, 89.0, 88.0, 94.0], { area: true })
+}
+
+/** 服务企业情况 ▸ 成本费用预算执行准确率：柱顶常显百分比 */
+export function buildShandongCostBarOption(c: Colors) {
+  const data = [90.0, 86.0, 91.0, 96.0, 89.0, 88.0, 94.0]
 
   return {
     ...BASE,
     tooltip: { trigger: 'axis', ...tooltipSkin(c) },
-    legend: {
-      top: 0,
-      left: 'center',
-      itemWidth: 10,
-      itemHeight: 10,
-      itemGap: 12,
-      textStyle: { color: c['--text-secondary'], fontSize: 10 },
-      data: names.map((name) => ({ name, icon: 'rect' })),
+    grid: { left: 2, right: 6, top: 24, bottom: 2, containLabel: true },
+    xAxis: categoryAxis(c, MONTHS),
+    yAxis: valueAxis(c, { min: 70, max: 100, interval: 5 }),
+    series: [
+      {
+        type: 'bar',
+        barWidth: 13,
+        itemStyle: { color: verticalFill(alpha(c['--ck-cyan'], 1), alpha(c['--ck-cyan'], 0.25)) },
+        label: {
+          show: true,
+          position: 'top' as const,
+          color: c['--foreground'],
+          fontSize: 11,
+          formatter: (p: { value: number }) => `${p.value.toFixed(1)}%`,
+        },
+        data,
+      },
+    ],
+  }
+}
+
+/**
+ * 滞纳金情况 ▸ 本企业税收滞纳金（含罚款）。
+ *
+ * 柱顶常显千分位金额（稿面如此），纵轴 0–25000 万元、每格 5000。
+ * 与页面上其余柱图同一套配色与柱宽，只是量纲大一档。
+ */
+export function buildShandongLateFeeOption(c: Colors) {
+  const data = [...SHANDONG_LATE_FEE.monthly]
+
+  return {
+    ...BASE,
+    tooltip: {
+      trigger: 'axis',
+      ...tooltipSkin(c),
+      valueFormatter: (v: number) => `${v.toLocaleString()} 万元`,
     },
-    grid: { left: 48, right: 14, top: 30, bottom: 24 },
-    xAxis: categoryAxis(
-      c,
-      rows.map((d) => d.category)
-    ),
-    yAxis: valueAxis(c, { name: '千元', min: 0, max: 5000, interval: 1000 }),
-    series: names.map((name, i) => ({
-      name,
-      type: 'bar' as const,
-      barWidth: 9,
-      barGap: '16%',
-      data: rows.map((d) => d[keys[i]]),
-      itemStyle: { color: verticalFill(tones[i], alpha(tones[i], 0.2)) },
-    })),
+    grid: { left: 2, right: 6, top: 22, bottom: 2, containLabel: true },
+    xAxis: categoryAxis(c, MONTHS),
+    yAxis: valueAxis(c, { min: 0, max: 25000, interval: 5000 }),
+    series: [
+      {
+        type: 'bar',
+        barWidth: 11,
+        itemStyle: { color: verticalFill(alpha(c['--ck-cyan'], 1), alpha(c['--ck-cyan'], 0.25)) },
+        label: {
+          show: true,
+          position: 'top' as const,
+          color: c['--foreground'],
+          fontSize: 10,
+          formatter: (p: { value: number }) => p.value.toLocaleString(),
+        },
+        data,
+      },
+    ],
   }
 }

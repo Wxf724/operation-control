@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { ScreenHeader, ScreenScaler } from '@/components/cockpit-ui'
 
-import { AiStrategyPanel } from './components/AiStrategyPanel'
+import { ControlModelBlock } from '@/pages/platform/components/ControlModelBlock'
 import { AlertBanner } from './components/AlertBanner'
 import { CenterStatusPanel } from './components/CenterStatusPanel'
 import { ChinaMap } from './components/ChinaMap'
@@ -97,7 +97,7 @@ export function CockpitPage() {
               className="flex shrink-0 flex-col"
               style={{ width: 968, paddingTop: 6, paddingBottom: 23, gap: 14 }}
             >
-              <AiStrategyPanel className="min-h-0 flex-1" />
+              <ControlModelBlock className="min-h-0 flex-1" />
               <QuickActionPanel className="h-[121px] shrink-0" />
             </div>
           </div>

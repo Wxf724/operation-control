@@ -1,184 +1,244 @@
-/** 绩效管理平台组织切换数据：共享公司、山东公司派驻组 */
+/**
+ * 绩效管理平台「共享公司」「山东公司派驻组」两组视图的静态数据。
+ *
+ * 字段与数值逐格对照参考稿填写，稿面上留空的单元格这里也保持空串。
+ */
 
-/* ───────────── 共享公司组（深色主题） ───────────── */
+/** 两组视图的折线/柱图统一用 1–7 月 */
+export const PERF_MONTHS = ['1月', '2月', '3月', '4月', '5月', '6月', '7月'] as const
 
-/** 作业情况·数量情况：1～7月单据接收量、完成量、完成率 */
-export const SHARED_DOC_TREND = [
-  { month: '1月', received: 8.5, completed: 8.1, rate: 95.3 },
-  { month: '2月', received: 9.2, completed: 8.8, rate: 95.7 },
-  { month: '3月', received: 10.0, completed: 9.6, rate: 96.0 },
-  { month: '4月', received: 11.5, completed: 11.0, rate: 95.7 },
-  { month: '5月', received: 12.8, completed: 12.5, rate: 97.7 },
-  { month: '6月', received: 13.5, completed: 13.2, rate: 97.8 },
-  { month: '7月', received: 14.0, completed: 13.8, rate: 98.6 },
-]
+/** 四个中心在图例里的固定顺序与配色 */
+export const PERF_CENTERS = ['东部中心', '西部中心', '南部中心', '北部中心'] as const
+export const PERF_CENTER_TONES = ['cyan', 'green', 'purple', 'blue'] as const
+export type CenterTone = (typeof PERF_CENTER_TONES)[number]
 
-/** 作业情况·平均天数：六条进度 */
-export interface SharedDurationItem {
-  label: string
-  /** 小时 */
-  value: number
+/** 带色点的图例行：名称 + 数值文本 +（可选）右侧迷你条占比 */
+export interface LegendRow {
+  name: string
+  valueText: string
+  /** 0–100，给出时在右侧画一截竖纹迷你条 */
+  percent?: number
 }
 
-export const SHARED_DURATION_ITEMS: SharedDurationItem[] = [
-  { label: '最迟响应服务', value: 2.0 },
-  { label: '资产业务', value: 1.5 },
-  { label: '成本业务', value: 1.0 },
-  { label: '费用业务', value: 1.2 },
-  { label: '资金业务', value: 1.8 },
-  { label: '收入业务', value: 1.6 },
-]
-
-/** 作业质量情况·驻企财务：平均提报率、平均提及率两图各7月 + 月结数据汇总三行 */
-export const SHARED_RESIDENT_REPORT_RATE = [
-  { month: '1月', value: 91.5 },
-  { month: '2月', value: 92.3 },
-  { month: '3月', value: 93.0 },
-  { month: '4月', value: 94.2 },
-  { month: '5月', value: 95.0 },
-  { month: '6月', value: 95.8 },
-  { month: '7月', value: 96.5 },
-]
-
-export const SHARED_RESIDENT_MENTION_RATE = [
-  { month: '1月', value: 88.0 },
-  { month: '2月', value: 89.5 },
-  { month: '3月', value: 90.2 },
-  { month: '4月', value: 91.8 },
-  { month: '5月', value: 92.5 },
-  { month: '6月', value: 93.0 },
-  { month: '7月', value: 94.2 },
-]
-
-export const SHARED_MONTH_SUMMARY = [
-  { label: '平均提报率', value: '240', unit: '笔' },
-  { label: '平均不及格人数', value: '240', unit: '笔' },
-  { label: '卷首中心', value: '240', unit: '笔' },
-]
-
-/** 作业质量情况·时长情况：月度通过达标率环70% + 下方四块带百分比 */
-export const SHARED_QUALITY_PASS_RATE = 70
-
-export interface SharedDurationBlock {
-  label: string
-  value: string
-  percent: number
+/** 四个中心配同一个数值时的图例快捷构造 */
+function centerLegend(values: readonly string[], percents?: readonly number[]): LegendRow[] {
+  return PERF_CENTERS.map((name, i) => ({
+    name,
+    valueText: values[i] ?? '',
+    percent: percents?.[i],
+  }))
 }
 
-export const SHARED_DURATION_BLOCKS: SharedDurationBlock[] = [
-  { label: '审批时长', value: '5', percent: 85 },
-  { label: '处理时长', value: '5', percent: 92 },
-  { label: '响应时长', value: '5', percent: 78 },
-  { label: '结算时长', value: '5', percent: 88 },
-]
+/* ═══════════════════ 共享公司 ═══════════════════ */
 
-/** 作业质量情况·驻企情况：九宫格三行，各三列99.0%/98.5%/99.2% */
-export interface SharedResidentRow {
-  title: string
-  col1: number
-  col2: number
-  col3: number
-}
-
-export const SHARED_RESIDENT_GRID: SharedResidentRow[] = [
-  { title: '黄金超程方案', col1: 99.0, col2: 98.5, col3: 99.2 },
-  { title: '分类报备方案', col1: 98.8, col2: 99.0, col3: 98.7 },
-  { title: '客户验货方案', col1: 99.1, col2: 98.9, col3: 99.3 },
-]
-
-/* ───────────── 山东公司派驻组（浅色主题） ───────────── */
-
-/** 作业质量管理情况·双柱+折线：1～7月，最高25k */
-export const SHANDONG_QUALITY_TREND = [
-  { month: '1月', bar1: 18000, bar2: 16500, line: 91.7 },
-  { month: '2月', bar1: 19500, bar2: 17800, line: 91.3 },
-  { month: '3月', bar1: 21000, bar2: 19200, line: 91.4 },
-  { month: '4月', bar1: 22500, bar2: 20800, line: 92.4 },
-  { month: '5月', bar1: 24000, bar2: 22500, line: 93.8 },
-  { month: '6月', bar1: 23500, bar2: 22000, line: 93.6 },
-  { month: '7月', bar1: 25000, bar2: 23800, line: 95.2 },
-]
-
-/** 作业质量管理情况·三环：申报通关量100% / 处报通关量100% / 提单通过率100% */
-export const SHANDONG_THREE_RINGS = [
-  { label: '月末申报通关量', value: 100 },
-  { label: '月处报通关量', value: 100 },
-  { label: '服务提单通过率', value: 100 },
-]
-
-/** 作业质量管理情况（续）·两个多线图：分月服务处理质量达成率 + 服务企业协同满意结绐情况，各1～7月四条线 */
-export const SHANDONG_SERVICE_QUALITY_LINES = [
-  { month: '1月', line1: 88.5, line2: 90.2, line3: 89.8, line4: 91.0 },
-  { month: '2月', line1: 89.0, line2: 90.8, line3: 90.5, line4: 91.5 },
-  { month: '3月', line1: 90.5, line2: 91.5, line3: 91.0, line4: 92.0 },
-  { month: '4月', line1: 91.2, line2: 92.0, line3: 91.8, line4: 92.8 },
-  { month: '5月', line1: 92.0, line2: 93.0, line3: 92.5, line4: 93.5 },
-  { month: '6月', line1: 92.8, line2: 93.5, line3: 93.0, line4: 94.0 },
-  { month: '7月', line1: 93.5, line2: 94.2, line3: 93.8, line4: 94.5 },
-]
-
-export const SHANDONG_SATISFACTION_LINES = [
-  { month: '1月', line1: 85.0, line2: 87.5, line3: 86.2, line4: 88.0 },
-  { month: '2月', line1: 86.5, line2: 88.0, line3: 87.0, line4: 89.0 },
-  { month: '3月', line1: 87.5, line2: 89.5, line3: 88.5, line4: 90.0 },
-  { month: '4月', line1: 88.0, line2: 90.0, line3: 89.0, line4: 90.5 },
-  { month: '5月', line1: 89.5, line2: 91.0, line3: 90.0, line4: 91.5 },
-  { month: '6月', line1: 90.0, line2: 91.5, line3: 90.5, line4: 92.0 },
-  { month: '7月', line1: 91.0, line2: 92.5, line3: 91.5, line4: 93.0 },
-]
-
-/** 作业质量管理情况（续）·四环：市场增收量2.00% / 在工场格服务量2.00% / 在工雷改功2.00% / 杂务2.00% */
-export const SHANDONG_FOUR_RINGS = [
-  { label: '市场增收量', value: 2.0 },
-  { label: '在工场格服务量', value: 2.0 },
-  { label: '在工雷改功', value: 2.0 },
-  { label: '杂务：住宅、鲁术等', value: 2.0 },
-]
-
-/** 报表税收兑现情况·成本费用应答情况：柱状图金额200万元绿色95.0% + 两个进度条 */
-export const SHANDONG_COST_RESPONSE = {
-  amount: 200,
-  percent: 95.0,
-  progressBars: [
-    { label: '成本费用項税落实率', value: 95.0 },
-    { label: '各类目指标验货率', value: 95.0 },
-  ],
-}
-
-/** 报表税收兑现情况·信值税成兑现情况：环形98.00% + 三块卡片 */
-export const SHANDONG_VAT_REALIZATION = {
-  ringValue: 98.0,
+/** 效率管理情况 ▸ 数量情况-中心：三个指标 + 月度混合图 + 平均单据产能底座 */
+export const SHARED_QTY_CENTER = {
   cards: [
-    { label: '费银宽环验所总量', value: '370', unit: '笔' },
-    { label: '费目夹实兑现验所', value: '250', unit: '笔' },
-    { label: '夹目整成', value: '20', unit: '笔' },
+    { label: '单据接收量', value: '39', unit: '万笔' },
+    { label: '单据完成量', value: '39', unit: '万笔' },
+    { label: '单据完成率', value: '80.0%', unit: '' },
   ],
-}
+  dropdown: '平均单据产能',
+  pedestal: { label: '平均单据产能', value: '240', unit: '' },
+  legend: centerLegend(['240', '240', '240', '240']),
+} as const
 
-/** 报表税收兑现情况·银行客户情况：两个立体座 + 环形仪表盘91% */
-export const SHANDONG_BANK_CUSTOMER = {
-  pedestals: [
-    { label: '银行账户资薪数', value: '100', unit: '笔' },
-    { label: '银行账户广告金', value: '20', unit: '笔' },
+/** 效率管理情况 ▸ 数量情况-驻企团队：两个指标 + 三列表 */
+export const SHARED_QTY_TEAM = {
+  cards: [
+    { label: '单据完成量', value: '40,500', unit: '笔' },
+    { label: '月末结账申请单待提交量', value: '27', unit: '笔' },
   ],
-  gauge: { label: '资金直查率', value: 91 },
-}
+  head: ['驻企团队名称', '单据完成量', '结账申请单据数量'],
+  rows: [
+    { label: '汇总', cells: ['40,500', '27'] },
+    { label: '山东公司派驻组', cells: ['', ''] },
+    { label: '北方管道公司派驻组', cells: ['', ''] },
+    { label: '东北公司派驻组', cells: ['', ''] },
+  ],
+} as const
 
-/** 清欠情况：本企费用总金额2,000万元 + 六行卡片（无需中心等）+ 四列柱状图 */
-export const SHANDONG_DEBT_CLEARANCE = {
-  totalAmount: '2,000',
-  centers: [
-    { name: '无需中心', amount: '5,000.0' },
-    { name: '西部中心', amount: '5,000.0' },
-    { name: '南部中心', amount: '5,000.0' },
-    { name: '北部中心', amount: '5,000.0' },
-    { name: '云指中心', amount: '5,000.0' },
-    { name: '外部中心', amount: '5,000.0' },
+/** 效率管理情况 ▸ 时长情况-中心：底座 + 七项费用条 + 月度结账及时率环 */
+export const SHARED_DUR_CENTER = {
+  pedestal: { label: '单据平均处理时长', value: '2', unit: '小时' },
+  legend: centerLegend(['2.0 小时', '2.0 小时', '2.0 小时', '2.0 小时']),
+  bars: [
+    { label: '物资采购', hours: 1.0 },
+    { label: '员工福利及劳务', hours: 2.0 },
+    { label: '燃动力及水电气', hours: 1.5 },
+    { label: '党工团活动', hours: 1.5 },
+    { label: '会议、培训、集中办公', hours: 1.5 },
+    { label: '员工出行', hours: 1.5 },
+    { label: '场地设备等租赁', hours: 1.5 },
   ],
-  chartData: [
-    { category: '类别1', bar1: 3500, bar2: 4200, bar3: 3800, bar4: 4500 },
-    { category: '类别2', bar1: 4000, bar2: 3800, bar3: 4200, bar4: 3900 },
-    { category: '类别3', bar1: 3200, bar2: 4500, bar3: 3600, bar4: 4100 },
-    { category: '类别4', bar1: 4500, bar2: 3500, bar3: 4300, bar4: 3700 },
+  dropdown: '月度结账及时率',
+  ring: { label: '月度结账及时率', value: 70.0 },
+  ringLegend: centerLegend(['80.0%', '60.0%', '60.0%', '60.0%']),
+} as const
+
+/** 效率管理情况 ▸ 时长情况-驻企团队：两个指标 + 三列表 */
+export const SHARED_DUR_TEAM = {
+  cards: [
+    { label: '单据平均处理时长', value: '5', unit: '小时' },
+    { label: '报表出具及时率', value: '95.0%', unit: '' },
   ],
-}
+  head: ['驻企团队名称', '单据流转时长', '报表上报及时率'],
+  rows: [
+    { label: '平均', cells: ['5', '95.0%'] },
+    { label: '山东公司派驻组', cells: ['5', '95.0%'] },
+    { label: '北方管道公司派驻组', cells: ['5', '95.0%'] },
+    { label: '东北公司派驻组', cells: ['5', '95.0%'] },
+  ],
+} as const
+
+/** 质量管理情况 ▸ 中心：全流程业务处理质量底座 + 四中心带条图例 */
+export const SHARED_QUAL_CENTER = {
+  pedestal: { label: '全流程业务处理质量', value: '90.0%', unit: '' },
+  legend: centerLegend(['80.0%', '60.0%', '60.0%', '60.0%'], [80, 60, 60, 60]),
+} as const
+
+/** 质量管理情况 ▸ 报表编制准确率：四中心折线（数据在 chartOptions 里） */
+export const SHARED_QUAL_REPORT_LEGEND = [...PERF_CENTERS] as const
+
+/** 质量管理情况 ▸ 驻企团队：三环 + 四列表 */
+export const SHARED_QUAL_TEAM = {
+  rings: [
+    { label: '全流程业务处理质量', value: 99.0 },
+    { label: '分项业务处理质量达成率', value: 98.5 },
+    { label: '业务跨期量', value: 99.2 },
+  ],
+  head: ['驻企团队名称', '全流程业务处理质量', '业务处理准确率', '业务跨期挂报率'],
+  rows: [
+    { label: '平均', cells: ['99.0%', '98.5%', '99.2%'] },
+    { label: '山东公司派驻组', cells: ['99.0%', '98.5%', '99.2%'] },
+    { label: '北方管道公司派驻组', cells: ['99.0%', '98.5%', '99.2%'] },
+    { label: '东北公司派驻组', cells: ['99.0%', '98.5%', '99.2%'] },
+  ],
+} as const
+
+/** 服务企业情况：成本费用总额底座 + 企业明细表 + 预算执行准确率环 */
+export const SHARED_SERVICE = {
+  pedestal: { label: '成本费用总额', value: '20,000.0', unit: '万元' },
+  legend: centerLegend(['5,000.0 万元', '5,000.0 万元', '5,000.0 万元', '5,000.0 万元']),
+  head: ['', '万元', ''],
+  rows: [
+    '山东公司派驻组',
+    '北方管道公司派驻组',
+    '东北公司派驻组',
+    '东部原油储运有限公司…',
+    '建设项目管理公司派驻…',
+    '华中公司派驻组',
+  ],
+  ring: { label: '成本费用预算执行准确率', value: 70.0 },
+  ringLegend: centerLegend(['80.0%', '60.0%', '60.0%', '60.0%']),
+} as const
+
+/** 服务满意度情况：问卷评分底座 + 四中心条 / 投诉总量底座 + 四中心条 */
+export const SHARED_SATISFACTION = {
+  score: { label: '客户满意度问卷评分', value: '95', unit: '' },
+  scoreLegend: centerLegend(['95', '80', '75', '90'], [95, 80, 75, 90]),
+  complaint: { label: '用户投诉总量', value: '10', unit: '' },
+  complaintLegend: centerLegend(['1', '4', '2', '3'], [25, 100, 50, 75]),
+} as const
+
+/* ═══════════════ 山东公司派驻组 ═══════════════ */
+
+/** 作业效率管理情况 ▸ 驻企财务审批单据情况统计（柱+折线，数据在 chartOptions） */
+export const SHANDONG_EFF_APPROVAL = {
+  resident: [11, 14, 16, 18, 19, 20, 21],
+  rate: [14, 15, 16, 17, 18, 18.5, 19],
+} as const
+
+/** 作业效率管理情况 ▸ 驻企财务管理团队结账处理时长：待提交量 + 三环 */
+export const SHANDONG_EFF_TEAM = {
+  banner: { label: '月末结账申请单待提交量', value: '1', unit: '笔' },
+  rings: [
+    { label: '月末结账申请单提交完成率', value: 100 },
+    { label: '月末结账申请单提交及时率', value: 100 },
+    { label: '报表出具及时率', value: 100 },
+  ],
+} as const
+
+/** 作业质量管理情况 ▸ 服务企业业务处理质量：分项达成率折线 */
+export const SHANDONG_QUAL_SUBITEM = {
+  title: '分项业务处理质量达成率',
+  data: [90.0, 86.0, 91.0, 96.0, 89.0, 88.0, 94.0],
+} as const
+
+/** 作业质量管理情况 ▸ 服务企业跨年制单情况：环 + 五项费用 */
+export const SHANDONG_QUAL_CROSS_YEAR = {
+  ring: { label: '业务跨期量', value: 2.0 },
+  rows: [
+    { label: '物资采购', valueText: '2.00%' },
+    { label: '员工福利及劳务', valueText: '2.00%' },
+    { label: '燃动力及水电气', valueText: '2.00%' },
+    { label: '党工团活动', valueText: '2.00%' },
+    { label: '会议、培训、集中办公、公务招待', valueText: '2.00%' },
+  ],
+} as const
+
+/** 作业质量管理情况 ▸ 服务企业协同退单情况：环 + 两张小卡 */
+export const SHANDONG_QUAL_RETURN = {
+  ring: { label: '协同退单率', value: 2.0 },
+  cards: [
+    { label: '协同单据量', value: '150', unit: '张' },
+    { label: '退回单据量', value: '20', unit: '张' },
+  ],
+} as const
+
+/** 作业质量管理情况 ▸ 服务企业内部交易对账情况：准确率折线 */
+export const SHANDONG_QUAL_RECONCILE = {
+  title: '内部交易对账准确率',
+  data: [90.0, 86.0, 91.0, 96.0, 89.0, 88.0, 94.0],
+} as const
+
+/** 服务企业情况 ▸ 公司成本预算执行情况：两个指标 + 准确率柱图 */
+export const SHANDONG_COST_BUDGET = {
+  cards: [
+    { label: '成本费用总额', value: '200', unit: '万元' },
+    { label: '成本费用预算完成率', value: '95.0%', unit: '' },
+  ],
+  chartTitle: '成本费用预算执行准确率',
+} as const
+
+/** 服务企业情况 ▸ 增值税退税完成情况：环 + 两张小卡 */
+export const SHANDONG_VAT = {
+  ring: { label: '增值税退税完成率', value: 98.0 },
+  cards: [
+    { label: '增值税退税预算完成率', value: '98.0%' },
+    { label: '增值税应退尽退完成率', value: '98.0%' },
+  ],
+} as const
+
+/** 服务企业情况 ▸ 公司资金预算执行情况：资金预算准确率折线 + 悬浮三项 */
+export const SHANDONG_FUND_BUDGET = {
+  chartTitle: '资金预算准确率',
+  tooltip: [
+    { label: '经营支出资金预算准确率', value: '96.8%' },
+    { label: '投资支出资金预算准确率', value: '96.8%' },
+    { label: '经营流入资金预算准确率', value: '96.8%' },
+  ],
+} as const
+
+/**
+ * 服务企业情况 ▸ 滞纳金情况：处罚笔数 + 本企业滞纳金（含罚款）月度金额。
+ *
+ * 稿面原图此处是「图形没有数据」的空状态，现按 1–7 月补齐金额序列（单位：万元）。
+ */
+export const SHANDONG_LATE_FEE = {
+  banner: { label: '税收滞纳金处罚', value: '1', unit: '笔' },
+  detail: { label: '本企业税收滞纳金（含罚款）', unit: '万元' },
+  /** 本企业税收滞纳金（含罚款）逐月金额，单位万元，柱顶标数值 */
+  monthly: [12584.0, 10607.0, 14818.0, 16007.0, 16853.0, 17760.0, 18404.0],
+} as const
+
+/** 服务企业情况 ▸ 银行账户管控情况：四项图标卡 + 银企直联率仪表 */
+export const SHANDONG_BANK = {
+  stats: [
+    { icon: 'ri-bank-card-line', label: '银行账户新增数量', value: '100', unit: '家' },
+    { icon: 'ri-close-circle-line', label: '银行账户销户数量', value: '20', unit: '家' },
+    { icon: 'ri-bank-line', label: '银行账户数量', value: '1,000', unit: '家' },
+    { icon: 'ri-time-line', label: '180天以上无动态银行账户数量', value: '20', unit: '家' },
+  ],
+  gauge: { label: '银企直联率', value: 91 },
+} as const

@@ -33,6 +33,67 @@ export function isValidEmailFormat(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)
 }
 
+/**
+ * 常见指标尾词。中文指标名基本是「作用域 + 尾词」，如
+ * 「月末结账申请单｜提交完成率」——能在尾词前断开时优先这样断，
+ * 免得把「申请单」这类词劈成两行。
+ */
+const METRIC_TAIL_WORDS = [
+  '提交完成率',
+  '提交及时率',
+  '提交率',
+  '完成率',
+  '及时率',
+  '准确率',
+  '达成率',
+  '挂报率',
+  '上报率',
+  '回款率',
+  '退单率',
+  '直联率',
+  '数量',
+  '金额',
+  '总量',
+  '情况',
+  '时长',
+  '评分',
+  '占比',
+] as const
+
+/**
+ * 中文指标标签折行：超过一行放得下的字数时折成两行。
+ *
+ * 浏览器自动折行会把「分项业务处理质量达成率」断成「分项业务处理质量达成 / 率」，
+ * 第二行只剩一个字很难看；这里在渲染前就断好，让两行长短接近。
+ *
+ * - `text` 不长于 `maxChars`：原样返回一行
+ * - 否则在两行都不少于 2 字的前提下挑断点：优先中点（两行均分），
+ *   若在尾词前断开能让两行字数差控制在原长的 20% 以内，则改用语义断点
+ * - 例：11 字 → 6+5，8 字 → 4+4，12 字的「…申请单提交完成率」→ 7+5
+ */
+export function splitLabelLines(text: string, maxChars = 6): string[] {
+  const label = text.trim()
+  if (label.length <= maxChars) return [label]
+
+  const mid = Math.ceil(label.length / 2)
+  const tail = METRIC_TAIL_WORDS.find((w) => label.length > w.length && label.endsWith(w))
+
+  /** 语义断点在前：与中点同分时优先语义断点 */
+  const candidates = tail ? [label.length - tail.length, mid] : [mid]
+
+  const valid = candidates.filter((i) => i >= 2 && label.length - i >= 2)
+  if (!valid.length) return [label.slice(0, mid), label.slice(mid)]
+
+  /** 分数越小越好：两行字数差越小越好，语义断点额外减 20% 原长 */
+  const score = (i: number) => {
+    const imbalance = Math.abs(i - (label.length - i)) / label.length
+    return imbalance - (i === mid ? 0 : 0.2)
+  }
+
+  const cut = valid.reduce((best, i) => (score(i) < score(best) ? i : best))
+  return [label.slice(0, cut), label.slice(cut)]
+}
+
 const DEFAULT_AVATAR_ICON = 'ri-robot-2-line'
 const DEFAULT_AVATAR_BG = 'bg-slate-100 text-slate-600'
 const ALLOWED_AVATAR_BG = new Set([

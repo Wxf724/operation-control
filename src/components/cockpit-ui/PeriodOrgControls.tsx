@@ -1,7 +1,13 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { DateRangePicker } from './DateRangePicker'
 import type { DateRangeEdge, DatePickerTab, DateRangeValue } from './DateRangePicker'
+
+/** 组织下拉的一个分组，如「共享中心」「驻区服务部」 */
+export interface OrgGroup {
+  name: string
+  orgs: readonly string[]
+}
 
 /** 顶栏左侧的日期区间选择 + 粒度切换 + 组织下拉，12 个平台页与任务调整／政策分析共用 */
 export interface PeriodOrgControlsProps {
@@ -14,7 +20,10 @@ export interface PeriodOrgControlsProps {
   /** 日/月/年之类的粒度选项 */
   units: readonly string[]
   defaultUnit?: string
-  orgs: readonly string[]
+  /** 扁平组织选项（用原生 select 渲染） */
+  orgs?: readonly string[]
+  /** 分组组织选项：给了就渲成「组名 + 缩进项」的两级下拉，优先于 `orgs` */
+  orgGroups?: readonly OrgGroup[]
   defaultOrg?: string
   className?: string
 
@@ -32,6 +41,8 @@ export interface PeriodOrgControlsProps {
   defaultOpenEdge?: DateRangeEdge
   /** 面板初始页签 */
   defaultPickerTab?: DatePickerTab
+  /** 组织下拉默认展开（默认收起，留给演示与自查） */
+  defaultOrgOpen?: boolean
 }
 
 const ISO_IN_TEXT = /\d{4}-\d{1,2}-\d{1,2}/g
@@ -94,6 +105,7 @@ export function PeriodOrgControls({
   units,
   defaultUnit,
   orgs,
+  orgGroups,
   defaultOrg,
   className = '',
   range,
@@ -103,9 +115,10 @@ export function PeriodOrgControls({
   today,
   defaultOpenEdge,
   defaultPickerTab,
+  defaultOrgOpen,
 }: PeriodOrgControlsProps) {
   const [unit, setUnit] = useState<string>(defaultUnit ?? units[0])
-  const [org, setOrg] = useState<string>(defaultOrg ?? orgs[0])
+  const [org, setOrg] = useState<string>(defaultOrg ?? orgGroups?.[0]?.orgs[0] ?? orgs?.[0] ?? '')
 
   const todayStamp = today?.getTime()
   const baseDate = useMemo(
@@ -165,24 +178,153 @@ export function PeriodOrgControls({
         ))}
       </div>
 
-      <label className="relative flex w-[210px] items-center">
-        <select
+      {orgGroups?.length ? (
+        <OrgGroupSelect
+          groups={orgGroups}
           value={org}
-          onChange={(e) => handleOrgChange(e.target.value)}
-          aria-label="组织范围"
-          className="w-full cursor-pointer appearance-none rounded-[3px] border border-(--border) bg-(--ck-panel-inner) px-3 py-[7px] text-[14px] leading-none text-(--ck-title-sub) outline-none focus:border-(--ck-cyan)"
-        >
-          {orgs.map((o) => (
-            <option key={o} value={o} className="bg-(--surface) text-(--foreground)">
-              {o}
-            </option>
-          ))}
-        </select>
+          onChange={handleOrgChange}
+          defaultOpen={defaultOrgOpen}
+        />
+      ) : (
+        <label className="relative flex w-[210px] items-center">
+          <select
+            value={org}
+            onChange={(e) => handleOrgChange(e.target.value)}
+            aria-label="组织范围"
+            className="w-full cursor-pointer appearance-none rounded-[3px] border border-(--border) bg-(--ck-panel-inner) px-3 py-[7px] text-[14px] leading-none text-(--ck-title-sub) outline-none focus:border-(--ck-cyan)"
+          >
+            {(orgs ?? []).map((o) => (
+              <option key={o} value={o} className="bg-(--surface) text-(--foreground)">
+                {o}
+              </option>
+            ))}
+          </select>
+          <i
+            className="ri-arrow-down-s-line pointer-events-none absolute right-2 text-[16px] text-(--ck-cyan)"
+            aria-hidden
+          />
+        </label>
+      )}
+    </div>
+  )
+}
+
+/**
+ * 两级分组组织下拉：按钮 + 浮层，浮层里先渲染组名（共享中心 / 驻区服务部），
+ * 组名下面是缩进的成员项，当前选中项高亮 —— 对齐目标稿的组织树选择器。
+ *
+ * 默认收起；点按钮开合、点外部或 Esc 关闭、选中即回填并收起。
+ * 配色全走 CSS 变量，跟随浅色主题换肤，不硬编码色值。
+ */
+function OrgGroupSelect({
+  groups,
+  value,
+  onChange,
+  defaultOpen = false,
+}: {
+  groups: readonly OrgGroup[]
+  value: string
+  onChange: (next: string) => void
+  defaultOpen?: boolean
+}) {
+  const [open, setOpen] = useState(defaultOpen)
+  const rootRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
+
+  // 点浮层外部关闭
+  useEffect(() => {
+    if (!open) return
+    const handlePointerDown = (e: Event) => {
+      if (!rootRef.current?.contains(e.target as Node)) setOpen(false)
+    }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('pointerdown', handlePointerDown, true)
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown, true)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [open])
+
+  // 展开时把选中项滚进可视区（驻区服务部有 50 项，默认落在顶部会看不到当前值）
+  useEffect(() => {
+    if (!open) return
+    listRef.current
+      ?.querySelector<HTMLElement>('[data-selected="true"]')
+      ?.scrollIntoView({ block: 'nearest' })
+  }, [open])
+
+  return (
+    <div ref={rootRef} className="relative w-[210px]">
+      <button
+        type="button"
+        onClick={() => setOpen((cur) => !cur)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label="组织范围"
+        className="flex w-full cursor-pointer items-center justify-between gap-2 rounded-[3px] border border-(--border) bg-(--ck-panel-inner) px-3 py-[7px] text-left text-[14px] leading-none text-(--ck-title-sub) transition-colors outline-none hover:border-(--ck-cyan)"
+      >
+        <span className="truncate">{value}</span>
         <i
-          className="ri-arrow-down-s-line pointer-events-none absolute right-2 text-[16px] text-(--ck-cyan)"
+          className={`ri-arrow-down-s-line shrink-0 text-[16px] text-(--ck-cyan) transition-transform ${
+            open ? 'rotate-180' : ''
+          }`}
           aria-hidden
         />
-      </label>
+      </button>
+
+      {open ? (
+        <div
+          ref={listRef}
+          role="listbox"
+          aria-label="组织范围"
+          className="ck-scroll absolute top-[calc(100%+5px)] left-0 z-50 flex max-h-[420px] w-[284px] flex-col overflow-y-auto rounded-[5px] border border-(--border) bg-(--surface) py-1.5"
+          style={{ boxShadow: 'var(--ck-panel-shadow, 0 10px 28px rgba(0, 0, 0, 0.18))' }}
+        >
+          {groups.map((group) => (
+            <div key={group.name} role="group" aria-label={group.name} className="flex flex-col">
+              {/* 组名：左侧带减号方块的层级标记，对齐目标稿 */}
+              <span className="flex shrink-0 items-center gap-1.5 px-2.5 pt-2 pb-1.5 text-[13px] leading-none text-(--text-secondary)">
+                <i
+                  className="ri-checkbox-indeterminate-line text-[13px] text-(--ck-cyan)"
+                  aria-hidden
+                />
+                {group.name}
+              </span>
+
+              {group.orgs.map((item) => {
+                const selected = item === value
+                return (
+                  <button
+                    key={item}
+                    type="button"
+                    role="option"
+                    aria-selected={selected}
+                    data-selected={selected}
+                    onClick={() => {
+                      onChange(item)
+                      setOpen(false)
+                    }}
+                    className={`ml-[9px] flex cursor-pointer items-center border-l py-[6px] pr-2.5 pl-[9px] text-left text-[13px] leading-none transition-colors ${
+                      selected
+                        ? 'font-medium text-(--ck-blue)'
+                        : 'text-(--ck-title-sub) hover:text-(--ck-blue)'
+                    }`}
+                    style={{
+                      borderColor: 'var(--ck-panel-inner-border)',
+                      background: selected ? 'var(--accent-light)' : undefined,
+                    }}
+                  >
+                    <span className="truncate">{item}</span>
+                  </button>
+                )
+              })}
+            </div>
+          ))}
+        </div>
+      ) : null}
     </div>
   )
 }

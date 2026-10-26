@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { PanelBox, SectionTitle, useChartColors } from '@/components/cockpit-ui'
 
 import type { PlatformContentProps } from '../types'
+import { RESIDENT_TEAM_SET } from '../constants'
 import {
   QualityManagementPanel,
   SatisfactionPanel,
@@ -17,17 +18,19 @@ import {
 } from './performanceData'
 import { buildDocTrendOption, buildTimelinessOption } from './performanceChartOptions'
 import { Chart, CountCard, DurationRow, Pedestal, PlateStat } from './performanceWidgets'
-import { SharedCompanyView, ShandongGroupView } from './performanceOrgViews'
+import { ShandongGroupView } from './performanceOrgShandong'
+import { SharedCompanyView } from './performanceOrgViews'
 
 /** 绩效管理平台的中间业务区（对应 `_refs/live/18-绩效管理平台.png`） */
 export function PerformancePlatformContent({ org }: PlatformContentProps) {
-  // 共享公司 → 深色主题的作业情况 + 作业质量 + 服务企业（右栏）
+  // 共享公司 → 效率管理情况 + 质量管理情况 + 服务企业情况 / 服务满意度情况
   if (org === '共享公司') return <SharedCompanyView />
 
-  // 山东公司派驻组 → 浅色主题的作业质量管理（上下） + 报表税收 + 清欠（右栏）
-  if (org === '山东公司派驻组') return <ShandongGroupView />
+  // 驻区服务部旗下所有派驻组（山东公司派驻组等 50 个）→ 共用同一套派驻组面板，
+  // 只是下拉里选中的名字不同，版面与数据不变
+  if (RESIDENT_TEAM_SET.has(org)) return <ShandongGroupView />
 
-  // 其他（包括默认的「北部中心」）→ 保持原有五块
+  // 其余（四个区域中心，包括默认的「北部中心」）→ 保持原有五块
   return (
     <div className="flex min-h-0 flex-1 gap-3.5">
       <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-3">
