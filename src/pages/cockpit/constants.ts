@@ -143,7 +143,7 @@ export const CENTER_STATUS: CenterStatus[] = [
   },
   {
     name: '北部中心',
-    status: '高负载',
+    status: '异常',
     pending: 398,
     overtime: 29,
     load: '96.0%',

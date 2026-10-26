@@ -41,7 +41,7 @@ export function ModelScreen({ screenLayout }: { screenLayout?: ScreenLayout }) {
           }}
         >
           <ControlModelBlock className="min-h-0 flex-1" />
-          <QuickActionPanel className="h-[120px] shrink-0" />
+          <QuickActionPanel className="h-[96px] shrink-0" />
         </div>
       </ScreenScaler>
     </div>
