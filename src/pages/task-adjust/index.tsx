@@ -1,6 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 
-import { BackToCockpitButton, PeriodOrgControls, ScreenHeader, ScreenScaler } from '@/components/cockpit-ui'
+import {
+  BackToCockpitButton,
+  PeriodOrgControls,
+  ScreenHeader,
+  ScreenScaler,
+} from '@/components/cockpit-ui'
 
 import { ImpactConfirmPanel } from './components/ImpactConfirmPanel'
 import { OriginalTaskPanel } from './components/OriginalTaskPanel'

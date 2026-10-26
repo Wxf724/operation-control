@@ -40,7 +40,7 @@ function ActionButton({ action, onClick }: { action: QuickAction; onClick: () =>
       }}
     >
       <span
-        className="flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-[4px] text-[15px] text-(--ck-cyan) transition-shadow group-hover:shadow-[0_0_14px_color-mix(in_srgb,var(--ck-cyan)_45%,transparent)]"
+        className="flex h-[28px] w-[28px] shrink-0 items-center justify-center rounded-[4px] text-[16px] text-(--ck-cyan) transition-shadow group-hover:shadow-[0_0_14px_color-mix(in_srgb,var(--ck-cyan)_45%,transparent)]"
         style={{ background: 'linear-gradient(180deg, var(--ck-icon-from), var(--ck-icon-to))' }}
       >
         <i className={action.icon} aria-hidden />

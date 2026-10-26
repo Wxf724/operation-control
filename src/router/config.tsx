@@ -3,7 +3,7 @@ import type { RouteObject } from 'react-router-dom'
 
 import { ProcessDisplayPage } from '@/pages/process-display'
 import { AiAssistantPage } from '@/pages/ai-assistant'
-import { CockpitPage } from '@/pages/cockpit'
+import { CockpitPager } from '@/pages/cockpit'
 import {
   JobFlowDrillPage,
   JobLoadDrillPage,
@@ -24,7 +24,8 @@ const NotFound = lazy(() => import('../pages/NotFound'))
 
 const routes: RouteObject[] = [
   /* ── 运营调控大屏 ───────────────────────── */
-  { path: '/', element: <CockpitPage /> },
+  // 首页 = 三页左右滑动（1 全景座舱 / 2 运营结果与趋势 / 3 模型执行与操作）
+  { path: '/', element: <CockpitPager /> },
   { path: '/task-adjust', element: <TaskAdjustPage /> },
   { path: '/policy-analysis', element: <PolicyAnalysisPage /> },
 

@@ -1,5 +1,5 @@
-export { ScreenScaler } from './ScreenScaler'
-export type { ScreenScalerProps } from './ScreenScaler'
+﻿export { ScreenScaler } from './ScreenScaler'
+export type { ScreenScalerProps, ScreenLayout, ScreenScaleMode } from './ScreenScaler'
 
 export { PanelBox, SectionTitle, TitleMarker } from './PanelBox'
 export type { PanelBoxProps, SectionTitleProps } from './PanelBox'

@@ -1,4 +1,4 @@
-import * as echarts from 'echarts'
+﻿import * as echarts from 'echarts'
 import ReactECharts from 'echarts-for-react'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -95,7 +95,7 @@ function buildMapOption(c: Record<ChartVarName, string>) {
   const geoBase = {
     map: MAP_NAME,
     roam: false,
-    zoom: 1.18,
+    zoom: 1.16,
     center: [104, 36] as [number, number],
     label: { show: false },
     silent: true,
@@ -170,7 +170,7 @@ function buildMapOption(c: Record<ChartVarName, string>) {
           distance: 4,
           formatter: '{b}',
           color: c['--text-secondary'],
-          fontSize: 10,
+          fontSize: 12,
           textShadowColor: 'rgba(128,160,200,0.55)',
           textShadowBlur: 2,
         },

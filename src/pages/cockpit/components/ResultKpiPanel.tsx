@@ -1,4 +1,4 @@
-import { PanelBox, DeltaText } from '@/components/cockpit-ui'
+﻿import { PanelBox, DeltaText } from '@/components/cockpit-ui'
 
 import { COMPLETE_RATE, RESULT_KPIS } from '../constants'
 import type { ResultKpi } from '../types'
@@ -30,10 +30,10 @@ function KpiCard({ kpi }: { kpi: ResultKpi }) {
   const color = `var(${TONE_VAR[kpi.tone] ?? '--ck-cyan'})`
 
   return (
-    <div className="ck-card flex flex-1 flex-col items-center justify-between rounded-[3px] px-2 py-2.5">
-      <span className="text-[13px] leading-none text-(--text-secondary)">{kpi.label}</span>
+    <div className="ck-card flex flex-1 flex-col items-center justify-between rounded-[3px] px-2 py-3">
+      <span className="text-[15px] leading-none text-(--text-secondary)">{kpi.label}</span>
 
-      <span className="ck-glow-num text-[26px] leading-none font-bold" style={{ color }}>
+      <span className="ck-glow-num text-[32px] leading-none font-bold" style={{ color }}>
         {kpi.value}
       </span>
 
@@ -47,7 +47,7 @@ function KpiCard({ kpi }: { kpi: ResultKpi }) {
 /** 迷你折线：用 SVG 直接画，避免为 5 个小图各起一个 ECharts 实例 */
 function Sparkline({ points, color }: { points: number[]; color: string }) {
   const w = 120
-  const h = 26
+  const h = 34
   const max = Math.max(...points)
   const min = Math.min(...points)
   const span = max - min || 1
@@ -74,13 +74,13 @@ function Sparkline({ points, color }: { points: number[]; color: string }) {
 
 /** 任务完成率：刻度环 + 进度弧 */
 function CompleteRateRing() {
-  const size = 104
-  const r = 40
+  const size = 96
+  const r = 38
   const c = 2 * Math.PI * r
   const pct = COMPLETE_RATE.value
 
   return (
-    <div className="ck-card flex w-[132px] shrink-0 flex-col items-center justify-center gap-1 rounded-[3px] px-2 py-2.5">
+    <div className="ck-card flex w-[150px] shrink-0 flex-col items-center justify-center gap-0.5 rounded-[3px] px-2 py-2">
       <div className="relative" style={{ width: size, height: size }}>
         <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
           {/* 刻度底环 */}
@@ -121,13 +121,13 @@ function CompleteRateRing() {
         </svg>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="ck-glow-num text-[22px] leading-none font-bold text-(--ck-cyan)">
+          <span className="ck-glow-num text-[21px] leading-none font-bold text-(--ck-cyan)">
             {pct}%
           </span>
         </div>
       </div>
 
-      <span className="text-[13px] leading-none text-(--text-secondary)">
+      <span className="text-[15px] leading-none text-(--text-secondary)">
         {COMPLETE_RATE.label}
       </span>
       <DeltaText value={COMPLETE_RATE.delta} tone="green" />

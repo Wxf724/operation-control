@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+﻿import type { ReactNode } from 'react'
 
 import { TONE_VAR } from '../controlModelTone'
 import type { FeedbackBar, ModelRow, StrategyCandidate } from '../types'
@@ -31,15 +31,15 @@ export function ModelCard({
       <header className="flex shrink-0 items-center gap-1.5">
         {badge ? (
           <span
-            className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[4px] text-[12px] leading-none font-bold text-(--ck-on-solid)"
+            className="flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-[4px] text-[13px] leading-none font-bold text-(--ck-on-solid)"
             style={{ background: 'var(--ck-cyan)' }}
           >
             {badge}
           </span>
         ) : (
-          <i className={`${icon} shrink-0 text-[15px] text-(--ck-cyan)`} aria-hidden />
+          <i className={`${icon} shrink-0 text-[17px] text-(--ck-cyan)`} aria-hidden />
         )}
-        <h4 className="text-[13.5px] leading-none font-bold text-(--ck-title)">{title}</h4>
+        <h4 className="text-[15.5px] leading-none font-bold text-(--ck-title)">{title}</h4>
       </header>
 
       {children}
@@ -61,25 +61,24 @@ export function ModelKvRow({ row }: { row: ModelRow }) {
       style={{ background: 'color-mix(in srgb, var(--ck-panel-inner) 70%, transparent)' }}
     >
       {/*
-        标签列固定 92px：「临时调配审核人员」这类 8 字标签在 11.5px 下正好一行放得下，
-        窄一档就会折行，把下方的表格/柱图顶出卡外。四张卡统一这一档行距——
-        首页右栏只有 718px 高，上排两张卡用宽松行距会溢出。
+        标签列固定 108px：立成整屏后字号放大一档，「临时调配审核人员」这类 8 字标签
+        在 13px 下正好一行放得下，窄一档就会折行、把下方的表格/柱图顶出卡外。
       */}
-      <span className="w-[92px] shrink-0 text-[11.5px] leading-tight text-(--ck-title-sub)">
+      <span className="w-[108px] shrink-0 text-[13px] leading-tight text-(--ck-title-sub)">
         {row.label}
       </span>
 
       <span className="flex min-w-0 flex-1 items-baseline gap-1">
         {row.icon ? (
           <i
-            className={`${row.icon} shrink-0 self-center text-[13px]`}
+            className={`${row.icon} shrink-0 self-center text-[15px]`}
             style={{ color }}
             aria-hidden
           />
         ) : null}
 
         <span
-          className={`leading-tight font-semibold ${row.big ? 'text-[19px]' : 'text-[12.5px]'}`}
+          className={`leading-tight font-semibold ${row.big ? 'text-[22px]' : 'text-[14.5px]'}`}
           style={{ color }}
         >
           {row.value}
@@ -87,7 +86,9 @@ export function ModelKvRow({ row }: { row: ModelRow }) {
 
         {row.tail ? (
           <span
-            className={row.big ? 'text-[15px] leading-tight font-semibold' : 'text-[11.5px] leading-tight'}
+            className={
+              row.big ? 'text-[17px] leading-tight font-semibold' : 'text-[13px] leading-tight'
+            }
             style={{ color: row.big ? color : 'var(--text-tertiary)' }}
           >
             {row.tail}
@@ -143,7 +144,7 @@ export function CandidateTable({
         {cols.map((col, i) => (
           <span
             key={col}
-            className={`text-[11px] leading-none text-(--ck-title-sub) ${i === 0 ? '' : 'text-center'}`}
+            className={`text-[12.5px] leading-none text-(--ck-title-sub) ${i === 0 ? '' : 'text-center'}`}
           >
             {col}
           </span>
@@ -169,7 +170,7 @@ export function CandidateTable({
               />
             ) : null}
             <span
-              className="truncate text-[11.5px] leading-none"
+              className="truncate text-[13px] leading-none"
               style={{
                 color: row.chosen ? 'var(--ck-cyan)' : 'var(--foreground)',
                 fontWeight: row.chosen ? 600 : 400,
@@ -179,7 +180,7 @@ export function CandidateTable({
             </span>
           </span>
           <span
-            className="text-center text-[11.5px] leading-none tabular-nums"
+            className="text-center text-[13px] leading-none tabular-nums"
             style={{
               color: row.chosen ? 'var(--ck-cyan)' : 'var(--text-secondary)',
               fontWeight: row.chosen ? 600 : 400,
@@ -188,7 +189,7 @@ export function CandidateTable({
             {row.effect}
           </span>
           <span
-            className="text-center text-[11.5px] leading-none tabular-nums"
+            className="text-center text-[13px] leading-none tabular-nums"
             style={{
               color: row.chosen ? 'var(--ck-cyan)' : 'var(--text-secondary)',
               fontWeight: row.chosen ? 600 : 400,
@@ -212,10 +213,10 @@ export function FeedbackChart({ title, bars }: { title: string; bars: FeedbackBa
     <div className="flex min-h-0 shrink-0 flex-col gap-1">
       <span className="flex shrink-0 items-center gap-1">
         <i className="ri-bubble-chart-fill text-[12px] text-(--ck-cyan)" aria-hidden />
-        <span className="text-[11.5px] leading-none text-(--ck-title-sub)">{title}</span>
+        <span className="text-[13px] leading-none text-(--ck-title-sub)">{title}</span>
       </span>
 
-      <div className="flex h-[66px] shrink-0 items-end gap-1">
+      <div className="flex h-[68px] shrink-0 items-end gap-1">
         {bars.map((bar, i) => (
           <span key={bar.label} className="flex h-full min-w-0 flex-1 items-end gap-1">
             {i > 0 ? (
@@ -227,7 +228,7 @@ export function FeedbackChart({ title, bars }: { title: string; bars: FeedbackBa
 
             <span className="flex h-full min-w-0 flex-1 flex-col justify-end gap-0.5">
               <span
-                className="text-center text-[12.5px] leading-none font-bold tabular-nums"
+                className="text-center text-[14px] leading-none font-bold tabular-nums"
                 style={{ color: `var(${TONE_VAR[bar.tone]})` }}
               >
                 {bar.value}
@@ -242,7 +243,7 @@ export function FeedbackChart({ title, bars }: { title: string; bars: FeedbackBa
                       : `var(${TONE_VAR[bar.tone]})`,
                 }}
               />
-              <span className="truncate text-center text-[11px] leading-none text-(--text-secondary)">
+              <span className="truncate text-center text-[12.5px] leading-none text-(--text-secondary)">
                 {bar.label}
               </span>
             </span>

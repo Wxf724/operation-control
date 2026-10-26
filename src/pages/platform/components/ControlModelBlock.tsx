@@ -2,7 +2,12 @@ import { useState } from 'react'
 
 import { PanelBox } from '@/components/cockpit-ui'
 
-import { CONTROL_TASK_COLUMNS, CONTROL_TASKS, MODEL_CLOSURE, MODEL_SUMMARY } from '../controlModelData'
+import {
+  CONTROL_TASK_COLUMNS,
+  CONTROL_TASKS,
+  MODEL_CLOSURE,
+  MODEL_SUMMARY,
+} from '../controlModelData'
 import { TONE_VAR } from '../controlModelTone'
 import type { ControlTask, ModelRow } from '../types'
 import { CandidateTable, FeedbackChart, ModelCard, ModelKvRow } from './controlModelCards'
@@ -40,14 +45,14 @@ export function ControlModelBlock({ className = '' }: { className?: string }) {
         */}
         <div
           className="grid min-h-0 flex-1 grid-cols-2 gap-2.5"
-          style={{ gridTemplateRows: '0.4fr 0.6fr' }}
+          style={{ gridTemplateRows: '0.30fr 0.70fr' }}
         >
           <ModelCard badge="1" title="感知模型结果">
-            <RowList rows={perception} />
+            <RowList rows={perception} columns={2} />
           </ModelCard>
 
           <ModelCard icon="ri-search-line" title="解释模型结果">
-            <RowList rows={explain} />
+            <RowList rows={explain} columns={2} />
           </ModelCard>
 
           <ModelCard icon="ri-lightbulb-line" title="策略模型结果">
@@ -70,8 +75,21 @@ export function ControlModelBlock({ className = '' }: { className?: string }) {
  *
  * 一律 `justify-between`：行只占内容高度，富余空间均摊到行间，
  * 下排两张卡的表格／柱图因此始终贴着卡底，行与行之间也不会留出一整块空档。
+ *
+ * `columns=2` 时排成两列：感知 / 解释两张卡只有键值行、卡又很宽，
+ * 排一列会让右半边整块空着，排两列正好把卡铺满。
  */
-function RowList({ rows }: { rows: ModelRow[] }) {
+function RowList({ rows, columns = 1 }: { rows: ModelRow[]; columns?: number }) {
+  if (columns === 2) {
+    return (
+      <div className="grid min-h-0 flex-1 grid-cols-2 content-between gap-x-4">
+        {rows.map((row) => (
+          <ModelKvRow key={row.label} row={row} />
+        ))}
+      </div>
+    )
+  }
+
   return (
     <div className="flex min-h-0 flex-1 flex-col justify-between">
       {rows.map((row) => (
@@ -81,49 +99,52 @@ function RowList({ rows }: { rows: ModelRow[] }) {
   )
 }
 
-/** 顶部统计条：⚠ 今日识别异常 5项 | 完成诊断 5项 | 生成策略 4项 | 闭环 2项、执行中 1项、待协调 1项 */
+/**
+ * 顶部统计条：今日识别异常 / 完成诊断 / 生成策略 / 闭环 · 执行中 · 待协调。
+ *
+ * 六项等宽分散铺满整行（不再靠左挤成一坨），每项自带图标与色调，
+ * 项与项之间用竖线分隔。
+ */
 function SummaryStrip() {
+  const items = [...MODEL_SUMMARY, ...MODEL_CLOSURE]
+
   return (
     <div
-      className="flex shrink-0 items-center gap-2.5 rounded-[8px] px-3 py-2"
+      className="flex shrink-0 items-stretch gap-1 rounded-[8px] px-2 py-1.5"
       style={{
         border: '1px solid var(--ck-card-border)',
         background: 'linear-gradient(90deg, var(--ck-card-from), var(--ck-card-to))',
       }}
     >
-      <i className="ri-error-warning-fill shrink-0 text-[15px] text-(--ck-red)" aria-hidden />
-
-      {MODEL_SUMMARY.map((item, i) => (
-        <span key={item.label} className="flex shrink-0 items-center gap-2.5">
+      {items.map((item, i) => (
+        <span key={item.label} className="flex min-w-0 flex-1 items-center">
           {i > 0 ? <Divider /> : null}
-          <span className="flex items-baseline gap-1 whitespace-nowrap">
-            <span className="text-[12.5px] leading-none text-(--ck-title-sub)">{item.label}</span>
-            <span className="ck-glow-num text-[17px] leading-none font-bold text-(--ck-cyan)">
-              {item.value}
+
+          <span className="flex min-w-0 flex-1 items-center justify-center gap-2">
+            <i
+              className={`${item.icon} shrink-0 text-[17px]`}
+              style={{ color: `var(${item.tone})` }}
+              aria-hidden
+            />
+            <span className="flex items-baseline gap-1 whitespace-nowrap">
+              <span className="text-[14px] leading-none text-(--ck-title-sub)">{item.label}</span>
+              <span
+                className="ck-glow-num text-[19px] leading-none font-bold"
+                style={{ color: `var(${item.tone})` }}
+              >
+                {item.value}
+              </span>
+              <span className="text-[12.5px] leading-none text-(--text-tertiary)">{item.unit}</span>
             </span>
-            <span className="text-[11px] leading-none text-(--text-tertiary)">{item.unit}</span>
           </span>
         </span>
       ))}
-
-      <Divider />
-
-      <span className="flex min-w-0 flex-1 items-baseline gap-1.5 whitespace-nowrap">
-        {MODEL_CLOSURE.map((item, i) => (
-          <span key={item.label} className="flex items-baseline gap-1">
-            {i > 0 ? <span className="text-[12px] text-(--text-tertiary)">、</span> : null}
-            <span className="text-[12.5px] leading-none text-(--ck-title-sub)">{item.label}</span>
-            <span className="text-[15px] leading-none font-bold text-(--ck-cyan)">{item.value}</span>
-            <span className="text-[11px] leading-none text-(--text-tertiary)">{item.unit}</span>
-          </span>
-        ))}
-      </span>
     </div>
   )
 }
 
 function Divider() {
-  return <span className="h-[13px] w-px shrink-0 bg-(--ck-panel-inner-border)" aria-hidden />
+  return <span className="mx-1 h-[16px] w-px shrink-0 bg-(--ck-panel-inner-border)" aria-hidden />
 }
 
 /** 执行任务概览：表头 + 四行可点任务，点中的一行左侧亮条 + 高亮底 */
@@ -138,14 +159,14 @@ function TaskOverview({
     <div className="flex shrink-0 flex-col gap-1.5">
       <div className="flex items-center justify-between gap-2">
         <span className="flex items-center gap-1.5">
-          <i className="ri-list-check-2 text-[14px] text-(--ck-cyan)" aria-hidden />
-          <span className="text-[14px] leading-none font-semibold text-(--ck-title)">
+          <i className="ri-list-check-2 text-[16px] text-(--ck-cyan)" aria-hidden />
+          <span className="text-[16px] leading-none font-semibold text-(--ck-title)">
             执行任务概览
           </span>
         </span>
         <button
           type="button"
-          className="cursor-pointer text-[12px] leading-none text-(--ck-title-sub) transition-colors hover:text-(--ck-cyan)"
+          className="cursor-pointer text-[13.5px] leading-none text-(--ck-title-sub) transition-colors hover:text-(--ck-cyan)"
         >
           查看更多
         </button>
@@ -156,13 +177,13 @@ function TaskOverview({
         style={{ border: '1px solid var(--ck-card-border)' }}
       >
         <div
-          className="grid shrink-0 items-center gap-2 px-2.5 py-[7px]"
+          className="grid shrink-0 items-center gap-2 px-3 py-[6px]"
           style={{ gridTemplateColumns: TASK_COLS, background: 'var(--ck-table-head)' }}
         >
           {CONTROL_TASK_COLUMNS.map((col, i) => (
             <span
               key={col}
-              className={`text-[12px] leading-none font-semibold text-(--ck-title-sub) ${
+              className={`text-[13.5px] leading-none font-semibold text-(--ck-title-sub) ${
                 i === 0 ? '' : 'text-center'
               }`}
             >
@@ -203,7 +224,7 @@ function TaskRow({
       type="button"
       onClick={() => onSelect(task.id)}
       aria-pressed={active}
-      className="relative grid cursor-pointer items-center gap-2 px-2.5 py-[7px] text-left transition-colors"
+      className="relative grid cursor-pointer items-center gap-2 px-3 py-[6px] text-left transition-colors"
       style={{
         gridTemplateColumns: TASK_COLS,
         background: active
@@ -221,7 +242,7 @@ function TaskRow({
       />
 
       <span
-        className="truncate text-[12.5px] leading-none"
+        className="truncate text-[14px] leading-none"
         style={{
           color: active ? 'var(--ck-cyan)' : 'var(--foreground)',
           fontWeight: active ? 600 : 400,
@@ -229,28 +250,28 @@ function TaskRow({
       >
         {task.name}
       </span>
-      <span className="truncate text-center text-[12px] leading-none text-(--text-secondary)">
+      <span className="truncate text-center text-[13.5px] leading-none text-(--text-secondary)">
         {task.owner}
       </span>
-      <span className="text-center text-[12px] leading-none text-(--text-secondary) tabular-nums">
+      <span className="text-center text-[13.5px] leading-none text-(--text-secondary) tabular-nums">
         {task.time}
       </span>
       <span
-        className="text-center text-[12px] leading-none font-semibold"
+        className="text-center text-[13.5px] leading-none font-semibold"
         style={{ color: statusColor }}
       >
         {task.status}
       </span>
 
       <span className="flex items-center gap-1.5">
-        <span className="h-[6px] min-w-0 flex-1 overflow-hidden rounded-full bg-(--ck-track)">
+        <span className="h-[8px] min-w-0 flex-1 overflow-hidden rounded-full bg-(--ck-track)">
           <span
             className="block h-full rounded-full"
             style={{ width: `${task.progress}%`, background: statusColor }}
           />
         </span>
         <span
-          className="w-[32px] shrink-0 text-right text-[12px] leading-none font-semibold tabular-nums"
+          className="w-[38px] shrink-0 text-right text-[13.5px] leading-none font-semibold tabular-nums"
           style={{ color: statusColor }}
         >
           {task.progress}%
@@ -259,4 +280,3 @@ function TaskRow({
     </button>
   )
 }
-

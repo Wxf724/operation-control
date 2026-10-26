@@ -16,7 +16,7 @@ export function TrendPanel({ className = '' }: { className?: string }) {
       title="近10日运行趋势"
       className={`flex flex-col ${className}`}
       extra={
-        <div className="flex items-center gap-4 text-[12px] leading-none">
+        <div className="flex items-center gap-4 text-[14px] leading-none">
           <ForecastItem label={PEAK_FORECAST.dateLabel} value={PEAK_FORECAST.date} />
           <ForecastItem label={PEAK_FORECAST.totalLabel} value={PEAK_FORECAST.total} />
         </div>
@@ -44,12 +44,13 @@ function ForecastItem({ label, value }: { label: string; value: string }) {
 }
 
 function buildTrendOption(c: Record<ChartVarName, string>) {
-  const axisLabel = { color: c['--ck-axis'], fontSize: 11 }
+  // 立成整屏后画布更宽更高，坐标轴与图例字号跟着放大一档
+  const axisLabel = { color: c['--ck-axis'], fontSize: 13 }
   const splitLine = { lineStyle: { color: c['--ck-grid'], type: 'dashed' as const } }
 
   const barBase = {
     type: 'bar' as const,
-    barWidth: 7,
+    barWidth: 10,
     barGap: '40%',
     itemStyle: { borderRadius: [2, 2, 0, 0] as [number, number, number, number] },
   }
@@ -64,19 +65,20 @@ function buildTrendOption(c: Record<ChartVarName, string>) {
       trigger: 'axis',
       backgroundColor: c['--ck-tooltip-bg'],
       borderWidth: 0,
-      textStyle: { color: c['--ck-tooltip-text'], fontSize: 12 },
+      textStyle: { color: c['--ck-tooltip-text'], fontSize: 13 },
       axisPointer: { type: 'shadow', shadowStyle: { color: c['--ck-grid'] } },
     },
     legend: {
+      // 图例居中：贴着右边会压住右侧 Y 轴的「单位：%」轴名
       top: 2,
-      right: 8,
-      itemWidth: 10,
-      itemHeight: 10,
-      itemGap: 14,
-      textStyle: { color: c['--text-secondary'], fontSize: 11 },
+      left: 'center',
+      itemWidth: 12,
+      itemHeight: 12,
+      itemGap: 16,
+      textStyle: { color: c['--text-secondary'], fontSize: 13 },
       data: ['单据接收量', '待处理单据量', '单据完成量', '单据完成率'],
     },
-    grid: { left: 46, right: 44, top: 38, bottom: 24 },
+    grid: { left: 56, right: 64, top: 44, bottom: 28 },
     xAxis: {
       type: 'category',
       data: TREND_DATA.map((d) => d.date),
@@ -88,7 +90,7 @@ function buildTrendOption(c: Record<ChartVarName, string>) {
       {
         type: 'value',
         name: '单位：笔',
-        nameTextStyle: { color: c['--text-tertiary'], fontSize: 11 },
+        nameTextStyle: { color: c['--text-tertiary'], fontSize: 13 },
         min: 0,
         max: 2000,
         interval: 500,
@@ -99,7 +101,7 @@ function buildTrendOption(c: Record<ChartVarName, string>) {
       {
         type: 'value',
         name: '单位：%',
-        nameTextStyle: { color: c['--text-tertiary'], fontSize: 11 },
+        nameTextStyle: { color: c['--text-tertiary'], fontSize: 13 },
         min: 0,
         max: 100,
         interval: 20,

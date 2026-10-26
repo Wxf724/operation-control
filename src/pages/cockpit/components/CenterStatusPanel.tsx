@@ -48,7 +48,7 @@ export function CenterStatusPanel({ className = '' }: { className?: string }) {
 
 function CenterCardGrid() {
   return (
-    <div className="grid h-full grid-cols-5 gap-2 px-3 pt-3 pb-3">
+    <div className="grid h-full grid-cols-5 gap-2.5 px-3 pt-2.5 pb-3">
       {CENTER_STATUS.map((item) => (
         <CenterCard key={item.name} data={item} />
       ))}
@@ -61,7 +61,7 @@ function CenterCard({ data }: { data: CenterStatus }) {
 
   return (
     <div
-      className="flex flex-col rounded-[3px] border px-2 py-2"
+      className="flex flex-col rounded-[3px] border px-2.5 py-2"
       style={{
         borderColor: data.danger ? 'var(--ck-red)' : 'var(--ck-panel-inner-border)',
         background: data.danger ? 'var(--danger-light)' : 'var(--ck-panel-inner)',
@@ -69,11 +69,11 @@ function CenterCard({ data }: { data: CenterStatus }) {
       }}
     >
       <div className="flex items-center justify-between gap-1 pb-1.5">
-        <span className="text-[14px] leading-none font-semibold" style={{ color: accent }}>
+        <span className="text-[16px] leading-none font-semibold" style={{ color: accent }}>
           {data.name}
         </span>
         <span
-          className="rounded-[2px] px-1 py-[2px] text-[11px] leading-none"
+          className="rounded-[2px] px-1.5 py-[3px] text-[12px] leading-none"
           style={{
             color: accent,
             border: `1px solid color-mix(in srgb, ${accent} 50%, transparent)`,
@@ -89,17 +89,17 @@ function CenterCard({ data }: { data: CenterStatus }) {
         style={{ background: `color-mix(in srgb, ${accent} 30%, transparent)` }}
       />
 
-      <div className="flex flex-1 flex-col justify-between gap-1">
+      <div className="flex flex-1 flex-col justify-between gap-0.5">
         {CENTER_METRIC_ROWS.map((row) => (
           <div key={row.key} className="flex items-baseline justify-between gap-1">
             <span
-              className="text-[12px] leading-none"
+              className="text-[13.5px] leading-tight"
               style={{ color: data.danger ? 'var(--ck-red)' : 'var(--text-tertiary)' }}
             >
               {row.label}
             </span>
             <span
-              className="text-[13px] leading-none font-semibold tabular-nums"
+              className="text-[15px] leading-tight font-semibold tabular-nums"
               style={{ color: data.danger ? 'var(--ck-red)' : 'var(--ck-green)' }}
             >
               {data[row.key]}

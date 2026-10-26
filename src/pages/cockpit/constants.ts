@@ -9,8 +9,40 @@ import type {
   TrendPoint,
 } from './types'
 
-/** 设计稿尺寸：超宽大屏 3540×940 */
-export const COCKPIT_CANVAS = { width: 3540, height: 940 } as const
+/**
+ * 首页三页的统一设计稿尺寸：16:9。
+ *
+ * 原来一整屏是「左栏 914 + 中栏 1506 + 右栏 968」的超宽画布；拆成三页后每页都是
+ * 一整屏，所以统一按 16:9 出稿。
+ */
+export const COCKPIT_PAGE_CANVAS = { width: 1600, height: 900 } as const
+
+/**
+ * 地图页画布再小一档（同样 16:9）：等比放大到视口后整页元素都更大，
+ * 两块模块列往两边靠，地图占满中间。
+ */
+export const COCKPIT_MAP_CANVAS = { width: 1440, height: 810 } as const
+
+/**
+ * 三页统一的外留白与间隙，对齐政策分析页的版面骨架（40 / 21 / 27）：
+ * 左右各 40，面板之间 21，底部 27 —— 四周都留出呼吸空间，不要顶满。
+ */
+export const COCKPIT_PAGE_PADDING = 40
+export const COCKPIT_PAGE_GAP = 21
+export const COCKPIT_PAGE_PAD_BOTTOM = 27
+/** 页面顶部留白（运营/模型两页没有顶栏，留一档与政策分析的 7px 顶隙观感一致） */
+export const COCKPIT_PAGE_PAD_TOP = 14
+
+/**
+ * 三页的顺序，与原来没拆时的「左 → 中 → 右」一致：
+ *   1. 运营结果与趋势（原左栏）
+ *   2. 全景座舱（原中栏 · 地图页，默认停在这一页）
+ *   3. 模型执行与操作（原右栏）
+ */
+export const COCKPIT_PAGE_LABELS = ['运营结果与趋势', '全景座舱', '模型执行与操作'] as const
+
+/** 默认显示第几页（0 起）：地图页在中间 */
+export const COCKPIT_DEFAULT_PAGE = 1
 
 export const COCKPIT_TITLE = '运营监控与调控全景座舱'
 
@@ -178,6 +210,7 @@ export const TEAM_STATUS: CenterStatus[] = [
   },
 ]
 
+/** 各中心卡片里的指标行（保持原有四项，不额外加指标） */
 export const CENTER_METRIC_ROWS = [
   { key: 'pending', label: '待处理任务量' },
   { key: 'overtime', label: '累计超时任务量' },

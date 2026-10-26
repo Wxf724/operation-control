@@ -8,18 +8,30 @@ import type { ControlTask } from './types'
  * 点击任务行时下方四个模型整体切换到该任务的结果。
  */
 
-/** 顶部统计条，逐项照参考稿 */
+/** 顶部统计条，逐项照参考稿；每项自带图标与色调，横向分散排布 */
 export const MODEL_SUMMARY = [
-  { label: '今日识别异常', value: '5', unit: '项' },
-  { label: '完成诊断', value: '5', unit: '项' },
-  { label: '生成策略', value: '4', unit: '项' },
+  {
+    label: '今日识别异常',
+    value: '5',
+    unit: '项',
+    icon: 'ri-alarm-warning-line',
+    tone: '--ck-red',
+  },
+  { label: '完成诊断', value: '5', unit: '项', icon: 'ri-stethoscope-line', tone: '--ck-cyan' },
+  {
+    label: '生成策略',
+    value: '4',
+    unit: '项',
+    icon: 'ri-lightbulb-flash-line',
+    tone: '--ck-orange',
+  },
 ] as const
 
 /** 统计条末段的三个闭环状态 */
 export const MODEL_CLOSURE = [
-  { label: '闭环', value: '2', unit: '项' },
-  { label: '执行中', value: '1', unit: '项' },
-  { label: '待协调', value: '1', unit: '项' },
+  { label: '闭环', value: '2', unit: '项', icon: 'ri-checkbox-circle-line', tone: '--ck-green' },
+  { label: '执行中', value: '1', unit: '项', icon: 'ri-play-circle-line', tone: '--ck-blue' },
+  { label: '待协调', value: '1', unit: '项', icon: 'ri-time-line', tone: '--ck-purple' },
 ] as const
 
 export const CONTROL_TASK_COLUMNS = ['任务名称', '执行人', '执行时间', '状态', '进度'] as const
