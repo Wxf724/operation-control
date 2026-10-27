@@ -171,9 +171,9 @@ export function buildTrendOption(c: Colors) {
         symbol: 'circle',
         symbolSize: 7,
         data: JOB_COMPLETE_TREND.map((d) => d.finished),
-        lineStyle: { color: c['--ck-cyan'], width: 2.6 },
-        itemStyle: { color: c['--ck-cyan'] },
-        areaStyle: { color: vGradient(alpha(c['--ck-cyan'], 0.34), alpha(c['--ck-cyan'], 0.02)) },
+        lineStyle: { color: c['--ck-green'], width: 2.6 },
+        itemStyle: { color: c['--ck-green'] },
+        areaStyle: { color: vGradient(alpha(c['--ck-green'], 0.18), alpha(c['--ck-green'], 0.02)) },
       },
     ],
   }

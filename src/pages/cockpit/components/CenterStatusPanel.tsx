@@ -89,7 +89,7 @@ function CenterCard({ data }: { data: CenterStatus }) {
         style={{ background: `color-mix(in srgb, ${accent} 30%, transparent)` }}
       />
 
-      <div className="flex flex-1 flex-col justify-between gap-0.5">
+      <div className="flex flex-1 flex-col justify-around gap-0.5">
         {CENTER_METRIC_ROWS.map((row) => (
           <div key={row.key} className="flex items-baseline justify-between gap-1">
             <span

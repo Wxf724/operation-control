@@ -65,7 +65,7 @@ export const JOB_OVERALL_STATS: JobIconStat[] = [
     value: '160',
     unit: '笔',
     icon: 'ri-file-check-line',
-    colorVar: '--ck-blue',
+    colorVar: '--ck-green',
   },
 ]
 

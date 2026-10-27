@@ -58,6 +58,8 @@ export interface DateRangePickerProps {
   defaultOpenEdge?: DateRangeEdge
   /** 面板初始页签 */
   defaultTab?: DatePickerTab
+  /** 弹出面板对齐方向；顶栏右侧使用 right，避免超出画布 */
+  panelAlign?: 'left' | 'right'
   className?: string
 }
 
@@ -180,6 +182,7 @@ export function DateRangePicker({
   today,
   defaultOpenEdge,
   defaultTab = 'calendar',
+  panelAlign = 'left',
   className = '',
 }: DateRangePickerProps) {
   const [openEdge, setOpenEdge] = useState<DateRangeEdge | null>(defaultOpenEdge ?? null)
@@ -253,6 +256,7 @@ export function DateRangePicker({
             selected={text}
             baseDate={baseDate}
             defaultTab={defaultTab}
+            align={panelAlign}
             onPick={(iso) => commit(edge, iso)}
             onClose={() => setOpenEdge(null)}
           />
@@ -276,6 +280,7 @@ interface DatePickerPanelProps {
   selected: string
   baseDate: Date
   defaultTab: DatePickerTab
+  align: 'left' | 'right'
   onPick: (iso: string) => void
   onClose: () => void
 }
@@ -284,6 +289,7 @@ function DatePickerPanel({
   selected,
   baseDate,
   defaultTab,
+  align,
   onPick,
   onClose,
 }: DatePickerPanelProps) {
@@ -306,7 +312,7 @@ function DatePickerPanel({
 
   return (
     <div
-      className="absolute top-[calc(100%+10px)] left-0 z-50 w-[276px] overflow-hidden rounded-[8px] border border-(--border) bg-(--surface)"
+      className={`absolute top-[calc(100%+10px)] z-50 w-[276px] overflow-hidden rounded-[8px] border border-(--border) bg-(--surface) ${align === 'right' ? 'right-0' : 'left-0'}`}
       style={{ boxShadow: 'var(--ck-panel-shadow, 0 10px 28px rgba(0, 0, 0, 0.18))' }}
     >
       {/* 页签 */}

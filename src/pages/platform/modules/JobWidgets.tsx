@@ -239,6 +239,7 @@ const TICK_COUNT = 41
 
 /** 报表出具情况：半圆刻度仪表盘（0–1 刻度 + 指针）+ 出具量明细 */
 export function ReportGauge({ item }: { item: JobReportGauge }) {
+  const completedTone = 'var(--ck-green)'
   const cx = 84
   const cy = 86
   const active = Math.round((item.rate / 100) * (TICK_COUNT - 1))
@@ -262,7 +263,7 @@ export function ReportGauge({ item }: { item: JobReportGauge }) {
                 y1={p1.y}
                 x2={p2.x}
                 y2={p2.y}
-                stroke={i <= active ? 'var(--ck-cyan)' : 'var(--ck-track)'}
+                stroke={i <= active ? completedTone : 'var(--ck-track)'}
                 strokeWidth={major ? 2.8 : 1.5}
                 strokeLinecap="round"
               />
@@ -309,7 +310,7 @@ export function ReportGauge({ item }: { item: JobReportGauge }) {
             y1={hub.y}
             x2={tip.x}
             y2={tip.y}
-            stroke="var(--ck-cyan)"
+            stroke={completedTone}
             strokeWidth="1.8"
             strokeLinecap="round"
           />
@@ -325,7 +326,7 @@ export function ReportGauge({ item }: { item: JobReportGauge }) {
       </span>
 
       <div className="flex w-full flex-col gap-1.5 pt-2">
-        <GaugeRow label="已出具量" value={item.issued} tone="var(--ck-cyan)" />
+        <GaugeRow label="已出具量" value={item.issued} tone={completedTone} />
         <GaugeRow label="待出具量" value={item.pending} tone="var(--ck-red)" />
       </div>
     </div>

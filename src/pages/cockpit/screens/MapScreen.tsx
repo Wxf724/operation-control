@@ -1,8 +1,8 @@
 ﻿import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { ScreenHeader, ScreenScaler } from '@/components/cockpit-ui'
-import type { ScreenLayout } from '@/components/cockpit-ui'
+import { DateRangePicker, ScreenHeader, ScreenScaler } from '@/components/cockpit-ui'
+import type { DateRangeValue, ScreenLayout } from '@/components/cockpit-ui'
 
 import { AlertBanner } from '../components/AlertBanner'
 import { ChinaMap } from '../components/ChinaMap'
@@ -46,7 +46,7 @@ export function MapScreen({ screenLayout }: { screenLayout?: ScreenLayout }) {
         layout={screenLayout}
       >
         <div className="flex h-full w-full flex-col">
-          <ScreenHeader title={COCKPIT_TITLE} height={72} right={<HeaderRight />} />
+          <ScreenHeader title={COCKPIT_TITLE} height={72} right={<HeaderRight />} className="z-20" />
 
           <div
             className="flex min-h-0 flex-1 flex-col"
@@ -96,6 +96,8 @@ export function MapScreen({ screenLayout }: { screenLayout?: ScreenLayout }) {
 
 /** 顶栏右侧：播报开关 + 日期区间 */
 function HeaderRight() {
+  const [dateRange, setDateRange] = useState<DateRangeValue>(DATE_RANGE)
+
   return (
     <>
       <button
@@ -106,15 +108,9 @@ function HeaderRight() {
         <i className="ri-volume-up-line" aria-hidden />
       </button>
 
-      <div className="flex items-center gap-2 rounded-[3px] border border-(--border) bg-(--ck-panel-inner) px-2.5 py-[6px]">
-        <i className="ri-calendar-line text-[14px] text-(--ck-cyan)" aria-hidden />
-        <span className="text-[13px] leading-none text-(--ck-title-sub) tabular-nums">
-          {DATE_RANGE.start}
-        </span>
-        <span className="text-[12px] leading-none text-(--text-tertiary)">至</span>
-        <span className="text-[13px] leading-none text-(--ck-title-sub) tabular-nums">
-          {DATE_RANGE.end}
-        </span>
+      <div className="flex items-center gap-2 rounded-[3px] border border-(--border) bg-(--ck-panel-inner) px-2 py-[5px]">
+        <i className="ri-calendar-2-line text-[14px] text-(--ck-cyan)" aria-hidden />
+        <DateRangePicker value={dateRange} onChange={setDateRange} panelAlign="right" />
       </div>
     </>
   )

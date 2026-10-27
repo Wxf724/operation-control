@@ -15,7 +15,8 @@ import {
 /**
  * 首页第 1 页：运营结果区 + 各中心核心数据运行情况 + 近10日运行趋势。
  *
- * 三块面板保留 2.4 : 2.7 : 3.4 的高度分配，画布、间距和标题字号与管理平台一致。
+ * 运营结果区缩减五分之一高度，腾出的空间分配给各中心运行情况。
+ * 三块面板按 1.92 : 3.18 : 3.4 分配，画布、间距和标题字号与管理平台一致。
  */
 export function OverviewScreen({ screenLayout }: { screenLayout?: ScreenLayout }) {
   return (
@@ -34,8 +35,8 @@ export function OverviewScreen({ screenLayout }: { screenLayout?: ScreenLayout }
             gap: COCKPIT_PAGE_GAP,
           }}
         >
-          <ResultKpiPanel className="min-h-0 flex-[2.4]" />
-          <CenterStatusPanel className="min-h-0 flex-[2.7]" />
+          <ResultKpiPanel className="min-h-0 flex-[1.92]" />
+          <CenterStatusPanel className="min-h-0 flex-[3.18]" />
           <TrendPanel className="min-h-0 flex-[3.4]" />
         </div>
       </ScreenScaler>
