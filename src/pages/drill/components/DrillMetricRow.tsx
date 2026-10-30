@@ -68,13 +68,12 @@ export function DrillMetricRow({ items, rows, columns, className = '' }: DrillMe
                       {item.unit}
                     </span>
                   ) : null}
+                  {item.sub ? (
+                    <span className="truncate text-[12px] leading-none text-(--text-tertiary)">
+                      {item.sub}
+                    </span>
+                  ) : null}
                 </span>
-
-                {item.sub ? (
-                  <span className="ml-auto shrink-0 text-[12px] leading-none text-(--text-tertiary)">
-                    {item.sub}
-                  </span>
-                ) : null}
               </div>
             )
           })}
