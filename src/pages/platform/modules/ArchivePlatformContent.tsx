@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 
 import { PanelBox, SectionTitle, useChartColors } from '@/components/cockpit-ui'
+import { DrillTitleLink } from '@/pages/drill/components'
+import { ARCHIVE_COLLECT_DRILL_PATH, ARCHIVE_WORK_DRILL_PATH } from '@/pages/drill/archiveConstants'
 
 import { buildMailTrendOption, buildProblemOption } from './archiveCharts'
 import {
@@ -86,7 +88,7 @@ function CollectPanel({ className = '' }: { className?: string }) {
 
   return (
     <PanelBox
-      title={<span className="italic">档案收集情况</span>}
+      title={<DrillTitleLink title="档案收集情况" to={ARCHIVE_COLLECT_DRILL_PATH} />}
       className={`flex flex-col ${className}`}
       bodyClassName="flex min-h-0 flex-1 gap-3 px-4 pt-2.5 pb-3.5"
     >
@@ -194,12 +196,16 @@ function OperationPanel({ className = '' }: { className?: string }) {
 
   return (
     <PanelBox
-      title={<span className="italic">档案作业情况</span>}
+      title={<DrillTitleLink title="档案作业情况" to={ARCHIVE_WORK_DRILL_PATH} />}
       className={`flex flex-col ${className}`}
       bodyClassName="flex min-h-0 flex-1 flex-col gap-3.5 px-4 pt-2.5 pb-3.5"
     >
       {/* ── 单据签收情况 ── */}
-      <Group title="单据签收情况" className="min-h-0 flex-[1.42]" bodyClassName="items-center gap-3.5">
+      <Group
+        title="单据签收情况"
+        className="min-h-0 flex-[1.42]"
+        bodyClassName="items-center gap-3.5"
+      >
         <Ring ring={ARCHIVE_RECEIPT.total} size={140} stroke={15} labelWidth={142} />
 
         <div className="flex min-w-0 max-w-[452px] flex-1 flex-col justify-center gap-3.5">
@@ -218,7 +224,10 @@ function OperationPanel({ className = '' }: { className?: string }) {
 
         <i className="ri-arrow-right-line shrink-0 text-[26px] text-(--ck-blue)" aria-hidden />
 
-        <Card className="w-[212px] shrink-0" bodyClassName="flex-col items-center justify-center gap-2.5 px-3 py-3.5">
+        <Card
+          className="w-[212px] shrink-0"
+          bodyClassName="flex-col items-center justify-center gap-2.5 px-3 py-3.5"
+        >
           <span className="flex items-center gap-1.5 text-[14px] leading-none text-(--text-secondary)">
             <i
               className={`${ARCHIVE_RECEIPT.machine.icon} text-[17px] text-(--ck-blue)`}

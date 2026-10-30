@@ -31,6 +31,8 @@ export interface DrillMetric {
   label: string
   value: string
   unit?: string
+  /** 数值下方的一行补充说明，如「问题报数量 240」 */
+  sub?: string
   /** 取色用的 CSS 变量名，如 `--ck-cyan` */
   colorVar: string
 }

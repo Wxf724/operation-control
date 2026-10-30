@@ -3,6 +3,8 @@ import { useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 
 import { PanelBox, useChartColors } from '@/components/cockpit-ui'
+import { DrillTitleLink } from '@/pages/drill/components'
+import { RPA_CONTRIB_DRILL_PATH, RPA_RUN_DRILL_PATH } from '@/pages/drill/rpaConstants'
 
 import {
   buildManualRingOption,
@@ -157,7 +159,7 @@ function Cell({ children, className = '' }: { children: ReactNode; className?: s
 export function OperationPanel({ className = '' }: { className?: string }) {
   return (
     <PanelBox
-      title="运行情况"
+      title={<DrillTitleLink title="运行情况" to={RPA_RUN_DRILL_PATH} />}
       className={`flex flex-col ${className}`}
       bodyClassName="flex min-h-0 flex-1 gap-1 px-3.5 pt-2.5 pb-3"
     >
@@ -307,7 +309,7 @@ export function ContributionPanel({ className = '' }: { className?: string }) {
 
   return (
     <PanelBox
-      title="贡献情况"
+      title={<DrillTitleLink title="贡献情况" to={RPA_CONTRIB_DRILL_PATH} />}
       className={`flex flex-col ${className}`}
       bodyClassName="flex min-h-0 flex-1 gap-4 px-4 pt-1.5 pb-4"
     >

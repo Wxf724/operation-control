@@ -265,12 +265,7 @@ export interface StatTileProps {
 }
 
 /** 面板顶部的一枚大数字：数值在上、透视底座在下、口径在最下 */
-export function StatTile({
-  label,
-  value,
-  unit,
-  color = 'var(--ck-title)',
-}: StatTileProps) {
+export function StatTile({ label, value, unit, color = 'var(--ck-title)' }: StatTileProps) {
   return (
     <div className="flex min-w-0 flex-1 flex-col items-center gap-1.5">
       <span className="flex items-baseline gap-0.5">

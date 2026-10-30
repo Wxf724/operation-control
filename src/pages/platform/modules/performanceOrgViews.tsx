@@ -1,6 +1,13 @@
 import { useMemo } from 'react'
 
 import { PanelBox, SectionTitle, useChartColors } from '@/components/cockpit-ui'
+import { DrillTitleLink } from '@/pages/drill/components'
+import {
+  PERFORMANCE_EFFICIENCY_DRILL_PATH,
+  PERFORMANCE_QUALITY_DRILL_PATH,
+  PERFORMANCE_SERVICE_DRILL_PATH,
+  PERFORMANCE_SATISFACTION_DRILL_PATH,
+} from '@/pages/drill/performanceConstants'
 
 import {
   buildSharedQtyCenterOption,
@@ -59,7 +66,10 @@ export function SharedCompanyView() {
  */
 function EfficiencyPanel({ className = '' }: { className?: string }) {
   return (
-    <PanelBox title="效率管理情况" className={`flex flex-col ${className}`}>
+    <PanelBox
+      title={<DrillTitleLink title="效率管理情况" to={PERFORMANCE_EFFICIENCY_DRILL_PATH} />}
+      className={`flex flex-col ${className}`}
+    >
       <div className="flex h-full min-h-0 gap-3 px-3.5 pt-2.5 pb-3">
         <div className="flex min-h-0 w-[338px] shrink-0 flex-col gap-3">
           <QtyCenterSection className="min-h-0 flex-[1.34]" />
@@ -223,7 +233,10 @@ function QualityPanel({ className = '' }: { className?: string }) {
   const option = useMemo(() => buildSharedReportLinesOption(c), [c])
 
   return (
-    <PanelBox title="质量管理情况" className={`flex flex-col ${className}`}>
+    <PanelBox
+      title={<DrillTitleLink title="质量管理情况" to={PERFORMANCE_QUALITY_DRILL_PATH} />}
+      className={`flex flex-col ${className}`}
+    >
       <div className="flex h-full min-h-0 flex-col gap-2.5 px-3.5 pt-2.5 pb-3">
         <SectionTitle>中心</SectionTitle>
 
@@ -280,7 +293,10 @@ function QualityPanel({ className = '' }: { className?: string }) {
 /** 成本费用总额底座 + 四中心图例 / 企业明细表 / 预算执行准确率环 + 四中心图例 */
 function ServiceEnterprisePanel({ className = '' }: { className?: string }) {
   return (
-    <PanelBox title="服务企业情况" className={`flex flex-col ${className}`}>
+    <PanelBox
+      title={<DrillTitleLink title="服务企业情况" to={PERFORMANCE_SERVICE_DRILL_PATH} />}
+      className={`flex flex-col ${className}`}
+    >
       <div className="flex h-full min-h-0 flex-col gap-2.5 px-3.5 pt-2.5 pb-3">
         <div className="flex h-[96px] shrink-0 items-center gap-3">
           <OrgPedestal
@@ -354,7 +370,10 @@ function SatisfactionPanel({ className = '' }: { className?: string }) {
   const { score, scoreLegend, complaint, complaintLegend } = SHARED_SATISFACTION
 
   return (
-    <PanelBox title="服务满意度情况" className={`flex flex-col ${className}`}>
+    <PanelBox
+      title={<DrillTitleLink title="服务满意度情况" to={PERFORMANCE_SATISFACTION_DRILL_PATH} />}
+      className={`flex flex-col ${className}`}
+    >
       <div className="flex h-full min-h-0 flex-col justify-between gap-4 px-3.5 pt-3 pb-3.5">
         <div className="flex min-h-0 flex-1 items-center gap-3">
           <OrgPedestal value={score.value} label={score.label} width={104} />

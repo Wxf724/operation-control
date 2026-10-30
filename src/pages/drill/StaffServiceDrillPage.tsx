@@ -44,7 +44,7 @@ export function StaffServiceDrillPage() {
     <DrillScreen>
       <StaffDrillHeader title="服务情况" className="h-[58px]" />
 
-      <DrillMetricRow items={STAFF_SERVICE_METRICS} className="h-[92px]" />
+      <DrillMetricRow items={STAFF_SERVICE_METRICS} />
 
       <DrillTabBar
         tabs={STAFF_SERVICE_TABS}

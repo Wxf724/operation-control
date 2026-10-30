@@ -47,7 +47,7 @@ export function JobOverallDrillPage() {
         className="h-[78px]"
       />
 
-      <DrillMetricRow items={OVERALL_METRICS} className="h-[92px]" />
+      <DrillMetricRow items={OVERALL_METRICS} />
 
       <DrillTabBar
         tabs={OVERALL_TABS}

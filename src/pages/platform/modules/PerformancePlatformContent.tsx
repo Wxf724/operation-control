@@ -1,6 +1,8 @@
 import { useMemo } from 'react'
 
 import { PanelBox, SectionTitle, useChartColors } from '@/components/cockpit-ui'
+import { DrillTitleLink } from '@/pages/drill/components'
+import { PERFORMANCE_EFFICIENCY_DRILL_PATH } from '@/pages/drill/performanceConstants'
 
 import type { PlatformContentProps } from '../types'
 import { RESIDENT_TEAM_SET } from '../constants'
@@ -50,7 +52,10 @@ export function PerformancePlatformContent({ org }: PlatformContentProps) {
 
 function EfficiencyPanel({ className = '' }: { className?: string }) {
   return (
-    <PanelBox title="效率管理情况" className={`flex flex-col ${className}`}>
+    <PanelBox
+      title={<DrillTitleLink title="效率管理情况" to={PERFORMANCE_EFFICIENCY_DRILL_PATH} />}
+      className={`flex flex-col ${className}`}
+    >
       <div className="flex h-full gap-3 px-4 pt-2 pb-2.5">
         <QuantitySection className="w-[752px] shrink-0" />
         <span className="w-px shrink-0 self-stretch bg-(--ck-panel-inner-border)" />

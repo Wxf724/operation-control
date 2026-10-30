@@ -50,7 +50,7 @@ export function StaffEfficiencyDrillPage() {
     <DrillScreen>
       <StaffDrillHeader title="效率情况" className="h-[58px]" />
 
-      <DrillMetricRow items={STAFF_EFFICIENCY_METRICS} className="h-[92px]" />
+      <DrillMetricRow items={STAFF_EFFICIENCY_METRICS} />
 
       <DrillTabBar
         tabs={STAFF_EFFICIENCY_TABS}

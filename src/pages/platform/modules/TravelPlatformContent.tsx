@@ -2,6 +2,8 @@ import ReactECharts from 'echarts-for-react'
 import { useMemo, useState } from 'react'
 
 import { PanelBox, SectionTitle, useChartColors, useCssVars } from '@/components/cockpit-ui'
+import { DrillTitleLink } from '@/pages/drill/components'
+import { TRAVEL_USAGE_DRILL_PATH, TRAVEL_TRIP_DRILL_PATH } from '@/pages/drill/travelConstants'
 
 import { TravelDoubtPanel, TravelReimbursePanel } from './travelBottomPanels'
 import {
@@ -58,7 +60,7 @@ export function TravelPlatformContent() {
 function TravelUsagePanel({ className = '' }: { className?: string }) {
   return (
     <PanelBox
-      title="商旅使用情况"
+      title={<DrillTitleLink title="商旅使用情况" to={TRAVEL_USAGE_DRILL_PATH} />}
       className={`flex flex-col ${className}`}
       bodyClassName="flex min-h-0 flex-1 gap-3 px-3.5 pt-2 pb-2.5"
     >
@@ -208,7 +210,7 @@ function TravelSelect({ options, label }: { options: readonly string[]; label: s
 function TravelTripPanel({ className = '' }: { className?: string }) {
   return (
     <PanelBox
-      title="商旅出行情况"
+      title={<DrillTitleLink title="商旅出行情况" to={TRAVEL_TRIP_DRILL_PATH} />}
       className={`flex flex-col ${className}`}
       bodyClassName="flex min-h-0 flex-1 gap-4 px-3.5 pt-2 pb-2.5"
     >

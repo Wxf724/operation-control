@@ -2,6 +2,8 @@ import ReactECharts from 'echarts-for-react'
 import { useMemo } from 'react'
 
 import { PanelBox, SectionTitle, useChartColors } from '@/components/cockpit-ui'
+import { DrillTitleLink } from '@/pages/drill/components'
+import { CREDIT_APPEAL_DRILL_PATH, CREDIT_OVERALL_DRILL_PATH } from '@/pages/drill/creditConstants'
 
 import {
   buildAppealBarOption,
@@ -45,7 +47,7 @@ function OverviewPanel({ className = '' }: { className?: string }) {
 
   return (
     <PanelBox
-      title="信用整体情况"
+      title={<DrillTitleLink title="信用整体情况" to={CREDIT_OVERALL_DRILL_PATH} />}
       className={`flex flex-col ${className}`}
       bodyClassName="flex min-h-0 flex-1 flex-col"
     >
@@ -258,7 +260,7 @@ function AppealPanel({ className = '' }: { className?: string }) {
 
   return (
     <PanelBox
-      title="申诉处理情况"
+      title={<DrillTitleLink title="申诉处理情况" to={CREDIT_APPEAL_DRILL_PATH} />}
       className={`flex flex-col ${className}`}
       bodyClassName="flex min-h-0 flex-1 flex-col"
     >

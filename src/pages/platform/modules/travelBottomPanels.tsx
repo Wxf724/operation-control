@@ -1,4 +1,6 @@
 import { PanelBox, SectionTitle } from '@/components/cockpit-ui'
+import { DrillTitleLink } from '@/pages/drill/components'
+import { TRAVEL_EXPENSE_DRILL_PATH, TRAVEL_DOUBT_DRILL_PATH } from '@/pages/drill/travelConstants'
 
 import {
   TRAVEL_COST_GAUGE,
@@ -16,7 +18,7 @@ import { TravelCostIcon, TravelDoubtRing, TravelPlate } from './travelWidgets'
 export function TravelReimbursePanel({ className = '' }: { className?: string }) {
   return (
     <PanelBox
-      title="商旅报销情况"
+      title={<DrillTitleLink title="商旅报销情况" to={TRAVEL_EXPENSE_DRILL_PATH} />}
       className={`flex flex-col ${className}`}
       bodyClassName="flex min-h-0 flex-1 gap-3 px-3.5 pt-1.5 pb-2.5"
     >
@@ -116,7 +118,7 @@ function OverdueReimbTable() {
 export function TravelDoubtPanel({ className = '' }: { className?: string }) {
   return (
     <PanelBox
-      title="商旅疑点订单情况"
+      title={<DrillTitleLink title="商旅疑点订单情况" to={TRAVEL_DOUBT_DRILL_PATH} />}
       className={`flex flex-col ${className}`}
       bodyClassName="flex min-h-0 flex-1 items-center gap-2 px-4 pt-1 pb-3"
     >

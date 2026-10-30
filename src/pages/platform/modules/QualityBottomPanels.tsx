@@ -2,8 +2,13 @@ import ReactECharts from 'echarts-for-react'
 import { useMemo } from 'react'
 
 import { PanelBox, SectionTitle, useChartColors } from '@/components/cockpit-ui'
-
 import type { ChartVarName } from '@/components/cockpit-ui'
+import { DrillTitleLink } from '@/pages/drill/components'
+import {
+  QUALITY_APPEAL_DRILL_PATH,
+  QUALITY_BUSINESS_DRILL_PATH,
+  QUALITY_RECTIFY_DRILL_PATH,
+} from '@/pages/drill/qualityConstants'
 
 import {
   QUALITY_APPEAL,
@@ -20,7 +25,10 @@ import { DonutStat } from './qualityWidgets'
 /** 下行左：业务处理质量情况 + 业务处理差错情况 */
 export function BusinessQualityPanel({ className = '' }: { className?: string }) {
   return (
-    <PanelBox title="业务质量与差错情况" className={`flex flex-col ${className}`}>
+    <PanelBox
+      title={<DrillTitleLink title="业务质量与差错情况" to={QUALITY_BUSINESS_DRILL_PATH} />}
+      className={`flex flex-col ${className}`}
+    >
       <div className="flex h-full gap-3.5 px-4 pt-2 pb-3.5">
         <div className="flex w-[300px] shrink-0 flex-col">
           <SectionTitle className="mb-1">业务处理质量情况</SectionTitle>
@@ -137,7 +145,10 @@ export function AppealPanel({ className = '' }: { className?: string }) {
   const option = useMemo(() => buildAppealOption(c), [c])
 
   return (
-    <PanelBox title="申诉与争议管理情况" className={`flex flex-col ${className}`}>
+    <PanelBox
+      title={<DrillTitleLink title="申诉与争议管理情况" to={QUALITY_APPEAL_DRILL_PATH} />}
+      className={`flex flex-col ${className}`}
+    >
       <div className="flex h-full flex-col px-3.5 pt-1.5 pb-3">
         <div className="min-h-0 flex-[1.26]">
           <ReactECharts
@@ -320,7 +331,10 @@ function buildAppealOption(c: Record<ChartVarName, string>) {
 /** 下行右：整改数量 + 问题整改及时率 + 规则转化率 */
 export function RectifyPanel({ className = '' }: { className?: string }) {
   return (
-    <PanelBox title="整改与规则转化情况" className={`flex flex-col ${className}`}>
+    <PanelBox
+      title={<DrillTitleLink title="整改与规则转化情况" to={QUALITY_RECTIFY_DRILL_PATH} />}
+      className={`flex flex-col ${className}`}
+    >
       <div className="flex h-full flex-col px-4 pt-2.5 pb-3.5">
         <div className="flex flex-1 items-center gap-2">
           <div className="flex min-w-0 flex-1 flex-col gap-3">
@@ -385,8 +399,7 @@ export function RectifyPanel({ className = '' }: { className?: string }) {
             <span
               className="absolute inset-[11px] rounded-full"
               style={{
-                background:
-                  'radial-gradient(circle at 50% 35%, var(--ck-teal), var(--ck-green))',
+                background: 'radial-gradient(circle at 50% 35%, var(--ck-teal), var(--ck-green))',
                 boxShadow: 'var(--ck-card-shadow)',
               }}
             />

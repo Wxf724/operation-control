@@ -37,7 +37,7 @@ export function StaffJobDrillPage() {
         className="h-[56px]"
       />
 
-      <DrillMetricRow items={STAFF_JOB_METRICS} className="h-[92px]" />
+      <DrillMetricRow items={STAFF_JOB_METRICS} />
 
       <DrillTabBar
         tabs={STAFF_JOB_TYPE_TABS}

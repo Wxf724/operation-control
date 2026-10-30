@@ -35,7 +35,7 @@ export function JobLoadDrillPage() {
         className="h-[60px]"
       />
 
-      <DrillMetricRow items={tab.metrics} className="h-[92px]" />
+      <DrillMetricRow items={tab.metrics} />
 
       <DrillTable columns={tab.columns} rows={tab.rows} className="min-h-0 flex-1" />
     </DrillScreen>

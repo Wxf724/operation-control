@@ -1,6 +1,12 @@
 import { useMemo } from 'react'
 
 import { PanelBox, SectionTitle, useChartColors } from '@/components/cockpit-ui'
+import { DrillTitleLink } from '@/pages/drill/components'
+import {
+  PERFORMANCE_QUALITY_DRILL_PATH,
+  PERFORMANCE_SERVICE_DRILL_PATH,
+  PERFORMANCE_SATISFACTION_DRILL_PATH,
+} from '@/pages/drill/performanceConstants'
 
 import {
   PERF_BUDGET_ACCURACY,
@@ -17,7 +23,10 @@ export function QualityManagementPanel({ className = '' }: { className?: string 
   const option = useMemo(() => buildReportAccuracyOption(c), [c])
 
   return (
-    <PanelBox title="质量管理情况" className={`flex flex-col ${className}`}>
+    <PanelBox
+      title={<DrillTitleLink title="质量管理情况" to={PERFORMANCE_QUALITY_DRILL_PATH} />}
+      className={`flex flex-col ${className}`}
+    >
       <div className="flex h-full gap-2 px-3 pt-2 pb-2">
         <div className="flex w-[292px] shrink-0 flex-col gap-1">
           <SectionTitle>全流程业务处理质量</SectionTitle>
@@ -42,7 +51,10 @@ export function QualityManagementPanel({ className = '' }: { className?: string 
 /** 服务企业情况：成本费用总额 + 成本费用预算执行准确率 */
 export function ServiceEnterprisePanel({ className = '' }: { className?: string }) {
   return (
-    <PanelBox title="服务企业情况" className={`flex flex-col ${className}`}>
+    <PanelBox
+      title={<DrillTitleLink title="服务企业情况" to={PERFORMANCE_SERVICE_DRILL_PATH} />}
+      className={`flex flex-col ${className}`}
+    >
       <div className="flex h-full flex-col px-4 pt-3 pb-4">
         <div className="flex flex-col items-center gap-2">
           <span className="text-[14px] leading-none text-(--ck-title-sub)">成本费用总额</span>
@@ -90,7 +102,10 @@ export function ServiceEnterprisePanel({ className = '' }: { className?: string 
 /** 服务满意度情况：客户满意度问卷评分 + 用户投诉总量 */
 export function SatisfactionPanel({ className = '' }: { className?: string }) {
   return (
-    <PanelBox title="服务满意度情况" className={`flex flex-col ${className}`}>
+    <PanelBox
+      title={<DrillTitleLink title="服务满意度情况" to={PERFORMANCE_SATISFACTION_DRILL_PATH} />}
+      className={`flex flex-col ${className}`}
+    >
       <div className="flex h-full flex-col justify-between px-4 py-3">
         {PERF_SATISFACTION.map((item) => (
           <div key={item.label} className="flex flex-col items-center gap-2">

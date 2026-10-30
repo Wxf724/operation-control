@@ -2,8 +2,12 @@ import ReactECharts from 'echarts-for-react'
 import { useMemo, useState } from 'react'
 
 import { PanelBox, useChartColors } from '@/components/cockpit-ui'
-
 import type { ChartVarName } from '@/components/cockpit-ui'
+import { DrillTitleLink } from '@/pages/drill/components'
+import {
+  QUALITY_CAPTURE_DRILL_PATH,
+  QUALITY_SAMPLING_DRILL_PATH,
+} from '@/pages/drill/qualityConstants'
 
 import { AppealPanel, BusinessQualityPanel, RectifyPanel } from './QualityBottomPanels'
 import { QUALITY_EFFICIENCY_TABS, QUALITY_SAMPLING_TABS } from './qualityData'
@@ -39,7 +43,7 @@ function SamplingPanel({ className = '' }: { className?: string }) {
 
   return (
     <PanelBox
-      title="稽核覆盖与抽样情况"
+      title={<DrillTitleLink title="稽核覆盖与抽样情况" to={QUALITY_SAMPLING_DRILL_PATH} />}
       className={`flex flex-col ${className}`}
       extra={
         <TabGroup
@@ -150,7 +154,7 @@ function EfficiencyPanel({ className = '' }: { className?: string }) {
 
   return (
     <PanelBox
-      title="稽核过程与效率情况"
+      title={<DrillTitleLink title="稽核过程与效率情况" to={QUALITY_CAPTURE_DRILL_PATH} />}
       className={`flex flex-col ${className}`}
       extra={
         <TabGroup

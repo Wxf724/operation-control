@@ -24,7 +24,7 @@ export function StaffQualityDrillPage() {
     <DrillScreen>
       <StaffDrillHeader title="质量情况" className="h-[58px]" />
 
-      <DrillMetricRow items={STAFF_QUALITY_METRICS} className="h-[92px]" />
+      <DrillMetricRow items={STAFF_QUALITY_METRICS} />
 
       <DrillTabBar
         tabs={STAFF_QUALITY_TABS}

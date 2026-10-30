@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import type { MouseEvent } from 'react'
 
 import type { DrillColumn } from '../types'
 
@@ -10,6 +11,10 @@ export interface DrillPagedTableProps {
   rows: readonly string[][]
   /** 每页条数 */
   pageSize?: number
+  /** 行点击：跳到更细一层的明细页；第三个参数带上鼠标事件，便于就地弹跳转菜单 */
+  onRowClick?: (row: readonly string[], index: number, event: MouseEvent<HTMLButtonElement>) => void
+  /** 紧凑模式：13px 字号 + 40px 行高，用来塞下十几列的宽表 */
+  dense?: boolean
   className?: string
 }
 
@@ -18,6 +23,9 @@ const INDEX_WIDTH = '80px'
 
 /** 默认每页条数（与参考图 57／58 的「167 条 / 2 页」一致） */
 const DEFAULT_PAGE_SIZE = 100
+
+/** 行容器共用的栅格类 */
+const ROW_BASE = 'grid items-center border-b border-(--border-light) last:border-b-0'
 
 type SortState = { key: string; dir: 'asc' | 'desc' }
 
@@ -32,12 +40,15 @@ export function DrillPagedTable({
   columns,
   rows,
   pageSize = DEFAULT_PAGE_SIZE,
+  onRowClick,
+  dense = false,
   className = '',
 }: DrillPagedTableProps) {
   const [sort, setSort] = useState<SortState | null>(null)
   const [page, setPage] = useState(1)
 
   const template = `${INDEX_WIDTH} ${columns.map((col) => col.width).join(' ')}`
+  const rowHeight = dense ? 'h-[40px]' : 'h-[42px]'
   const pageCount = Math.max(1, Math.ceil(rows.length / pageSize))
   const current = Math.min(page, pageCount)
 
@@ -71,7 +82,7 @@ export function DrillPagedTable({
           className="grid h-[46px] shrink-0 items-center"
           style={{ gridTemplateColumns: template, background: 'var(--ck-table-head)' }}
         >
-          <HeadCell title="序号" align="center" />
+          <HeadCell title="序号" align="center" dense={dense} />
           {columns.map((col) => (
             <HeadCell
               key={col.key}
@@ -80,42 +91,53 @@ export function DrillPagedTable({
               sortable={col.sortable}
               sortDir={sort?.key === col.key ? sort.dir : undefined}
               onSort={col.sortable ? () => toggleSort(col.key) : undefined}
+              dense={dense}
             />
           ))}
         </div>
 
         {/* 表体 */}
         <div className="ck-scroll min-h-0 flex-1 overflow-y-auto">
-          {visible.map((row, i) => (
-            <div
-              key={`${row[0]}-${start + i}`}
-              className="grid h-[42px] items-center border-b border-(--border-light) last:border-b-0"
-              style={{
-                gridTemplateColumns: template,
-                background: i % 2 === 0 ? 'var(--ck-table-row)' : 'var(--ck-table-row-alt)',
-              }}
-            >
-              <span className="text-center text-[15px] leading-none text-(--text-secondary) tabular-nums">
-                {start + i + 1}
-              </span>
-              {columns.map((col, ci) => (
-                <span
-                  key={col.key}
-                  className={`truncate px-3 text-[15px] leading-none text-(--foreground) tabular-nums ${
-                    (col.align ?? 'center') === 'center' ? 'text-center' : 'text-left'
-                  }`}
+          {visible.map((row, i) => {
+            const background = i % 2 === 0 ? 'var(--ck-table-row)' : 'var(--ck-table-row-alt)'
+
+            if (onRowClick) {
+              return (
+                <button
+                  type="button"
+                  key={`${row[0]}-${start + i}`}
+                  title="查看明细"
+                  onClick={(event) => onRowClick(row, start + i, event)}
+                  className={`${ROW_BASE} ${rowHeight} w-full cursor-pointer text-left transition-colors hover:bg-(--accent-light)`}
+                  style={{ gridTemplateColumns: template, background }}
                 >
-                  {row[ci]}
-                </span>
-              ))}
-            </div>
-          ))}
+                  <RowCells row={row} columns={columns} index={start + i + 1} dense={dense} />
+                </button>
+              )
+            }
+
+            return (
+              <div
+                key={`${row[0]}-${start + i}`}
+                className={`${ROW_BASE} ${rowHeight}`}
+                style={{ gridTemplateColumns: template, background }}
+              >
+                <RowCells row={row} columns={columns} index={start + i + 1} dense={dense} />
+              </div>
+            )
+          })}
         </div>
       </div>
 
       <footer className="flex h-[36px] shrink-0 items-center gap-1 pt-2 pl-1 text-[16px] leading-none text-(--ck-title)">
         共<span className="font-bold text-(--ck-title-sub) tabular-nums">{rows.length}</span>
         条数据
+        {onRowClick ? (
+          <span className="ml-3 flex items-center gap-1 text-[13px] leading-none text-(--text-tertiary)">
+            <i className="ri-cursor-line text-[14px]" aria-hidden />
+            点击任意一行查看明细
+          </span>
+        ) : null}
         <span className="ml-auto flex items-center gap-1.5">
           <input
             type="text"
@@ -147,6 +169,41 @@ export function DrillPagedTable({
         </span>
       </footer>
     </section>
+  )
+}
+
+/** 一行里的单元格：序号 + 各列，行容器是 div 还是 button 都复用这一份 */
+function RowCells({
+  row,
+  columns,
+  index,
+  dense,
+}: {
+  row: readonly string[]
+  columns: readonly DrillColumn[]
+  index: number
+  dense: boolean
+}) {
+  const textClass = dense ? 'text-[13px]' : 'text-[15px]'
+
+  return (
+    <>
+      <span
+        className={`text-center ${textClass} leading-none text-(--text-secondary) tabular-nums`}
+      >
+        {index}
+      </span>
+      {columns.map((col, ci) => (
+        <span
+          key={col.key}
+          className={`truncate px-3 ${textClass} leading-none text-(--foreground) tabular-nums ${
+            (col.align ?? 'center') === 'center' ? 'text-center' : 'text-left'
+          } ${dense ? 'px-2' : ''}`}
+        >
+          {row[ci]}
+        </span>
+      ))}
+    </>
   )
 }
 
@@ -190,16 +247,18 @@ function HeadCell({
   sortable,
   sortDir,
   onSort,
+  dense = false,
 }: {
   title: string
   align: 'left' | 'center'
   sortable?: boolean
   sortDir?: 'asc' | 'desc'
   onSort?: () => void
+  dense?: boolean
 }) {
-  const base = `flex items-center gap-1 px-3 text-[16px] leading-none font-semibold text-(--ck-title-sub) ${
+  const base = `flex items-center gap-1 whitespace-nowrap px-3 ${dense ? 'text-[14px]' : 'text-[16px]'} leading-none font-semibold text-(--ck-title-sub) ${
     align === 'center' ? 'justify-center' : 'justify-start'
-  }`
+  } ${dense ? 'px-2' : ''}`
 
   if (!sortable) {
     return <span className={base}>{title}</span>
