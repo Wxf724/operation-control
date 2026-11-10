@@ -1,3 +1,5 @@
+import { OrbitAccent } from '@/components/cockpit-ui'
+
 import ReactECharts from 'echarts-for-react'
 
 /** ECharts 容器，统一 canvas 渲染与尺寸 */
@@ -258,6 +260,7 @@ export function QualityOrb({ value }: { value: number }) {
         {dots.map((d) => (
           <circle key={`${d.x}-${d.y}`} cx={d.x} cy={d.y} r={d.r} fill={d.color} opacity={0.85} />
         ))}
+        <OrbitAccent size={size} radius={size / 2 - 2} />
       </svg>
       <span
         className="absolute inset-0 flex items-center justify-center text-[30px] leading-none font-bold"

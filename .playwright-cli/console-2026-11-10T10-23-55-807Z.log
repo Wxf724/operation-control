@@ -1,0 +1,21 @@
+[     529ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3000/node_modules/.vite/deps/react-dom_client.js?v=9e538534:20102
+[     945ms] [WARNING] [ECharts] Instance ec_1794306236386 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[   23409ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3000/node_modules/.vite/deps/react-dom_client.js?v=9e538534:20102
+[   23636ms] [WARNING] [ECharts] Instance ec_1794306259238 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[   26051ms] [WARNING] [ECharts] Instance ec_1794306259253 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[   26061ms] [WARNING] [ECharts] Instance ec_1794306259254 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[   26069ms] [WARNING] [ECharts] Instance ec_1794306259255 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[   26077ms] [WARNING] [ECharts] Instance ec_1794306259256 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[   26087ms] [WARNING] [ECharts] Instance ec_1794306259257 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[   26098ms] [WARNING] [ECharts] Instance ec_1794306259258 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[   26108ms] [WARNING] [ECharts] Instance ec_1794306259259 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[   26714ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3000/node_modules/.vite/deps/react-dom_client.js?v=9e538534:20102
+[   26947ms] [WARNING] [ECharts] Instance ec_1794306342551 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[   26955ms] [WARNING] [ECharts] Instance ec_1794306342552 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[   26963ms] [WARNING] [ECharts] Instance ec_1794306342553 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[   26970ms] [WARNING] [ECharts] Instance ec_1794306342554 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[   26978ms] [WARNING] [ECharts] Instance ec_1794306342555 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[   26991ms] [WARNING] [ECharts] Instance ec_1794306342556 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[   26999ms] [WARNING] [ECharts] Instance ec_1794306342557 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[   27234ms] [WARNING] [ECharts] Instance ec_1794306342566 has been disposed @ http://127.0.0.1:3000/node_modules/.vite/deps/chunk-7E55F2RL.js?v=9e538534:7747
+[ 1159431ms] [LOG] [vite] server connection lost. Polling for restart... @ http://127.0.0.1:3000/@vite/client:864

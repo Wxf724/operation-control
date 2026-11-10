@@ -1,3 +1,5 @@
+import { OrbitAccent } from '@/components/cockpit-ui'
+
 import { useId } from 'react'
 import type { ReactNode } from 'react'
 
@@ -85,7 +87,8 @@ export function Ring({ size, stroke, percent, color, className = '' }: RingProps
         strokeDasharray={`${(circumference * pct) / 100} ${circumference}`}
         transform={`rotate(-90 ${half} ${half})`}
       />
-    </svg>
+      <OrbitAccent size={size} radius={size / 2 - 1} />
+      </svg>
   )
 }
 

@@ -76,6 +76,7 @@ function AiAssistButton() {
     <button
       type="button"
       onClick={() => navigate('/ai-assistant')}
+      data-tour-ai
       className="flex cursor-pointer items-center gap-1.5 rounded-full px-2.5 py-[6px] text-[13px] leading-none font-medium text-white transition-opacity hover:opacity-85"
       style={{ background: 'linear-gradient(90deg, var(--ck-btn-from), var(--ck-btn-to))' }}
     >
@@ -124,7 +125,7 @@ function ChipCard({ chip }: { chip: WarningChip }) {
         boxShadow: 'var(--ck-card-shadow)',
       }}
     >
-      <i className={`${chip.icon} shrink-0 text-[16px]`} style={{ color }} aria-hidden />
+      <i className={`${chip.icon} shrink-0 text-[16px] ${chip.status === '处理中' ? 'ck-processing-icon' : ''}`} style={{ color }} aria-hidden />
       <div className="flex min-w-0 flex-col gap-1.5">
         <span className="text-[12px] leading-tight text-(--ck-title-sub)">{chip.text}</span>
         <span className="text-[12px] leading-none font-semibold" style={{ color }}>

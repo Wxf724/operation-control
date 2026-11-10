@@ -1,4 +1,4 @@
-﻿import { PanelBox, DeltaText } from '@/components/cockpit-ui'
+﻿import { AnimatedNumber, PanelBox, DeltaText } from '@/components/cockpit-ui'
 
 import { COMPLETE_RATE, RESULT_KPIS } from '../constants'
 import type { ResultKpi } from '../types'
@@ -34,7 +34,7 @@ function KpiCard({ kpi }: { kpi: ResultKpi }) {
       <span className="text-[15px] leading-none text-(--text-secondary)">{kpi.label}</span>
 
       <span className="ck-glow-num text-[32px] leading-none font-bold" style={{ color }}>
-        {kpi.value}
+        <AnimatedNumber value={kpi.value} />
       </span>
 
       <DeltaText value={kpi.delta} />
@@ -62,9 +62,10 @@ function Sparkline({ points, color }: { points: number[]; color: string }) {
   const area = `0,${h} ${line} ${w},${h}`
 
   return (
-    <svg width="100%" height={h} viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" aria-hidden>
+    <svg className="ck-chart-reveal" width="100%" height={h} viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" aria-hidden>
       <polygon points={area} fill={color} opacity="0.14" />
       <polyline points={line} fill="none" stroke={color} strokeWidth="1.6" opacity="0.95" />
+      <polyline className="ck-trend-flow" points={line} pathLength={100} fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" strokeDasharray="3 97" />
       {coords.map(([x, y], i) => (
         <circle key={i} cx={x} cy={y} r="1.4" fill={color} />
       ))}
@@ -76,7 +77,6 @@ function Sparkline({ points, color }: { points: number[]; color: string }) {
 function CompleteRateRing() {
   const size = 96
   const r = 38
-  const c = 2 * Math.PI * r
   const pct = COMPLETE_RATE.value
 
   return (
@@ -85,6 +85,7 @@ function CompleteRateRing() {
         <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
           {/* 刻度底环 */}
           <circle
+            className="ck-ring-orbit"
             cx={size / 2}
             cy={size / 2}
             r={r + 8}
@@ -105,6 +106,8 @@ function CompleteRateRing() {
           />
           {/* 进度弧 */}
           <circle
+            className="ck-ring-progress"
+            pathLength={100}
             cx={size / 2}
             cy={size / 2}
             r={r}
@@ -112,7 +115,7 @@ function CompleteRateRing() {
             stroke="var(--ck-cyan)"
             strokeWidth="6"
             strokeLinecap="round"
-            strokeDasharray={`${(c * pct) / 100} ${c}`}
+            strokeDasharray={`${pct} ${100 - pct}`}
             transform={`rotate(-90 ${size / 2} ${size / 2})`}
             style={{
               filter: 'drop-shadow(0 0 5px color-mix(in srgb, var(--ck-cyan) 40%, transparent))',
@@ -122,7 +125,7 @@ function CompleteRateRing() {
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span className="ck-glow-num text-[21px] leading-none font-bold text-(--ck-cyan)">
-            {pct}%
+            <AnimatedNumber value={`${pct}%`} />
           </span>
         </div>
       </div>

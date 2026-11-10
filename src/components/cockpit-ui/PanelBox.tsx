@@ -22,7 +22,7 @@ export function PanelBox({
   children,
 }: PanelBoxProps) {
   return (
-    <div className={`ck-panel relative rounded-(--ck-panel-radius) ${className}`}>
+    <div className={`ck-panel ck-motion-enter relative rounded-(--ck-panel-radius) ${className}`}>
       {corners ? <PanelCorners /> : null}
 
       {title ? (

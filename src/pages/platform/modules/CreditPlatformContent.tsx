@@ -1,3 +1,5 @@
+import { OrbitAccent } from '@/components/cockpit-ui'
+
 import ReactECharts from 'echarts-for-react'
 import { useMemo } from 'react'
 
@@ -137,6 +139,7 @@ function CreditDonut() {
           fill="var(--ck-panel-bg-strong)"
           stroke="var(--ck-card-border)"
         />
+        <OrbitAccent size={size} radius={size / 2 - 2} />
       </svg>
 
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5">

@@ -1,6 +1,7 @@
-﻿import * as echarts from 'echarts'
+import * as echarts from 'echarts'
 import ReactECharts from 'echarts-for-react'
 import { useEffect, useMemo, useState } from 'react'
+import { useReducedMotion } from 'framer-motion'
 
 import { useChartColors } from '@/components/cockpit-ui'
 import type { ChartVarName } from '@/components/cockpit-ui'
@@ -14,6 +15,7 @@ const MAP_NAME = 'china'
 /** 中部主视觉：淡色世界地图衬底 + 中国地图 + 站点光点 */
 export function ChinaMap({ className = '' }: { className?: string }) {
   const c = useChartColors()
+  const reducedMotion = useReducedMotion()
   const [ready, setReady] = useState(() => Boolean(echarts.getMap(MAP_NAME)))
 
   useEffect(() => {
@@ -25,11 +27,11 @@ export function ChinaMap({ className = '' }: { className?: string }) {
     let cancelled = false
     const load = async () => {
       try {
-        const res = await fetch(`${import.meta.env.BASE_URL}china.json`)
-        if (!res.ok) throw new Error(`地图数据加载失败：${res.status}`)
-        const geo = await res.json()
+        // 直接按模块加载地图数据：file:// 打开时 fetch 会被 CORS 拦下，
+        // 走打包内联的方式离线双击 index.html 也能出图。
+        const geo = (await import('@/assets/geo/china.json')).default
         if (cancelled) return
-        echarts.registerMap(MAP_NAME, geo)
+        echarts.registerMap(MAP_NAME, geo as never)
         setReady(true)
       } catch (err) {
         console.error('[ChinaMap] 地图注册失败', err)
@@ -42,7 +44,7 @@ export function ChinaMap({ className = '' }: { className?: string }) {
     }
   }, [])
 
-  const option = useMemo(() => buildMapOption(c), [c])
+  const option = useMemo(() => buildMapOption(c, Boolean(reducedMotion)), [c, reducedMotion])
 
   if (!ready) {
     return (
@@ -64,6 +66,7 @@ export function ChinaMap({ className = '' }: { className?: string }) {
       <div className="ck-map-stage absolute inset-0 z-10">
         {/* 世界底图单独一个实例垫在下面，中国地图这一层的 option 保持原样，尺寸位置不受影响 */}
         <WorldBackdrop className="pointer-events-none absolute inset-0" />
+        <span className="ck-map-sweep pointer-events-none absolute inset-y-0 left-0 z-20" aria-hidden />
         <div className="relative h-full w-full">
           <ReactECharts
             option={option}
@@ -81,7 +84,7 @@ export function ChinaMap({ className = '' }: { className?: string }) {
   )
 }
 
-function buildMapOption(c: Record<ChartVarName, string>) {
+function buildMapOption(c: Record<ChartVarName, string>, reducedMotion: boolean) {
   const points = MAP_NODES.map((n) => ({
     name: n.name,
     value: [...n.coord, n.weight],
@@ -153,7 +156,7 @@ function buildMapOption(c: Record<ChartVarName, string>) {
     series: [
       {
         name: '站点',
-        type: 'effectScatter',
+        type: reducedMotion ? 'scatter' : 'effectScatter',
         coordinateSystem: 'geo',
         geoIndex: 1,
         data: normal,
@@ -178,7 +181,7 @@ function buildMapOption(c: Record<ChartVarName, string>) {
       },
       {
         name: '枢纽',
-        type: 'effectScatter',
+        type: reducedMotion ? 'scatter' : 'effectScatter',
         coordinateSystem: 'geo',
         geoIndex: 1,
         data: primary,

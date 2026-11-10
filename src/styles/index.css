@@ -5,6 +5,7 @@
 @import './themes/cloud-light.css';
 @import './themes/lavender.css';
 @import './themes/aqua-light.css';
+@import './themes/cockpit-motion.css';
 
 :root {
   /* ═══════════ 结构变量（共享，不随主题变化） ═══════════ */

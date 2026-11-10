@@ -1,0 +1,506 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - heading "运营结果区" [level=3] [ref=e11]
+        - generic [ref=e17]:
+          - generic [ref=e18]:
+            - generic [ref=e19]: 任务接收量
+            - generic [ref=e21]:
+              - generic [ref=e22]: 3,286
+              - generic [aria-hidden] [ref=e23]: "0"
+            - generic [ref=e24]:
+              - generic [ref=e25]: 日环比
+              - generic [ref=e26]:
+                - text: +12.6%
+                - generic [ref=e27]: ▲
+          - generic [ref=e40]:
+            - generic [ref=e41]: 任务待办量
+            - generic [ref=e43]:
+              - generic [ref=e44]: 1,286
+              - generic [aria-hidden] [ref=e45]: "0"
+            - generic [ref=e46]:
+              - generic [ref=e47]: 日环比
+              - generic [ref=e48]:
+                - text: "-5.3%"
+                - generic [ref=e49]: ▼
+          - generic [ref=e62]:
+            - generic [ref=e63]: 超时任务量
+            - generic [ref=e65]:
+              - generic [ref=e66]: "58"
+              - generic [aria-hidden] [ref=e67]: "0"
+            - generic [ref=e68]:
+              - generic [ref=e69]: 日环比
+              - generic [ref=e70]:
+                - text: +12.6%
+                - generic [ref=e71]: ▲
+          - generic [ref=e84]:
+            - generic [ref=e85]: 高风险预警
+            - generic [ref=e87]:
+              - generic [ref=e88]: "12"
+              - generic [aria-hidden] [ref=e89]: "0"
+            - generic [ref=e90]:
+              - generic [ref=e91]: 日环比
+              - generic [ref=e92]:
+                - text: +12.6%
+                - generic [ref=e93]: ▲
+          - generic [ref=e106]:
+            - generic [ref=e107]: 调度中任务量
+            - generic [ref=e109]:
+              - generic [ref=e110]: "26"
+              - generic [aria-hidden] [ref=e111]: "0"
+            - generic [ref=e112]:
+              - generic [ref=e113]: 日环比
+              - generic [ref=e114]:
+                - text: "-7.1%"
+                - generic [ref=e115]: ▼
+          - generic [ref=e128]:
+            - generic [ref=e136]:
+              - generic [ref=e137]: 92.4%
+              - generic [aria-hidden] [ref=e138]: 0.0%
+            - generic [ref=e139]: 任务完成率
+            - generic [ref=e140]:
+              - generic [ref=e141]: 日环比
+              - generic [ref=e142]:
+                - text: +3.2%
+                - generic [ref=e143]: ▲
+      - generic [ref=e144]:
+        - generic [ref=e145]:
+          - heading "各中心核心数据运行情况" [level=3] [ref=e146]
+          - generic [ref=e151]:
+            - button "各中心运行情况" [ref=e152] [cursor=pointer]
+            - button "各驻企财务团队运行情况" [ref=e153] [cursor=pointer]
+        - generic [ref=e156]:
+          - generic [ref=e157]:
+            - generic [ref=e158]:
+              - generic [ref=e159]: 东部中心
+              - generic [ref=e160]: 正常
+            - generic [ref=e162]:
+              - generic [ref=e163]:
+                - generic [ref=e164]: 待处理任务量
+                - generic [ref=e165]: "245"
+              - generic [ref=e166]:
+                - generic [ref=e167]: 累计超时任务量
+                - generic [ref=e168]: "12"
+              - generic [ref=e169]:
+                - generic [ref=e170]: 平均负载率
+                - generic [ref=e171]: 78.0%
+              - generic [ref=e172]:
+                - generic [ref=e173]: 健康度
+                - generic [ref=e174]: 90.0%
+          - generic [ref=e175]:
+            - generic [ref=e176]:
+              - generic [ref=e177]: 西部中心
+              - generic [ref=e178]: 正常
+            - generic [ref=e180]:
+              - generic [ref=e181]:
+                - generic [ref=e182]: 待处理任务量
+                - generic [ref=e183]: "245"
+              - generic [ref=e184]:
+                - generic [ref=e185]: 累计超时任务量
+                - generic [ref=e186]: "12"
+              - generic [ref=e187]:
+                - generic [ref=e188]: 平均负载率
+                - generic [ref=e189]: 78.0%
+              - generic [ref=e190]:
+                - generic [ref=e191]: 健康度
+                - generic [ref=e192]: 90.0%
+          - generic [ref=e193]:
+            - generic [ref=e194]:
+              - generic [ref=e195]: 南部中心
+              - generic [ref=e196]: 正常
+            - generic [ref=e198]:
+              - generic [ref=e199]:
+                - generic [ref=e200]: 待处理任务量
+                - generic [ref=e201]: "245"
+              - generic [ref=e202]:
+                - generic [ref=e203]: 累计超时任务量
+                - generic [ref=e204]: "12"
+              - generic [ref=e205]:
+                - generic [ref=e206]: 平均负载率
+                - generic [ref=e207]: 78.0%
+              - generic [ref=e208]:
+                - generic [ref=e209]: 健康度
+                - generic [ref=e210]: 90.0%
+          - generic [ref=e211]:
+            - generic [ref=e212]:
+              - generic [ref=e213]: 北部中心
+              - generic [ref=e214]: 异常
+            - generic [ref=e216]:
+              - generic [ref=e217]:
+                - generic [ref=e218]: 待处理任务量
+                - generic [ref=e219]: "398"
+              - generic [ref=e220]:
+                - generic [ref=e221]: 累计超时任务量
+                - generic [ref=e222]: "29"
+              - generic [ref=e223]:
+                - generic [ref=e224]: 平均负载率
+                - generic [ref=e225]: 96.0%
+              - generic [ref=e226]:
+                - generic [ref=e227]: 健康度
+                - generic [ref=e228]: 70.0%
+          - generic [ref=e229]:
+            - generic [ref=e230]:
+              - generic [ref=e231]: 业财中心
+              - generic [ref=e232]: 正常
+            - generic [ref=e234]:
+              - generic [ref=e235]:
+                - generic [ref=e236]: 待处理任务量
+                - generic [ref=e237]: "245"
+              - generic [ref=e238]:
+                - generic [ref=e239]: 累计超时任务量
+                - generic [ref=e240]: "12"
+              - generic [ref=e241]:
+                - generic [ref=e242]: 平均负载率
+                - generic [ref=e243]: 78.0%
+              - generic [ref=e244]:
+                - generic [ref=e245]: 健康度
+                - generic [ref=e246]: 90.0%
+      - generic [ref=e248]:
+        - heading "近10日运行趋势" [level=3] [ref=e249]
+        - generic [ref=e254]:
+          - generic [ref=e255]:
+            - generic [ref=e256]: 业务高峰期预测到达时间：
+            - text: 2026年12月26日
+          - generic [ref=e257]:
+            - generic [ref=e258]: 业务高峰期预测单据总量：
+            - text: 19,000 笔
+    - generic [ref=e268]:
+      - banner [ref=e269]:
+        - generic [ref=e270]:
+          - heading "运营监控与调控全景座舱" [level=1]
+          - generic [ref=e271]:
+            - button "播报开关" [ref=e272] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e273]: 
+            - generic [ref=e274]:
+              - generic [aria-hidden] [ref=e275]: 
+              - generic [ref=e276]:
+                - button "起始日期" [ref=e278] [cursor=pointer]:
+                  - generic [ref=e279]: 2026-10-01
+                  - generic [aria-hidden] [ref=e280]: 
+                - generic [ref=e281]: 至
+                - button "结束日期" [ref=e283] [cursor=pointer]:
+                  - generic [ref=e284]: 2026-10-19
+                  - generic [aria-hidden] [ref=e285]: 
+      - generic [ref=e286]:
+        - generic [ref=e287]:
+          - generic [aria-hidden] [ref=e289]: 
+          - paragraph [ref=e290]: 今日整体运行平稳，发现重点风险5项，其中2项调度中、2项已闭环、1项需领导协调，北部中心积压风险较高，预计18:00前恢复正常。
+        - generic [ref=e291]:
+          - navigation [ref=e292]:
+            - button "作业管理" [ref=e293] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e295]: 
+            - button "员工管理" [ref=e297] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e299]: 
+            - button "RPA管理" [ref=e301] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e303]: 
+            - button "规则管理" [ref=e305] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e307]: 
+            - button "风险管理" [ref=e309] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e311]: 
+            - button "标准流程管理" [ref=e313] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e315]: 
+          - generic [ref=e317]: 地图加载中…
+          - navigation [ref=e319]:
+            - button "质量管理" [ref=e320] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e322]: 
+            - button "信用管理" [ref=e324] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e326]: 
+            - button "服务管理" [ref=e328] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e330]: 
+            - button "绩效管理" [ref=e332] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e334]: 
+            - button "系统管理" [ref=e336] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e338]: 
+            - button "商旅服务管理" [ref=e340] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e342]: 
+            - button "档案管理" [ref=e344] [cursor=pointer]:
+              - generic [aria-hidden] [ref=e346]: 
+        - generic [ref=e348]:
+          - generic [ref=e349]:
+            - generic [aria-hidden] [ref=e351]: 
+            - generic [ref=e352]:
+              - generic [ref=e353]: 平均首次响应时长
+              - generic [ref=e354]:
+                - generic [ref=e356]:
+                  - generic [ref=e357]: "5"
+                  - generic [aria-hidden] [ref=e358]: "0"
+                - generic [ref=e359]: 分钟
+          - generic [ref=e360]:
+            - generic [aria-hidden] [ref=e362]: 
+            - generic [ref=e363]:
+              - generic [ref=e364]: 咨询事项解决及时率
+              - generic [ref=e367]:
+                - generic [ref=e368]: 95%
+                - generic [aria-hidden] [ref=e369]: 0%
+          - generic [ref=e370]:
+            - generic [aria-hidden] [ref=e372]: 
+            - generic [ref=e373]:
+              - generic [ref=e374]: 咨询事项解决率
+              - generic [ref=e377]:
+                - generic [ref=e378]: 98%
+                - generic [aria-hidden] [ref=e379]: 0%
+          - generic [ref=e380]:
+            - generic [aria-hidden] [ref=e382]: 
+            - generic [ref=e383]:
+              - generic [ref=e384]: AI客服转人工会话率
+              - generic [ref=e387]:
+                - generic [ref=e388]: 5.0%
+                - generic [aria-hidden] [ref=e389]: 0.0%
+          - generic [ref=e390]:
+            - generic [aria-hidden] [ref=e392]: 
+            - generic [ref=e393]:
+              - generic [ref=e394]: 工单服务满意度评分
+              - generic [ref=e397]:
+                - generic [ref=e398]: 97%
+                - generic [aria-hidden] [ref=e399]: 0%
+          - generic [ref=e400]:
+            - generic [aria-hidden] [ref=e402]: 
+            - generic [ref=e403]:
+              - generic [ref=e404]: 服务协议综合达成率
+              - generic [ref=e407]:
+                - generic [ref=e408]: 96.0%
+                - generic [aria-hidden] [ref=e409]: 0.0%
+    - generic [ref=e413]:
+      - generic [ref=e414]:
+        - heading "智能调控模型执行结果" [level=3] [ref=e416]
+        - generic [ref=e423]:
+          - generic [ref=e424]:
+            - generic [ref=e426]:
+              - generic [aria-hidden] [ref=e427]: 
+              - generic [ref=e428]:
+                - generic [ref=e429]: 今日识别异常
+                - generic [ref=e430]: "5"
+                - generic [ref=e431]: 项
+            - generic [ref=e434]:
+              - generic [aria-hidden] [ref=e435]: 
+              - generic [ref=e436]:
+                - generic [ref=e437]: 完成诊断
+                - generic [ref=e438]: "5"
+                - generic [ref=e439]: 项
+            - generic [ref=e442]:
+              - generic [aria-hidden] [ref=e443]: 
+              - generic [ref=e444]:
+                - generic [ref=e445]: 生成策略
+                - generic [ref=e446]: "4"
+                - generic [ref=e447]: 项
+            - generic [ref=e450]:
+              - generic [aria-hidden] [ref=e451]: 
+              - generic [ref=e452]:
+                - generic [ref=e453]: 闭环
+                - generic [ref=e454]: "2"
+                - generic [ref=e455]: 项
+            - generic [ref=e458]:
+              - generic [aria-hidden] [ref=e459]: 
+              - generic [ref=e460]:
+                - generic [ref=e461]: 执行中
+                - generic [ref=e462]: "1"
+                - generic [ref=e463]: 项
+            - generic [ref=e466]:
+              - generic [aria-hidden] [ref=e467]: 
+              - generic [ref=e468]:
+                - generic [ref=e469]: 待协调
+                - generic [ref=e470]: "1"
+                - generic [ref=e471]: 项
+          - generic [ref=e472]:
+            - generic [ref=e473]:
+              - generic [ref=e474]:
+                - generic [aria-hidden] [ref=e475]: 
+                - generic [ref=e476]: 执行任务概览
+              - button "查看更多" [ref=e477] [cursor=pointer]
+            - generic [ref=e478]:
+              - generic [ref=e479]:
+                - generic [ref=e480]: 任务名称
+                - generic [ref=e481]: 执行人
+                - generic [ref=e482]: 执行时间
+                - generic [ref=e483]: 状态
+                - generic [ref=e484]: 进度
+              - button "调配北部中心审核人员 张三 09-21 15:40 执行中 60%" [pressed] [ref=e485] [cursor=pointer]:
+                - generic [ref=e487]: 调配北部中心审核人员
+                - generic [ref=e488]: 张三
+                - generic [ref=e489]: 09-21 15:40
+                - generic [ref=e490]: 执行中
+                - generic [ref=e491]: 60%
+              - button "提升RPA任务优先级 RPA系统 09-21 15:42 已完成 100%" [ref=e495] [cursor=pointer]:
+                - generic [ref=e497]: 提升RPA任务优先级
+                - generic [ref=e498]: RPA系统
+                - generic [ref=e499]: 09-21 15:42
+                - generic [ref=e500]: 已完成
+                - generic [ref=e501]: 100%
+              - button "超24小时单据专项处理 李四 09-21 16:10 执行中 45%" [ref=e505] [cursor=pointer]:
+                - generic [ref=e507]: 超24小时单据专项处理
+                - generic [ref=e508]: 李四
+                - generic [ref=e509]: 09-21 16:10
+                - generic [ref=e510]: 执行中
+                - generic [ref=e511]: 45%
+              - button "系统性能优化 王五 09-21 16:20 待协调 20%" [ref=e515] [cursor=pointer]:
+                - generic [ref=e517]: 系统性能优化
+                - generic [ref=e518]: 王五
+                - generic [ref=e519]: 09-21 16:20
+                - generic [ref=e520]: 待协调
+                - generic [ref=e521]: 20%
+          - generic [ref=e525]:
+            - generic [ref=e526]:
+              - generic [ref=e527]:
+                - generic [ref=e528]: "1"
+                - heading "感知模型结果" [level=4] [ref=e529]
+              - generic [ref=e530]:
+                - generic [ref=e531]:
+                  - generic [ref=e532]: 异常场景
+                  - generic [ref=e533]: 待处理单据积压异常
+                - generic [ref=e535]:
+                  - generic [ref=e536]: 异常对象
+                  - generic [ref=e537]: 北部中心
+                - generic [ref=e539]:
+                  - generic [ref=e540]: 当前值
+                  - generic [ref=e541]:
+                    - generic [ref=e542]: 398 笔
+                    - generic [ref=e543]: "> 300 笔"
+                - generic [ref=e544]:
+                  - generic [ref=e545]: 预警阈值
+                  - generic [ref=e546]: 300 笔
+                - generic [ref=e548]:
+                  - generic [ref=e549]: 异常等级
+                  - generic [ref=e550]:
+                    - generic [aria-hidden] [ref=e551]: 
+                    - generic [ref=e552]: 严重预警
+                - generic [ref=e553]:
+                  - generic [ref=e554]: 触发时间
+                  - generic [ref=e555]: 15:32
+            - generic [ref=e557]:
+              - generic [ref=e558]:
+                - generic [aria-hidden] [ref=e559]: 
+                - heading "解释模型结果" [level=4] [ref=e560]
+              - generic [ref=e561]:
+                - generic [ref=e562]:
+                  - generic [ref=e563]: 主因
+                  - generic [ref=e564]: 人均单据处理效率低
+                - generic [ref=e566]:
+                  - generic [ref=e567]: 实际效率
+                  - generic [ref=e568]: 8.6 笔/人·小时
+                - generic [ref=e570]:
+                  - generic [ref=e571]: 基准效率
+                  - generic [ref=e572]: 11.2 笔/人·小时
+                - generic [ref=e574]:
+                  - generic [ref=e575]: 偏离程度
+                  - generic [ref=e576]:
+                    - generic [aria-hidden] [ref=e577]: 
+                    - generic [ref=e578]: 23.2%
+                - generic [ref=e579]:
+                  - generic [ref=e580]: 次因
+                  - generic [ref=e581]: 系统性能下降，影响处理能力约12%
+                - generic [ref=e583]:
+                  - generic [ref=e584]: 排除原因
+                  - generic [ref=e585]: RPA数量不足（未触发）
+            - generic [ref=e587]:
+              - generic [ref=e588]:
+                - generic [aria-hidden] [ref=e589]: 
+                - heading "策略模型结果" [level=4] [ref=e590]
+              - generic [ref=e591]:
+                - generic [ref=e592]:
+                  - generic [ref=e593]: 最优策略
+                  - generic [ref=e594]: 人员+RPA联合调控
+                - generic [ref=e596]:
+                  - generic [ref=e597]: 临时调配审核人员
+                  - generic [ref=e598]: 2 人
+                - generic [ref=e600]:
+                  - generic [ref=e601]: 调整人员来源
+                  - generic [ref=e602]: 东部中心
+                - generic [ref=e604]:
+                  - generic [ref=e605]: RPA任务优先级
+                  - generic [ref=e606]: 提升至一级
+                - generic [ref=e608]:
+                  - generic [ref=e609]: 优先处理
+                  - generic [ref=e610]: 超24小时积压单据
+                - generic [ref=e612]:
+                  - generic [ref=e613]: 策略执行窗口
+                  - generic [ref=e614]: 15:40 — 18:00
+              - generic [ref=e616]:
+                - generic [ref=e617]:
+                  - generic [ref=e618]: 候选策略
+                  - generic [ref=e619]: 预计消化量
+                  - generic [ref=e620]: 预计恢复时间
+                - generic [ref=e621]:
+                  - generic [ref=e622]: 仅增加人员
+                  - generic [ref=e624]: 86 笔
+                  - generic [ref=e625]: 19:20
+                - generic [ref=e626]:
+                  - generic [ref=e627]: 仅调整RPA
+                  - generic [ref=e629]: 72 笔
+                  - generic [ref=e630]: 20:10
+                - generic [ref=e631]:
+                  - generic [ref=e632]:
+                    - generic [aria-hidden] [ref=e633]: 
+                    - generic [ref=e634]: 人员+RPA联合调控
+                  - generic [ref=e635]: 142 笔
+                  - generic [ref=e636]: 17:50
+            - generic [ref=e637]:
+              - generic [ref=e638]:
+                - generic [aria-hidden] [ref=e639]: 
+                - heading "反馈模型结果" [level=4] [ref=e640]
+              - generic [ref=e641]:
+                - generic [ref=e642]:
+                  - generic [ref=e643]: 积压量
+                  - generic [ref=e644]: 398 → 286
+                  - generic [ref=e646]:
+                    - generic [aria-hidden] [ref=e647]: 
+                    - text: 下降28.1%
+                - generic [ref=e648]:
+                  - generic [ref=e649]: 人均处理效率
+                  - generic [ref=e650]:
+                    - generic [ref=e651]: 8.6 → 10.7
+                    - generic [ref=e652]: 笔/人·小时
+                  - generic [ref=e653]:
+                    - generic [aria-hidden] [ref=e654]: 
+                    - text: 提升24.4%
+                - generic [ref=e655]:
+                  - generic [ref=e656]: RPA处理效率
+                  - generic [ref=e657]:
+                    - generic [ref=e658]: 92 → 108
+                    - generic [ref=e659]: 笔/台·小时
+                - generic [ref=e660]:
+                  - generic [ref=e661]: 策略执行完成度
+                  - generic [ref=e662]: 78%
+                - generic [ref=e666]:
+                  - generic [ref=e667]: 当前判断
+                  - generic [ref=e668]:
+                    - generic [aria-hidden] [ref=e669]: 
+                    - generic [ref=e670]: 调控有效，持续执行
+              - generic [ref=e671]:
+                - generic [ref=e672]:
+                  - generic [aria-hidden] [ref=e673]: 
+                  - generic [ref=e674]: 积压量变化（笔）
+                - generic [ref=e675]:
+                  - generic [ref=e677]:
+                    - generic [ref=e678]: "398"
+                    - generic [ref=e680]: 调控前
+                  - generic [ref=e681]:
+                    - generic [aria-hidden] [ref=e682]: 
+                    - generic [ref=e683]:
+                      - generic [ref=e684]: "286"
+                      - generic [ref=e686]: 调控后
+                  - generic [ref=e687]:
+                    - generic [aria-hidden] [ref=e688]: 
+                    - generic [ref=e689]:
+                      - generic [ref=e690]: ≤300
+                      - generic [ref=e692]: 目标值
+      - generic [ref=e693]:
+        - heading "智能操作面板(快速处理)" [level=3] [ref=e695]
+        - generic [ref=e701]:
+          - button "即时会议" [ref=e702] [cursor=pointer]:
+            - generic [aria-hidden] [ref=e704]: 
+          - button "运营分析报告" [ref=e706] [cursor=pointer]:
+            - generic [aria-hidden] [ref=e708]: 
+          - button "任务调整" [ref=e710] [cursor=pointer]:
+            - generic [aria-hidden] [ref=e712]: 
+          - button "政策分析" [ref=e714] [cursor=pointer]:
+            - generic [aria-hidden] [ref=e716]: 
+  - generic:
+    - button "上一页：运营结果与趋势" [ref=e718] [cursor=pointer]:
+      - generic [aria-hidden] [ref=e719]: 
+    - button "下一页：模型执行与操作" [ref=e720] [cursor=pointer]:
+      - generic [aria-hidden] [ref=e721]: 
+    - generic [ref=e722]:
+      - button "第 1 页：运营结果与趋势" [ref=e723] [cursor=pointer]
+      - button "第 2 页：全景座舱" [ref=e724] [cursor=pointer]
+      - button "第 3 页：模型执行与操作" [ref=e725] [cursor=pointer]

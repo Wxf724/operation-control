@@ -266,7 +266,7 @@ function TaskRow({
       <span className="flex items-center gap-1.5">
         <span className="h-[8px] min-w-0 flex-1 overflow-hidden rounded-full bg-(--ck-track)">
           <span
-            className="block h-full rounded-full"
+            className={`ck-progress-fill block h-full rounded-full ${task.status === '执行中' ? 'ck-progress-running' : ''}`}
             style={{ width: `${task.progress}%`, background: statusColor }}
           />
         </span>

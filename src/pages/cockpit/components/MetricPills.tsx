@@ -1,5 +1,7 @@
 import type { CSSProperties } from 'react'
 
+import { AnimatedNumber } from '@/components/cockpit-ui'
+
 import type { MetricPill } from '../types'
 
 export interface MetricPillsProps {
@@ -25,7 +27,7 @@ function PillItem({ pill }: { pill: MetricPill }) {
 
   return (
     <div
-      className="relative flex items-center gap-2.5 rounded-[6px] border px-3 py-2"
+      className="ck-motion-enter relative flex items-center gap-2.5 rounded-[6px] border px-3 py-2"
       style={{
         borderColor: 'var(--ck-card-border)',
         background: 'linear-gradient(180deg, var(--ck-card-from) 0%, var(--ck-card-to) 100%)',
@@ -48,7 +50,7 @@ function PillItem({ pill }: { pill: MetricPill }) {
         </span>
         <span className="flex items-baseline gap-0.5">
           <span className="ck-glow-num text-[21px] leading-none font-bold" style={{ color }}>
-            {pill.value}
+            <AnimatedNumber value={pill.value} />
           </span>
           {pill.unit ? (
             <span className="text-[12px] leading-none text-(--text-tertiary)">{pill.unit}</span>

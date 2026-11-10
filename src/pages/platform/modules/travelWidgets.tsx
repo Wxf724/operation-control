@@ -1,3 +1,5 @@
+import { OrbitAccent } from '@/components/cockpit-ui'
+
 import type { TravelBarRow, TravelRingStat, TravelShareRow } from './travelData'
 
 /** 退票改签 / 逾期未出行发生率的圆环 */
@@ -31,6 +33,7 @@ export function TravelRing({ stat, size = 112 }: { stat: TravelRingStat; size?: 
           transform={`rotate(150 ${half} ${half})`}
           style={{ filter: `drop-shadow(0 0 5px var(${stat.tone}))` }}
         />
+        <OrbitAccent size={size} radius={size / 2 - 1} />
       </svg>
 
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 leading-none">

@@ -1,3 +1,5 @@
+import { OrbitAccent } from '@/components/cockpit-ui'
+
 import ReactECharts from 'echarts-for-react'
 import { useId } from 'react'
 import type { ReactNode } from 'react'
@@ -88,6 +90,7 @@ export function FullFlowButton() {
     <button
       type="button"
       onClick={() => navigate('/business-flow')}
+      data-tour-flow
       className="flex cursor-pointer items-center gap-1.5 rounded-[6px] px-3 py-[6px] text-[13px] leading-none font-medium text-white transition-opacity hover:opacity-85"
       style={{
         background: 'linear-gradient(90deg, var(--ck-btn-from), var(--ck-btn-to))',
@@ -438,6 +441,7 @@ export function RingGauge({
         >
           {value.toFixed(1)}%
         </text>
+        <OrbitAccent size={size} radius={size / 2 - 1} />
       </svg>
 
       <span className="text-center text-[13px] leading-tight text-(--text-secondary)">{label}</span>

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { useReducedMotion } from 'framer-motion'
 
 import type { ScreenLayout } from '@/components/cockpit-ui'
 
@@ -40,6 +41,7 @@ const SWIPE_RATIO = 0.12
 const DRAG_THRESHOLD = 12
 
 export function CockpitPager() {
+  const reducedMotion = useReducedMotion()
   const [searchParams, setSearchParams] = useSearchParams()
 
   // ?p= 是 1 起的页码；不带参数 / 越界 / 非法都回落到默认页（地图页）
@@ -190,12 +192,12 @@ export function CockpitPager() {
         className="flex h-full w-full"
         style={{
           transform: `translate3d(${offset}, 0, 0)`,
-          transition: dragging ? 'none' : 'transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1)',
+          transition: dragging || reducedMotion ? 'none' : 'transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1)',
           cursor: dragging ? 'grabbing' : undefined,
         }}
       >
-        {SLIDES.map(({ key, Screen }) => (
-          <div key={key} className="relative h-full w-full shrink-0 overflow-hidden">
+        {SLIDES.map(({ key, Screen }, slideIndex) => (
+          <div key={key} data-ck-active={slideIndex === index} className="relative h-full w-full shrink-0 overflow-hidden">
             <Screen screenLayout="absolute" />
           </div>
         ))}

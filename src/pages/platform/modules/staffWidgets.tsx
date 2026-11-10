@@ -1,3 +1,5 @@
+import { OrbitAccent } from '@/components/cockpit-ui'
+
 import ReactECharts from 'echarts-for-react'
 
 import type { ReactNode } from 'react'
@@ -63,6 +65,7 @@ export function Donut({
             />
           )
         })}
+        <OrbitAccent size={size} radius={size / 2 - 1} />
       </svg>
       {center ? (
         <div className="absolute inset-0 flex flex-col items-center justify-center">{center}</div>

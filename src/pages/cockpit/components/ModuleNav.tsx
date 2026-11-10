@@ -41,10 +41,11 @@ function ModuleButton({
   return (
     <button
       type="button"
+      data-tour-module={item.key}
       onClick={onClick}
       onDoubleClick={onDoubleClick}
       title={`双击进入${item.label}平台`}
-      className="group relative flex min-h-0 flex-1 cursor-pointer items-center gap-3.5 rounded-[4px] border px-5 transition-all duration-200 select-none"
+      className="ck-module-button ck-motion-enter group relative flex min-h-0 flex-1 cursor-pointer items-center gap-3.5 rounded-[4px] border px-5 transition-all duration-200 select-none"
       style={{
         borderColor: active ? 'var(--ck-cyan)' : 'var(--ck-panel-inner-border)',
         background: active

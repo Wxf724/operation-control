@@ -1,3 +1,4 @@
+import { AnimatedNumber } from '@/components/cockpit-ui'
 import type { MetricPill } from '@/pages/cockpit/types'
 
 import { DEFAULT_DELTA } from '../constants'
@@ -29,7 +30,7 @@ function KpiCard({ kpi }: { kpi: MetricPill }) {
 
   return (
     <div
-      className="relative flex items-center gap-3 rounded-(--ck-panel-radius) border px-3.5 py-2.5"
+      className="ck-motion-enter relative flex items-center gap-3 rounded-(--ck-panel-radius) border px-3.5 py-2.5"
       style={{
         borderColor: 'var(--ck-card-border)',
         background: 'linear-gradient(180deg, var(--ck-card-from) 0%, var(--ck-card-to) 100%)',
@@ -57,7 +58,7 @@ function KpiCard({ kpi }: { kpi: MetricPill }) {
             className="ck-glow-num text-[24px] leading-none font-bold"
             style={{ color: 'var(--ck-kpi-text, var(--ck-title))' }}
           >
-            {kpi.value}
+            <AnimatedNumber value={kpi.value} />
           </span>
           {kpi.unit ? (
             <span className="text-[12px] leading-none text-(--text-tertiary)">{kpi.unit}</span>

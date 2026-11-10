@@ -1,5 +1,7 @@
 ﻿export { ScreenScaler } from './ScreenScaler'
 export type { ScreenScalerProps, ScreenLayout, ScreenScaleMode } from './ScreenScaler'
+export { AnimatedNumber } from './AnimatedNumber'
+export { OrbitAccent } from './OrbitAccent'
 
 export { PanelBox, SectionTitle, TitleMarker } from './PanelBox'
 export type { PanelBoxProps, SectionTitleProps } from './PanelBox'

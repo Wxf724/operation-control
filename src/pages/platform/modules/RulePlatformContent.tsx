@@ -1,3 +1,5 @@
+import { OrbitAccent } from '@/components/cockpit-ui'
+
 import ReactECharts from 'echarts-for-react'
 import { useId, useMemo } from 'react'
 
@@ -154,6 +156,7 @@ function ZeroTriggerRing() {
         </defs>
         <circle cx={half} cy={half} r={60} fill="none" stroke="var(--ck-card-border)" />
         <RingArc c={half} r={51} w={15} stroke={`url(#${gradId})`} pct={RULE_ZERO_TRIGGER.ratio} />
+        <OrbitAccent size={size} radius={size / 2 - 2} />
       </svg>
       <span className="ck-glow-num absolute inset-0 flex items-center justify-center text-[32px] leading-none font-bold text-(--foreground)">
         {RULE_ZERO_TRIGGER.value}

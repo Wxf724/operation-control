@@ -99,7 +99,7 @@ export function ModelKvRow({ row }: { row: ModelRow }) {
         {row.progress === undefined ? null : (
           <span className="ml-1 h-[6px] min-w-0 flex-1 self-center overflow-hidden rounded-full bg-(--ck-track)">
             <span
-              className="block h-full rounded-full"
+              className="ck-progress-fill block h-full rounded-full"
               style={{
                 width: `${Math.max(0, Math.min(100, row.progress))}%`,
                 background: 'linear-gradient(90deg, var(--ck-cyan), var(--ck-green))',

@@ -55,6 +55,7 @@
   "private": true,
   "scripts": {
     "build": "vite build",
+    "build:offline": "vite build --config vite.config.offline.ts && node scripts/patch-offline-html.mjs",
     "live": "vite build --mode live",
     "test": "vite build --mode test",
     "dev": "vite --mode dev",

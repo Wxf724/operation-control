@@ -1,3 +1,5 @@
+import { OrbitAccent } from '@/components/cockpit-ui'
+
 import type { ReactNode } from 'react'
 
 /** 面板标题右侧的页签组 */
@@ -118,6 +120,7 @@ export function DonutStat({
             />
           )
         })}
+        <OrbitAccent size={size} radius={size / 2 - 1} />
       </svg>
 
       <div className="absolute inset-0 flex items-center justify-center">{children}</div>

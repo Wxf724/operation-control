@@ -1,3 +1,5 @@
+import { OrbitAccent } from '@/components/cockpit-ui'
+
 import ReactECharts from 'echarts-for-react'
 import { useId } from 'react'
 
@@ -57,7 +59,8 @@ export function RingStat({ item, size = 96 }: { item: SystemRateItem; size?: num
             strokeDasharray={`${(circumference * item.value) / 100} ${circumference}`}
             transform={`rotate(-90 ${size / 2} ${size / 2})`}
           />
-        </svg>
+          <OrbitAccent size={size} radius={size / 2 - 1} />
+      </svg>
         <span className="absolute inset-0 flex items-center justify-center text-[18px] leading-none font-bold text-(--foreground)">
           {item.display}
         </span>

@@ -1,3 +1,5 @@
+import { OrbitAccent } from '@/components/cockpit-ui'
+
 import { useId } from 'react'
 import type { ReactNode } from 'react'
 
@@ -83,6 +85,7 @@ export function RiskRing({
         >
           {value.toFixed(1)}%
         </text>
+        <OrbitAccent size={size} radius={size / 2 - 1} />
       </svg>
 
       <span className="text-center text-[14px] leading-tight text-(--text-secondary)">{label}</span>

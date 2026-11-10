@@ -73,7 +73,7 @@ function CenterCard({ data }: { data: CenterStatus }) {
           {data.name}
         </span>
         <span
-          className="rounded-[2px] px-1.5 py-[3px] text-[12px] leading-none"
+          className={`rounded-[2px] px-1.5 py-[3px] text-[12px] leading-none ${data.danger ? 'ck-status-alert' : ''}`}
           style={{
             color: accent,
             border: `1px solid color-mix(in srgb, ${accent} 50%, transparent)`,

@@ -83,7 +83,7 @@ export function ProgressBar({
         style={{ background: 'var(--ck-track)' }}
       >
         <div
-          className="h-full rounded-full"
+          className="ck-progress-fill h-full rounded-full"
           style={{
             width: `${pct}%`,
             background: `linear-gradient(90deg, color-mix(in srgb, ${color} 55%, transparent), ${color})`,

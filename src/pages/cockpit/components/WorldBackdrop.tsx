@@ -35,11 +35,10 @@ export function WorldBackdrop({ className = '' }: { className?: string }) {
     let cancelled = false
     const load = async () => {
       try {
-        const res = await fetch(`${import.meta.env.BASE_URL}world.json`)
-        if (!res.ok) throw new Error(`世界地图加载失败：${res.status}`)
-        const geo = await res.json()
+        // 与 ChinaMap 同样按模块加载，避免 file:// 下 fetch 被 CORS 拦下
+        const geo = (await import('@/assets/geo/world.json')).default
         if (cancelled) return
-        echarts.registerMap(WORLD_MAP, geo)
+        echarts.registerMap(WORLD_MAP, geo as never)
         setReady(true)
       } catch (err) {
         console.error('[WorldBackdrop] 世界地图注册失败', err)

@@ -52,6 +52,7 @@ export function DrillTabBar({
           return (
             <button
               key={tab.key}
+              data-tour-tab={tab.key}
               type="button"
               aria-pressed={on}
               onClick={() => onChange(tab.key)}

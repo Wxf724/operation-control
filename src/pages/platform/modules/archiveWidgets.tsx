@@ -1,3 +1,5 @@
+import { OrbitAccent } from '@/components/cockpit-ui'
+
 import ReactECharts from 'echarts-for-react'
 import { useId } from 'react'
 import type { ReactNode } from 'react'
@@ -110,7 +112,8 @@ export function Ring({
             strokeDasharray={`${(circ * ring.ratio) / 100} ${circ}`}
             transform={`rotate(-90 ${size / 2} ${size / 2})`}
           />
-        </svg>
+          <OrbitAccent size={size} radius={size / 2 - 1} />
+      </svg>
 
         {/* 环心内容：外层负责居中，内层按基线对齐数值与单位 */}
         <span className="absolute inset-0 flex items-center justify-center">

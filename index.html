@@ -2,27 +2,14 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="https://static.readdy.ai/image/ef95b83776c013c4a1c3d783d82ec693/790fa4d64762eea3565205595e6b025d.png"
-    />
+    <link rel="icon" type="image/png" href="/vendor/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>运营监控与调控全景座舱</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.min.css"
-    />
+    <!--
+      图标字体与站点图标都放本地 vendor 目录（原先引 cdnjs / 外链，内网部署会缺图标）：
+      public/vendor/** 会被原样拷进 dist/vendor/**。
+    -->
+    <link rel="stylesheet" href="/vendor/remixicon/remixicon.min.css" />
   </head>
   <body>
     <div id="root"></div>

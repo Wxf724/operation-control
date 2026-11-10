@@ -1,3 +1,5 @@
+import { OrbitAccent } from '@/components/cockpit-ui'
+
 import type { ReactNode } from 'react'
 
 import type { ProcessDetailRow, ProcessReportGauge, ProcessStageItem } from './processData'
@@ -249,6 +251,7 @@ export function DonutRing({
             />
           )
         })}
+        <OrbitAccent size={size} radius={size / 2 - 1} />
       </svg>
       <span className="ck-glow-num absolute inset-0 flex items-center justify-center text-[25px] leading-none font-bold text-(--ck-cyan)">
         {total}
