@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { PanelBox } from '@/components/cockpit-ui'
 
 import { STRATEGY_STATS, WARNING_CHIPS, WARNING_DETAILS } from '../constants'
 import type { StrategyStat, WarningChip, WarningDetail } from '../types'
+import { STATUS_STYLE, type ModuleWarning } from '../moduleWarnings'
 
 /** 预警详情固定展示的字段行数，第 7 行起需手动滚动 */
 const DETAIL_VISIBLE = 6
@@ -19,7 +21,21 @@ const TONE_VAR: Record<string, string> = {
 }
 
 /** 右栏上半：AI 调控策略（13 个平台页共用） */
-export function AiStrategyBlock({ className = '' }: { className?: string }) {
+export function AiStrategyBlock({ className = '', warnings, dispatches }: { className?: string; warnings?: ModuleWarning[]; dispatches?: string }) {
+  const [selected, setSelected] = useState(0)
+  const warning = warnings?.[selected]
+  const chips = warnings?.map(({ title, status }) => ({
+    text: title,
+    status,
+    ...STATUS_STYLE[status],
+  })) ?? WARNING_CHIPS
+  const details: WarningDetail[] = warning ? [
+    { label: '问题编号', value: String(selected + 1).padStart(5, '0') },
+    { label: '预警等级', value: warning.status === '待处理' ? '红灯' : '黄灯', tone: warning.status === '待处理' ? 'red' : 'orange' },
+    { label: '问题描述', value: warning.description },
+    { label: 'AI调控策略', value: warning.strategy },
+    { label: '建议处理人', value: warning.owner },
+  ] : WARNING_DETAILS
   return (
     <PanelBox
       title={<span className="italic">AI 调控策略</span>}
@@ -29,7 +45,7 @@ export function AiStrategyBlock({ className = '' }: { className?: string }) {
       <div className="flex h-full min-h-0 flex-col gap-3 px-3.5 pt-3 pb-3.5">
         <div className="grid shrink-0 grid-cols-4 gap-2.5">
           {STRATEGY_STATS.map((stat) => (
-            <StatBox key={stat.label} stat={stat} />
+            <StatBox key={stat.label} stat={stat.label === '模型调度次数' && dispatches ? { ...stat, value: dispatches } : stat} />
           ))}
         </div>
 
@@ -42,9 +58,14 @@ export function AiStrategyBlock({ className = '' }: { className?: string }) {
           链路上每一层都带 `min-h-0`，否则 flex 子项会被内容撑开、滚动条永远不出现。
         */}
         <div className="flex min-h-0 flex-1 gap-2.5">
-          <div className="ck-scroll flex min-h-0 w-[196px] shrink-0 flex-col gap-2.5 overflow-y-auto pr-1">
-            {WARNING_CHIPS.map((chip) => (
-              <ChipCard key={chip.text} chip={chip} />
+          <div className="ck-scroll grid min-h-0 w-[196px] shrink-0 auto-rows-[calc((100%-20px)/3)] gap-[10px] overflow-y-auto overscroll-contain pr-1">
+            {chips.map((chip, i) => (
+              <ChipCard
+                key={chip.text}
+                chip={chip}
+                selected={warnings ? selected === i : undefined}
+                onSelect={warnings ? () => setSelected(i) : undefined}
+              />
             ))}
           </div>
 
@@ -58,8 +79,8 @@ export function AiStrategyBlock({ className = '' }: { className?: string }) {
               （不能用 `grow basis-0`：那样行会一直均分容器高度、永远不溢出，滚动失效。）
             */}
             <div className="ck-scroll flex min-h-0 flex-1 flex-col overflow-y-auto pr-1">
-              {WARNING_DETAILS.map((row) => (
-                <DetailRow key={row.label} row={row} />
+              {details.map((row) => (
+                <DetailRow key={row.label} row={row} flexible={Boolean(warning)} />
               ))}
             </div>
           </div>
@@ -112,12 +133,20 @@ function StatBox({ stat }: { stat: StrategyStat }) {
   )
 }
 
-function ChipCard({ chip }: { chip: WarningChip }) {
+function ChipCard({ chip, selected, onSelect }: {
+  chip: WarningChip
+  selected?: boolean
+  onSelect?: () => void
+}) {
   const color = `var(${TONE_VAR[chip.statusTone] ?? '--ck-cyan'})`
+  const Card = onSelect ? 'button' : 'div'
 
   return (
-    <div
-      className="flex shrink-0 items-center gap-2.5 rounded-[12px] px-2.5 py-2.5"
+    <Card
+      type={onSelect ? 'button' : undefined}
+      aria-pressed={selected}
+      onClick={onSelect}
+      className={`flex min-h-0 shrink-0 items-center gap-2.5 rounded-[12px] px-2.5 py-2.5 text-left ${onSelect ? 'cursor-pointer focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-(--ck-cyan)' : ''}`}
       style={{
         border: '1px solid var(--ck-card-border)',
         borderLeft: `3px solid ${color}`,
@@ -126,23 +155,23 @@ function ChipCard({ chip }: { chip: WarningChip }) {
       }}
     >
       <i className={`${chip.icon} shrink-0 text-[16px] ${chip.status === '处理中' ? 'ck-processing-icon' : ''}`} style={{ color }} aria-hidden />
-      <div className="flex min-w-0 flex-col gap-1.5">
+      <span className="flex min-w-0 flex-col gap-1.5">
         <span className="text-[12px] leading-tight text-(--ck-title-sub)">{chip.text}</span>
         <span className="text-[12px] leading-none font-semibold" style={{ color }}>
           {chip.status}
         </span>
-      </div>
-    </div>
+      </span>
+    </Card>
   )
 }
 
-function DetailRow({ row }: { row: WarningDetail }) {
+function DetailRow({ row, flexible }: { row: WarningDetail; flexible?: boolean }) {
   return (
     <div
-      className="grid shrink-0 items-center gap-2"
+      className={`grid shrink-0 items-center gap-2 ${flexible ? 'flex-1 py-1.5' : ''}`}
       style={{
         gridTemplateColumns: '86px 1fr',
-        height: `calc(100% / ${DETAIL_VISIBLE})`,
+        height: flexible ? undefined : `calc(100% / ${DETAIL_VISIBLE})`,
       }}
     >
       <span className="flex items-center gap-1 text-[12px] leading-snug text-(--ck-cyan)">

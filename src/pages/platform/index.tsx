@@ -15,6 +15,7 @@ import { KpiRow } from './components/KpiRow'
 import { PlaceholderPanel } from './components/PlaceholderPanel'
 import { DEFAULT_ORG, ORG_GROUPS, PERIOD_RANGE, PLATFORM_CANVAS } from './constants'
 import { getPlatformMeta } from './registry'
+import { getModuleWarnings, getWarningSummary } from './moduleWarnings'
 
 /**
  * 模块平台页（13 个模块共用一套骨架）。
@@ -36,6 +37,8 @@ export function PlatformPage() {
   }
 
   const Content = meta.Content
+  const warnings = getModuleWarnings(meta.key)
+  const summary = getWarningSummary(meta.key)
 
   return (
     <div className={meta.theme ?? 'theme-cloud-light'}>
@@ -79,8 +82,8 @@ export function PlatformPage() {
 
               {/* 右栏：13 个平台页一致；比例对齐参考稿（策略 6 : 反馈 4） */}
               <div className="flex w-[756px] shrink-0 flex-col gap-3">
-                <AiStrategyBlock className="min-h-0 flex-[1.22]" />
-                <FeedbackBlock className="min-h-0 flex-1" />
+                <AiStrategyBlock key={meta.key} warnings={warnings} dispatches={summary.dispatches} className="min-h-0 flex-[1.22]" />
+                <FeedbackBlock warnings={warnings} counts={summary.taskCounts} visibleRows={summary.visibleTasks} className="min-h-0 flex-1" />
               </div>
             </div>
           </div>

@@ -2,9 +2,24 @@ import { PanelBox, StatusTag } from '@/components/cockpit-ui'
 
 import { FEEDBACK_STATS, TASK_FEEDBACK_COLUMNS, TASK_FEEDBACK_ROWS } from '../constants'
 import type { FeedbackStat, TaskFeedbackRow } from '../types'
+import { STATUS_STYLE, type ModuleWarning } from '../moduleWarnings'
 
 /** 右栏下半：调控执行反馈（13 个平台页共用） */
-export function FeedbackBlock({ className = '' }: { className?: string }) {
+export function FeedbackBlock({ className = '', warnings, counts, visibleRows = 2 }: {
+  className?: string
+  warnings?: ModuleWarning[]
+  counts?: number[]
+  visibleRows?: number
+}) {
+  const tasks: TaskFeedbackRow[] = warnings?.map((issue, i) => ({
+    taskNo: String(i + 1).padStart(5, '0'),
+    issueNo: String(i + 1).padStart(5, '0'),
+    description: `${issue.title}：${issue.task}`,
+    owner: issue.owner,
+    deadline: issue.deadline ?? (i === 1 ? '1小时内' : '2小时内'),
+    status: issue.taskStatus,
+    statusTone: STATUS_STYLE[issue.taskStatus].statusTone,
+  })) ?? TASK_FEEDBACK_ROWS
   return (
     <PanelBox
       title="调控执行反馈"
@@ -21,8 +36,8 @@ export function FeedbackBlock({ className = '' }: { className?: string }) {
     >
       <div className="flex h-full min-h-0 flex-col gap-3 px-3.5 pt-3 pb-3.5">
         <div className="grid shrink-0 grid-cols-3 gap-2.5">
-          {FEEDBACK_STATS.map((stat) => (
-            <StatBox key={stat.label} stat={stat} />
+          {FEEDBACK_STATS.map((stat, index) => (
+            <StatBox key={stat.label} stat={counts ? { ...stat, value: String(counts[index]) } : stat} />
           ))}
         </div>
 
@@ -41,16 +56,13 @@ export function FeedbackBlock({ className = '' }: { className?: string }) {
             ))}
           </div>
 
-          {/*
-            固定展示 2 行：行高写死 `ROW_H`，滚动容器高度 = 2 行，
-            第 3 行起需要手动滚动。字号保持不变，靠加大行高撑开整个列表。
-          */}
+          {/* 按模块展示两行或三行，余下的任务在表内滚动。 */}
           <div
-            className="ck-scroll flex shrink-0 flex-col overflow-y-auto"
+            className="ck-scroll flex min-h-0 flex-1 flex-col overflow-y-auto"
             style={{ maxHeight: ROW_H * VISIBLE_ROWS }}
           >
-            {TASK_FEEDBACK_ROWS.map((row, i) => (
-              <TaskRow key={row.taskNo} row={row} even={i % 2 === 0} />
+            {tasks.map((row, i) => (
+              <TaskRow key={row.taskNo} row={row} even={i % 2 === 0} visibleRows={visibleRows} />
             ))}
           </div>
         </div>
@@ -87,12 +99,12 @@ function StatBox({ stat }: { stat: FeedbackStat }) {
   )
 }
 
-function TaskRow({ row, even }: { row: TaskFeedbackRow; even: boolean }) {
+function TaskRow({ row, even, visibleRows }: { row: TaskFeedbackRow; even: boolean; visibleRows: number }) {
   return (
     <div
       className="grid shrink-0 items-center gap-2 px-2.5 py-2"
       style={{
-        height: ROW_H,
+        height: `calc(100% / ${visibleRows})`,
         gridTemplateColumns: COLS,
         background: even ? 'var(--ck-table-row)' : 'var(--ck-table-row-alt)',
       }}
@@ -104,7 +116,7 @@ function TaskRow({ row, even }: { row: TaskFeedbackRow; even: boolean }) {
         {row.issueNo}
       </span>
       <span className="text-[12px] leading-snug text-(--foreground)">
-        <span className="line-clamp-2">{row.description}</span>
+        <span title={row.description}>{row.description}</span>
       </span>
       <span className="text-[12px] leading-snug text-(--text-secondary)">{row.owner}</span>
       <span className="text-[12px] leading-snug text-(--text-secondary) tabular-nums">
