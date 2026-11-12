@@ -193,7 +193,7 @@ export function buildRunStatusOption(c: ChartColors) {
     yAxis: [valAxis(c, '单位：个', 700, 100), valAxis(c, '单位：%', 100, 20, 'right')],
     series: [
       {
-        name: 'RPA在线运行数量',
+        name: '数字员工在线运行数量',
         type: 'bar' as const,
         barWidth: 20,
         data: RPA_RUN_TREND.map((d) => d.online),
@@ -201,7 +201,7 @@ export function buildRunStatusOption(c: ChartColors) {
       },
       rateLine(
         c,
-        'RPA启用率',
+        '数字员工启用率',
         RPA_RUN_TREND.map((d) => d.enableRate)
       ),
     ],
@@ -220,7 +220,7 @@ export function buildTaskOption(c: ChartColors) {
     yAxis: [valAxis(c, '单位：个', 80000, 20000), valAxis(c, '单位：%', 100, 20, 'right')],
     series: [
       {
-        name: 'RPA执行成功单据量',
+        name: '数字员工执行成功单据量',
         type: 'bar' as const,
         stack: 'doc',
         barWidth: 26,
@@ -228,7 +228,7 @@ export function buildTaskOption(c: ChartColors) {
         itemStyle: barFill(c['--ck-blue'], [0, 0, 0, 0], 0.85),
       },
       {
-        name: 'RPA执行失败单据量',
+        name: '数字员工执行失败单据量',
         type: 'bar' as const,
         stack: 'doc',
         barWidth: 26,
@@ -237,7 +237,7 @@ export function buildTaskOption(c: ChartColors) {
       },
       rateLine(
         c,
-        'RPA单据处理成功率',
+        '数字员工单据处理成功率',
         RPA_TASK_TREND.map((d) => d.rate),
         false
       ),

@@ -24,9 +24,9 @@ export interface RpaRunView {
 
 const RUN_STAGE_COLUMNS: readonly DrillColumn[] = [
   { key: 'stage', title: '业务环节', width: 'minmax(0,1fr)', align: 'left' },
-  { key: 'online', title: 'RPA在线运行数量', width: '200px' },
-  { key: 'stopped', title: 'RPA异常停用数量', width: '200px' },
-  { key: 'success', title: 'RPA执行成功单据量', width: '230px' },
+  { key: 'online', title: '数字员工在线运行数量', width: '200px' },
+  { key: 'stopped', title: '数字员工异常停用数量', width: '200px' },
+  { key: 'success', title: '数字员工执行成功单据量', width: '230px' },
 ]
 
 const RUN_STAGE_ROWS: readonly string[][] = [
@@ -59,10 +59,10 @@ const MANUAL_TYPE_ROWS: readonly string[][] = [
 
 const IDLE_COLUMNS: readonly DrillColumn[] = [
   { key: 'stage', title: '业务环节', width: 'minmax(0,1fr)', align: 'left' },
-  { key: 'successRate', title: 'RPA单据处理成功率', width: '340px' },
-  { key: 'usageRate', title: 'RPA运行利用率', width: '300px' },
-  { key: 'manualRate', title: 'RPA转人工率', width: '280px' },
-  { key: 'errorCount', title: '人工复核RPA差错数量', width: '340px' },
+  { key: 'successRate', title: '数字员工单据处理成功率', width: '340px' },
+  { key: 'usageRate', title: '数字员工运行利用率', width: '300px' },
+  { key: 'manualRate', title: '数字员工转人工率', width: '280px' },
+  { key: 'errorCount', title: '人工复核数字员工差错数量', width: '340px' },
 ]
 
 const IDLE_ROWS: readonly string[][] = [
@@ -81,19 +81,19 @@ export const RPA_RUN_VIEWS: Record<string, RpaRunView> = {
     metrics: [
       {
         icon: 'ri-stack-line',
-        label: 'RPA在线运行数量',
+        label: '数字员工在线运行数量',
         value: '24',
         colorVar: '--ck-cyan',
       },
       {
         icon: 'ri-robot-2-line',
-        label: 'RPA异常停用数量',
+        label: '数字员工异常停用数量',
         value: '4',
         colorVar: '--ck-orange',
       },
       {
         icon: 'ri-file-chart-line',
-        label: 'RPA执行成功单据量',
+        label: '数字员工执行成功单据量',
         value: '2,400',
         colorVar: '--ck-green',
       },
@@ -101,16 +101,16 @@ export const RPA_RUN_VIEWS: Record<string, RpaRunView> = {
     tables: [
       {
         key: 'stage',
-        title: 'RPA运行情况',
-        titleQuery: 'source=RPA运行情况',
+        title: '数字员工运行情况',
+        titleQuery: 'source=数字员工运行情况',
         rowQueryKey: 'stage',
         columns: RUN_STAGE_COLUMNS,
         rows: RUN_STAGE_ROWS,
       },
       {
         key: 'manual',
-        title: 'RPA转人工情况',
-        titleQuery: 'source=RPA转人工情况',
+        title: '数字员工转人工情况',
+        titleQuery: 'source=数字员工转人工情况',
         rowQueryKey: 'type',
         columns: MANUAL_TYPE_COLUMNS,
         rows: MANUAL_TYPE_ROWS,
@@ -122,25 +122,25 @@ export const RPA_RUN_VIEWS: Record<string, RpaRunView> = {
     metrics: [
       {
         icon: 'ri-pie-chart-line',
-        label: 'RPA单据处理成功率',
+        label: '数字员工单据处理成功率',
         value: '90%',
         colorVar: '--ck-cyan',
       },
       {
         icon: 'ri-time-line',
-        label: 'RPA运行利用率',
+        label: '数字员工运行利用率',
         value: '89%',
         colorVar: '--ck-blue',
       },
       {
         icon: 'ri-user-shared-line',
-        label: 'RPA转人工率',
+        label: '数字员工转人工率',
         value: '12%',
         colorVar: '--ck-purple',
       },
       {
         icon: 'ri-error-warning-line',
-        label: '人工复核RPA差错数量',
+        label: '人工复核数字员工差错数量',
         value: '240',
         colorVar: '--ck-orange',
       },
@@ -148,8 +148,8 @@ export const RPA_RUN_VIEWS: Record<string, RpaRunView> = {
     tables: [
       {
         key: 'idle',
-        title: 'RPA资源闲置',
-        titleQuery: 'source=RPA资源闲置',
+        title: '数字员工资源闲置',
+        titleQuery: 'source=数字员工资源闲置',
         rowQueryKey: 'stage',
         columns: IDLE_COLUMNS,
         rows: IDLE_ROWS,

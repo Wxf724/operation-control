@@ -236,7 +236,7 @@ export const TREND_DATA: TrendPoint[] = [
 export const LEFT_MODULES: ModuleEntry[] = [
   { key: 'job', label: '作业管理', icon: 'ri-clipboard-line', route: '/platform/job' },
   { key: 'staff', label: '员工管理', icon: 'ri-user-settings-line', route: '/platform/staff' },
-  { key: 'rpa', label: 'RPA管理', icon: 'ri-robot-2-line', route: '/platform/rpa' },
+  { key: 'rpa', label: '数字员工管理', icon: 'ri-robot-2-line', route: '/platform/rpa' },
   { key: 'rule', label: '规则管理', icon: 'ri-file-list-3-line', route: '/platform/rule' },
   { key: 'risk', label: '风险管理', icon: 'ri-shield-check-line', route: '/platform/risk' },
   {

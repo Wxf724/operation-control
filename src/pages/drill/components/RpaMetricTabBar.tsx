@@ -30,7 +30,7 @@ export function RpaMetricTabBar({
     >
       <div
         role="tablist"
-        aria-label="RPA 视图页签"
+        aria-label="数字员工视图页签"
         className="flex shrink-0 items-center gap-2 rounded-[9px] p-1"
         style={{ background: 'var(--ck-panel-inner)' }}
       >

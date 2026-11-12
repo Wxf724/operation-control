@@ -11,7 +11,7 @@ export interface RpaCountStat {
 
 /** RPA 总数 / 领用机器人 / 定时机器人 */
 export const RPA_COUNTS: RpaCountStat[] = [
-  { label: 'RPA总数', value: '263', unit: '个' },
+  { label: '数字员工总数', value: '263', unit: '个' },
   { label: '领用机器人数量', value: '39', unit: '个' },
   { label: '定时机器人数量', value: '224', unit: '个' },
 ]
@@ -128,7 +128,7 @@ export const RPA_RUN_TREND: RpaRunTrendPoint[] = [
 ]
 
 /** 运行状态下方的三个切换页签 */
-export const RPA_RUN_TABS = ['RPA在线运行数量', 'RPA异常停用数量', '待处理单据量'] as const
+export const RPA_RUN_TABS = ['数字员工在线运行数量', '数字员工异常停用数量', '待处理单据量'] as const
 
 /** 环形小卡：某个环节的一个数值 */
 export interface RpaStageRing {
@@ -197,7 +197,7 @@ export const RPA_MANUAL = {
 /* ───────────── 贡献情况 ───────────── */
 
 /** 贡献情况的两个切换页签 */
-export const RPA_CONTRIB_TABS = ['RPA作业任务处理量', 'RPA非作业任务处理量'] as const
+export const RPA_CONTRIB_TABS = ['数字员工作业任务处理量', '数字员工非作业任务处理量'] as const
 
 /** 效率提升贡献率仪表盘读数，单位：% */
 export const RPA_CONTRIB_GAUGE = 91

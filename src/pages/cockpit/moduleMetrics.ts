@@ -34,12 +34,12 @@ export const MODULE_METRICS: Record<string, MetricPill[]> = {
 
   /* RPA管理平台 —— 6 张卡 */
   rpa: [
-    { key: 'coverage', label: 'RPA覆盖率', value: '89.0%', unit: '', icon: 'ri-pie-chart-line' },
-    { key: 'enabled', label: 'RPA启用率', value: '89.0%', unit: '', icon: 'ri-cursor-line' },
-    { key: 'online', label: 'RPA在线运行数量', value: '263', unit: '个', icon: 'ri-robot-2-line' },
-    { key: 'success', label: 'RPA执行成功单据量', value: '200,000', unit: '张', icon: 'ri-file-check-line' },
-    { key: 'toHuman', label: 'RPA转人工率', value: '5.0%', unit: '', icon: 'ri-user-shared-line' },
-    { key: 'auto', label: 'RPA自动化率', value: '96.0%', unit: '', icon: 'ri-settings-5-line' },
+    { key: 'coverage', label: '数字员工覆盖率', value: '89.0%', unit: '', icon: 'ri-pie-chart-line' },
+    { key: 'enabled', label: '数字员工启用率', value: '89.0%', unit: '', icon: 'ri-cursor-line' },
+    { key: 'online', label: '数字员工在线运行数量', value: '263', unit: '个', icon: 'ri-robot-2-line' },
+    { key: 'success', label: '数字员工执行成功单据量', value: '200,000', unit: '张', icon: 'ri-file-check-line' },
+    { key: 'toHuman', label: '数字员工转人工率', value: '5.0%', unit: '', icon: 'ri-user-shared-line' },
+    { key: 'auto', label: '数字员工自动化率', value: '96.0%', unit: '', icon: 'ri-settings-5-line' },
   ],
 
   /* 规则管理平台 —— 5 张卡 */

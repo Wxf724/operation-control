@@ -52,7 +52,7 @@ export function PlanningPanel({ className = '' }: { className?: string }) {
       className={`flex flex-col ${className}`}
       bodyClassName="flex min-h-0 flex-1 flex-col gap-3 px-4 pt-3 pb-4"
     >
-      <PanelSectionTitle>RPA数量</PanelSectionTitle>
+      <PanelSectionTitle>数字员工数量</PanelSectionTitle>
 
       <div
         className="flex shrink-0 items-center gap-3 rounded-[12px] px-3.5 py-3"
@@ -76,14 +76,14 @@ export function PlanningPanel({ className = '' }: { className?: string }) {
         <ReactECharts option={option} {...CHART_PROPS} />
       </div>
 
-      <PanelSectionTitle>RPA上线类型分布</PanelSectionTitle>
+      <PanelSectionTitle>数字员工上线类型分布</PanelSectionTitle>
       <TypeTable />
     </PanelBox>
   )
 }
 
-const TYPE_COLUMNS = ['序号', 'RPA类型', '业务大类', '业务场景', '数量', '任务量', '自动化率']
-const TYPE_WIDTHS = ['42px', '62px', '66px', 'auto', '58px', '72px', '80px']
+const TYPE_COLUMNS = ['序号', '数字员工类型', '业务大类', '业务场景', '数量', '任务量', '自动化率']
+const TYPE_WIDTHS = ['42px', '86px', '66px', 'auto', '58px', '72px', '80px']
 
 function TypeTable() {
   return (
@@ -180,7 +180,7 @@ function RunStatusBlock() {
 
   return (
     <section className="flex min-w-0 flex-1 flex-col gap-2.5">
-      <PanelSectionTitle>RPA运行状态</PanelSectionTitle>
+      <PanelSectionTitle>数字员工运行状态</PanelSectionTitle>
 
       <div className="h-[204px] shrink-0">
         <ReactECharts option={option} {...CHART_PROPS} />
@@ -232,7 +232,7 @@ function TaskBlock() {
 
   return (
     <section className="flex min-w-0 flex-1 flex-col gap-3">
-      <PanelSectionTitle>RPA作业情况</PanelSectionTitle>
+      <PanelSectionTitle>数字员工作业情况</PanelSectionTitle>
 
       <div className="h-[210px] shrink-0">
         <ReactECharts option={option} {...CHART_PROPS} />
@@ -271,7 +271,7 @@ function TaskBlock() {
             <span className="ck-glow-num text-[32px] font-bold text-(--ck-title)">
               {RPA_MANUAL.rate}%
             </span>
-            <span className="text-[11.5px] text-(--text-secondary)">RPA转人工率</span>
+            <span className="text-[11.5px] text-(--text-secondary)">数字员工转人工率</span>
           </div>
         </div>
 
