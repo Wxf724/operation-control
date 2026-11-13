@@ -1,0 +1,63 @@
+.risk-step-arrow {
+  position: absolute;
+  z-index: 1;
+  top: 52px;
+  right: -26px;
+  width: 36px;
+  height: 18px;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, transparent, var(--ck-blue) 65%, var(--ck-cyan));
+  clip-path: polygon(0 32%, 65% 32%, 65% 0, 100% 50%, 65% 100%, 65% 68%, 0 68%);
+  pointer-events: none;
+}
+
+.risk-loop-return {
+  position: absolute;
+  /* 与七等分网格中首、末两张卡片的中心对齐。 */
+  inset-inline: calc((100% - 6rem) / 14);
+  bottom: 9px;
+  height: 23px;
+  border: 3px solid color-mix(in srgb, var(--ck-blue) 65%, var(--ck-card-border));
+  border-top: 0;
+  border-radius: 0 0 10px 10px;
+}
+
+.risk-loop-return::before {
+  content: '';
+  position: absolute;
+  left: -8.5px;
+  top: -1px;
+  width: 14px;
+  height: 10px;
+  background: var(--ck-blue);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.risk-exchange-arrows {
+  position: relative;
+  flex: 1;
+  max-width: 160px;
+  height: 30px;
+  pointer-events: none;
+}
+
+.risk-exchange-arrows::before,
+.risk-exchange-arrows::after {
+  content: '';
+  position: absolute;
+  width: 84%;
+  height: 14px;
+  background: linear-gradient(90deg, transparent, var(--ck-blue) 80%, var(--ck-cyan));
+  clip-path: polygon(0 55%, calc(100% - 20px) 32%, calc(100% - 24px) 0, 100% 55%, calc(100% - 24px) 100%, calc(100% - 20px) 72%);
+}
+
+.risk-exchange-arrows::before {
+  top: 0;
+  left: 0;
+  transform: rotate(180deg);
+}
+
+.risk-exchange-arrows::after {
+  bottom: 0;
+  right: 0;
+}

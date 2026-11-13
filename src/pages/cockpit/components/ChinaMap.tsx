@@ -125,7 +125,7 @@ export function ChinaMap({ className = '' }: { className?: string }) {
     const fallback = chartDom ? echarts.getInstanceByDom(chartDom) ?? null : null
     const cached = chartRef.current
     const chart = cached && !cached.isDisposed() ? cached : fallback
-    if (!chart || chart.isDisposed()) return false
+    if (!chart || chart.isDisposed() || (chart !== cached && !chart.getOption()?.geo)) return false
 
     /* 读取舞台的完整变换矩阵（缩放 + 视觉配平角），以舞台中心为原点换算 */
     const stage = host.querySelector<HTMLElement>('.ck-map-stage')

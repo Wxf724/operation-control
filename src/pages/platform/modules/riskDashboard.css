@@ -1,0 +1,696 @@
+/* 预警管控驾驶舱的独立主题，画布按参考稿 1914 × 854 排版。 */
+.risk-theme {
+  --foreground: #f4f8ff;
+  --text-secondary: #d1e4fb;
+  --text-tertiary: #86a5ca;
+  --ck-title: #e8f4ff;
+  --ck-title-sub: #b3ddff;
+  --ck-cyan: #00edf5;
+  --ck-blue: #139efa;
+  --ck-green: #26d572;
+  --ck-orange: #ffad22;
+  --ck-red: #ff626e;
+  --ck-purple: #a37bea;
+  --ck-teal: #4bdef1;
+  --ck-track: #17375b;
+  --ck-axis: #adc2dc;
+  --ck-grid: #324d76;
+  --ck-screen-base: #081638;
+  --ck-panel-bg: #122246;
+  --ck-card-border: #184074;
+  --ck-panel-inner: #162c53;
+  --ck-table-head: #203d78;
+  --ck-table-row: #17294d;
+  --text-primary: #fff;
+  --surface: #122749;
+  --border: #23486e;
+  --accent-light: #184477;
+  --risk-edge: #173d72;
+  --risk-panel: linear-gradient(180deg, #0f2045, #152851);
+}
+.risk-theme .ck-screen {
+  background: #081638;
+}
+.risk-cockpit {
+  position: relative;
+  display: grid;
+  grid-template-rows: 59px 74px minmax(0, 1fr);
+  gap: 15px;
+  height: 100%;
+  background: #081638;
+  color: var(--foreground);
+  font:
+    14px/1.2 'Microsoft YaHei',
+    sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+.risk-art,
+.risk-masthead h1 button {
+  background-image: url('../../../assets/risk/cockpit-art.jpg');
+  background-repeat: no-repeat;
+  background-size: 1914px 854px;
+}
+.risk-masthead {
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-right: 18px;
+  background: linear-gradient(#0b1933, #19365f 88%, #284a78);
+  border-bottom: 1px solid #275496;
+}
+.risk-masthead h1 {
+  align-self: stretch;
+  flex: 0 0 535px;
+}
+.risk-masthead h1 button {
+  width: 100%;
+  height: 100%;
+  background-position: 0 0;
+  cursor: pointer;
+}
+.risk-sections {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex: 1;
+  white-space: nowrap;
+  color: #c7dffa;
+  font-weight: 600;
+}
+.risk-sections [aria-current] {
+  color: white;
+  text-shadow: 0 0 10px #56cbff;
+}
+.risk-period,
+.risk-masthead select {
+  display: flex;
+  align-items: center;
+  color: white;
+  background: #0e2543;
+  border: 1px solid #1b436e;
+  border-radius: 3px;
+  height: 30px;
+  padding: 0 8px;
+}
+.risk-period > i {
+  color: #83bfe9;
+  margin-right: 4px;
+}
+.risk-masthead select {
+  width: 172px;
+  color-scheme: dark;
+}
+.risk-summaries,
+.risk-columns {
+  margin: 0 30px 0 34px;
+  display: grid;
+  gap: 14px;
+  min-height: 0;
+}
+.risk-summaries {
+  grid-template-columns: 313fr 313fr 289fr 289fr 289fr 289fr;
+}
+.risk-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(#122449, #24395d);
+  border: 1px solid var(--risk-edge);
+  position: relative;
+}
+.risk-summary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 14px;
+  background: repeating-linear-gradient(135deg, transparent 0 3px, #235185 4px 6px);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+.risk-summary .risk-art {
+  width: 76px;
+  height: 70px;
+  flex: none;
+}
+.risk-summary::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(135deg, transparent, #12ceff);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+.risk-summary h2 {
+  font-size: 14px;
+  color: #86c4ff;
+  margin-bottom: 5px;
+}
+.risk-summary strong {
+  font-size: 24px;
+  font-weight: 700;
+}
+.risk-summary small {
+  font-size: 13px;
+  font-weight: 400;
+}
+.risk-columns {
+  grid-template-columns: 449fr 922fr 449fr;
+  padding-bottom: 2px;
+}
+.risk-left,
+.risk-middle,
+.risk-right {
+  display: grid;
+  min-height: 0;
+  min-width: 0;
+  gap: 15px;
+}
+.risk-left {
+  grid-template-rows: 209fr 210fr 241fr;
+}
+.risk-middle {
+  grid-template-rows: 325fr 220fr 129fr;
+  gap: 7px;
+}
+.risk-right {
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+}
+.risk-box {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--risk-edge);
+  background: var(--risk-panel);
+}
+.risk-box header {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  height: 48px;
+  padding: 8px 17px 0;
+}
+.risk-box h2 {
+  font-size: 18px;
+  font-weight: 700;
+}
+.risk-left h2,
+.risk-right h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-style: italic;
+  color: white;
+}
+.risk-left h2::before,
+.risk-right h2::before {
+  content: '';
+  width: 9px;
+  height: 16px;
+  background: linear-gradient(90deg, #153e72, #13bafa);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+.risk-tabs {
+  display: flex;
+  gap: 4px;
+}
+.risk-tabs button {
+  padding: 3px 8px;
+  color: #648ab6;
+  background: linear-gradient(#16335b, #102344);
+  border: 1px solid #234675;
+  border-radius: 3px;
+  transform: skewX(-10deg);
+  font-size: 11px;
+  cursor: pointer;
+}
+.risk-tabs button[aria-selected='true'] {
+  color: white;
+  border-color: #4679ad;
+  background: linear-gradient(#3c83af, #1a3d6f);
+}
+.risk-distribution-content,
+.risk-marking-content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+}
+.risk-distribution-content {
+  padding: 0 42px 6px 16px;
+  gap: 17px;
+}
+.risk-distribution-content > div:first-child {
+  align-self: stretch;
+}
+.risk-distribution-content ul {
+  width: 54%;
+  display: grid;
+  gap: 4px;
+}
+.risk-distribution-content li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 33px;
+  padding: 0 10px;
+  background: #182d52;
+  font-size: 10px;
+}
+.risk-distribution-content li:first-child {
+  background: #203f79;
+}
+.risk-distribution-content b {
+  color: var(--ck-cyan);
+  margin-left: auto;
+  font-weight: 500;
+  font-size: 12px;
+}
+.risk-distribution-content li i,
+.risk-manual td i {
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  border-radius: 50%;
+}
+.risk-marking-content {
+  padding: 0 20px 12px;
+  gap: 14px;
+}
+.risk-marking-total {
+  width: 35%;
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+}
+.risk-marking-total strong {
+  font-size: 25px;
+  font-weight: 500;
+}
+.risk-marking-total i {
+  height: 47px;
+  width: 94px;
+  background-position: -77px -499px;
+}
+.risk-marking-total b {
+  color: var(--ck-cyan);
+  font-size: 16px;
+}
+.risk-marking-content table {
+  flex: 1;
+  border-collapse: separate;
+  border-spacing: 0 4px;
+  font-size: 10px;
+  width: 63%;
+}
+.risk-marking-content th {
+  background: var(--ck-table-head);
+  height: 23px;
+  font-weight: 500;
+}
+.risk-marking-content td {
+  background: #192d50;
+  height: 24px;
+  text-align: center;
+}
+.risk-marking-content td:first-child {
+  white-space: nowrap;
+}
+.risk-marking-content td i {
+  margin-right: 4px;
+}
+.risk-marking-content td:nth-child(2) {
+  text-align: left;
+}
+.risk-marking-content td em {
+  display: inline-block;
+  vertical-align: middle;
+  height: 7px;
+}
+.risk-marking-content td span {
+  display: inline-block;
+  width: 48px;
+}
+.risk-trend > div {
+  margin: 5px 12px 3px;
+}
+.risk-middle h2 {
+  text-align: center;
+  color: #91d7ff;
+}
+.risk-flow > h2 {
+  height: 56px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  letter-spacing: 2px;
+  border-bottom: 2px solid #164e83;
+  background: linear-gradient(110deg, transparent, #07386d 45%, #0c2f58);
+}
+.risk-flow > h2::before,
+.risk-flow > h2::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  height: 54px;
+  width: 145px;
+  opacity: 1;
+  background: url('../../../assets/risk/cockpit-art.jpg') -499px -164px;
+  mask-image: linear-gradient(90deg, black 84%, transparent);
+}
+.risk-flow > h2::before {
+  left: 0;
+}
+.risk-flow > h2::after {
+  right: 0;
+  transform: scaleX(-1);
+}
+.risk-flow ol {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 14px;
+  margin: 24px 23px 35px;
+}
+.risk-flow li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: linear-gradient(color-mix(in srgb, var(--step-color) 23%, #0e233f), #101f3d);
+  border: 1px solid color-mix(in srgb, var(--step-color) 18%, #132547);
+  border-radius: 6px 6px 0 0;
+}
+.risk-flow li > i {
+  flex: none;
+  width: 65px;
+  height: 65px;
+  margin: 8px 0 5px;
+  border-radius: 50%;
+}
+.risk-flow h3 {
+  font-style: italic;
+  font-size: 13px;
+  font-weight: 700;
+  height: 28px;
+  display: grid;
+  place-items: center;
+}
+.risk-flow dl {
+  flex: 1;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background: linear-gradient(#132d51aa, transparent);
+  border-top: 1px solid #1c3753;
+  text-align: center;
+}
+.risk-flow dt,
+.risk-unit dt,
+.risk-supervisor span {
+  font-size: 10px;
+}
+.risk-flow dd {
+  color: var(--step-color);
+  font-size: 16px;
+  margin-top: 2px;
+}
+.risk-step-arrow {
+  position: absolute;
+  z-index: 1;
+  width: 40px;
+  height: 28px;
+  top: 26px;
+  right: -30px;
+  background: linear-gradient(90deg, transparent, #afd3ef 65%, #cbeaff);
+  clip-path: polygon(0 26%, 62% 26%, 62% 0, 100% 50%, 62% 100%, 62% 74%, 0 74%);
+}
+.risk-loop-return {
+  position: absolute;
+  bottom: 11px;
+  left: 6.9%;
+  right: 7.5%;
+  height: 35px;
+  background: linear-gradient(180deg, #e6f3ff 8%, #96b8db 56%, #314b71 95%);
+  clip-path: polygon(
+    0 40%,
+    1.9% 0,
+    3.8% 40%,
+    2.9% 40%,
+    2.9% 59%,
+    97.7% 59%,
+    97.7% 30%,
+    100% 30%,
+    100% 100%,
+    1% 100%,
+    1% 40%
+  );
+}
+.risk-collaboration::before,
+.risk-collaboration::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 105px;
+  pointer-events: none;
+  background-image: url('../../../assets/risk/cockpit-art.jpg');
+  background-size: 1914px 854px;
+}
+.risk-collaboration::before {
+  left: 0;
+  background-position: -499px -496px;
+}
+.risk-collaboration::after {
+  right: 0;
+  background-position: -1314px -496px;
+}
+.risk-collaboration h2 {
+  padding: 9px 0 0;
+}
+.risk-network {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 15px;
+  padding: 8px 12.1% 0;
+  min-height: 0;
+}
+.risk-unit {
+  width: 93px;
+  flex: none;
+  text-align: center;
+}
+.risk-unit h3,
+.risk-hub b,
+.risk-supervisor strong {
+  font-size: 12px;
+  font-style: italic;
+  font-weight: bold;
+  color: #d1ebff;
+}
+.risk-unit i {
+  display: block;
+  width: 65px;
+  height: 64px;
+  margin: 8px auto;
+}
+.risk-unit dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 1px 8px;
+  white-space: nowrap;
+}
+.risk-unit dd,
+.risk-supervisor b {
+  font-size: 16px;
+  font-weight: 500;
+}
+.risk-hub {
+  width: 154px;
+  height: 132px;
+  flex: none;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  border-radius: 50%;
+  border-inline: 2px solid #31638b;
+  box-shadow:
+    inset 3px 0 10px -5px #42749d,
+    inset -3px 0 10px -5px #42749d;
+}
+.risk-hub strong {
+  color: var(--ck-cyan);
+  font-size: 32px;
+}
+.risk-hub span {
+  font-size: 10px;
+}
+.risk-exchange-arrows {
+  flex: 1;
+  max-width: 130px;
+  height: 42px;
+  background-image: url('../../../assets/risk/cockpit-art.jpg');
+  background-position: -725px -583px;
+}
+.risk-hub + .risk-exchange-arrows {
+  background-position: -1064px -583px;
+}
+.risk-supervisor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  padding-bottom: 10px;
+}
+.risk-supervisor b {
+  display: block;
+}
+.risk-runtime header {
+  justify-content: center;
+  height: 44px;
+  padding: 0;
+}
+.risk-runtime .risk-tabs {
+  position: absolute;
+  left: 25px;
+}
+.risk-runtime dl {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 17px;
+  margin: 4px 23px 15px;
+}
+.risk-runtime dl div,
+.risk-monitor dl div {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  justify-content: space-around;
+  text-align: center;
+  background: linear-gradient(#102c48 0%, #15385e 45%, #12284a 46%, #102140);
+  border: 1px solid #183456;
+  border-radius: 5px 5px 0 0;
+}
+.risk-runtime dt {
+  font:
+    bold italic 11px 'Microsoft YaHei',
+    sans-serif;
+}
+.risk-runtime dd {
+  font-size: 22px;
+  font-weight: bold;
+}
+.risk-monitor header {
+  height: 35px;
+  padding-top: 10px;
+}
+.risk-monitor-content {
+  display: grid;
+  flex: 1;
+  min-height: 0;
+  grid-template-columns: 34% 1fr;
+  gap: 24px;
+  padding: 2px 23px 15px;
+}
+.risk-monitor dl {
+  display: grid;
+  gap: 14px;
+  grid-template-rows: repeat(2, 1fr);
+  padding-top: 24px;
+}
+.risk-monitor dt {
+  font-size: 12px;
+}
+.risk-monitor dd {
+  font-size: 26px;
+  font-weight: bold;
+  color: #ffbd3b;
+}
+.risk-monitor dd.risk-danger {
+  color: var(--ck-red);
+}
+.risk-monitor dd small {
+  font-size: 12px;
+  font-weight: 400;
+}
+.risk-ranking {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  gap: 4px;
+}
+.risk-ranking h3 {
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.risk-ranking-head,
+.risk-rank-values {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  text-align: center;
+}
+.risk-ranking-head {
+  background: #203d7a;
+  border-radius: 4px 4px 0 0;
+  font-size: 10px;
+  line-height: 22px;
+}
+.risk-ranking ol {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 4px;
+  flex: 1;
+  min-height: 0;
+}
+.risk-ranking li {
+  background: #192a4b;
+  padding: 3px 4px;
+  display: grid;
+  align-content: center;
+}
+.risk-rank-name {
+  font-size: 10px;
+  padding-left: 8px;
+}
+.risk-rank-name b {
+  display: inline-block;
+  width: 12px;
+  text-align: center;
+  margin-right: 5px;
+  background: var(--ck-red);
+}
+.risk-ranking li:nth-child(2) b {
+  background: var(--ck-orange);
+}
+.risk-ranking li:nth-child(3) b {
+  background: #18b888;
+}
+.risk-rank-values {
+  font-size: 12px;
+}
+.risk-assistant {
+  position: absolute;
+  right: 0;
+  top: 160px;
+  width: 34px;
+  height: 36px;
+  border-radius: 18px 0 0 18px;
+  background-position: -1880px -160px;
+  cursor: pointer;
+}

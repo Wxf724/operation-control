@@ -37,6 +37,15 @@ export function PlatformPage() {
   }
 
   const Content = meta.Content
+  if (meta.key === 'risk' && Content) {
+    return (
+      <div className="theme-cockpit risk-theme">
+        <ScreenScaler width={1914} height={854} mode="fill">
+          <Content />
+        </ScreenScaler>
+      </div>
+    )
+  }
   const warnings = getModuleWarnings(meta.key)
   const summary = getWarningSummary(meta.key)
 
@@ -82,8 +91,18 @@ export function PlatformPage() {
 
               {/* 右栏：13 个平台页一致；比例对齐参考稿（策略 6 : 反馈 4） */}
               <div className="flex w-[756px] shrink-0 flex-col gap-3">
-                <AiStrategyBlock key={meta.key} warnings={warnings} dispatches={summary.dispatches} className="min-h-0 flex-[1.22]" />
-                <FeedbackBlock warnings={warnings} counts={summary.taskCounts} visibleRows={summary.visibleTasks} className="min-h-0 flex-1" />
+                <AiStrategyBlock
+                  key={meta.key}
+                  warnings={warnings}
+                  dispatches={summary.dispatches}
+                  className="min-h-0 flex-[1.22]"
+                />
+                <FeedbackBlock
+                  warnings={warnings}
+                  counts={summary.taskCounts}
+                  visibleRows={summary.visibleTasks}
+                  className="min-h-0 flex-1"
+                />
               </div>
             </div>
           </div>
