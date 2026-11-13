@@ -56,6 +56,9 @@ export const CHART_VAR_NAMES = [
   '--ck-map-area',
   '--ck-map-border',
   '--ck-map-emphasis',
+  '--ck-map-route',
+  '--ck-map-trunk',
+  '--ck-map-region',
   '--ck-map-world-area',
   '--ck-map-world-border',
 ] as const

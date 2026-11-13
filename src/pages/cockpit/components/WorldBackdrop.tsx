@@ -5,6 +5,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { useChartColors } from '@/components/cockpit-ui'
 import type { ChartVarName } from '@/components/cockpit-ui'
 
+import { MAP_GEO_FIT } from '../constants'
+
 const WORLD_MAP = 'world'
 
 /**
@@ -16,9 +18,13 @@ const WORLD_MAP = 'world'
  *
  * 标定方法：两张图各放两个已知经纬度的标记点（[80,45] 与 [125,25]），
  * 截图量出像素位置后解出缩放比与中心点，实测两图对应点偏差 ≤0.5px。
- * **改动 `ChinaMap` 的 geo.zoom / geo.center 或中栏布局尺寸后，这两个值必须重新标定。**
+ * **改动标定基准 zoom 或 geo.center 后，这两个值必须重新标定。**
+ * 地图舞台现为平面视图；仅调整 `.ck-map-stage` 的 CSS transform 不需要重新标定：
+ * 两层同处一个变换容器，缩放会一起作用到世界底图与中国地图上，相对位置不变。
+ * 取景收缩系数 MAP_GEO_FIT 与中国地图共用，两层围绕同一中心按同一比例缩放，
+ * 因此收缩后仍然重合，无需重新标定。
  */
-const WORLD_ZOOM = 5.8087
+const WORLD_ZOOM = 5.8087 * MAP_GEO_FIT
 const WORLD_CENTER: [number, number] = [104, 36]
 
 /** 中国地图背后的淡色世界底图：俄罗斯、蒙古、朝鲜半岛、日本、东南亚、印度等周边轮廓 */

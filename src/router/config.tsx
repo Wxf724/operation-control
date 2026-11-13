@@ -4,6 +4,7 @@ import type { RouteObject } from 'react-router-dom'
 import { ProcessDisplayPage } from '@/pages/process-display'
 import { AiAssistantPage } from '@/pages/ai-assistant'
 import { CockpitPager } from '@/pages/cockpit'
+import { HtmlViewScreen } from '@/pages/cockpit/screens/HtmlViewScreen'
 import {
   ArchiveCollectDrillPage,
   ArchiveDocDrillPage,
@@ -59,6 +60,8 @@ const routes: RouteObject[] = [
   /* ── 运营调控大屏 ───────────────────────── */
   // 首页 = 三页左右滑动（1 全景座舱 / 2 运营结果与趋势 / 3 模型执行与操作）
   { path: '/', element: <CockpitPager /> },
+  /* 右下角「燕祉商务」「质量监督」双击进入的两个独立静态驾驶舱 */
+  { path: '/html-view/:pageKey', element: <HtmlViewScreen /> },
   { path: '/task-adjust', element: <TaskAdjustPage /> },
   { path: '/policy-analysis', element: <PolicyAnalysisPage /> },
 

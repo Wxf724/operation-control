@@ -10,7 +10,7 @@ import type { DrillColumn } from './types'
 const COLUMNS: readonly DrillColumn[] = [
   { key: 'bizCode', title: '业务类型编码', width: '320px', sortable: true },
   { key: 'bizName', title: '业务类型名称', width: 'minmax(0,1fr)', align: 'left' },
-  { key: 'duration', title: '数字员工任务平均处理时长', width: '420px', sortable: true },
+  { key: 'duration', title: 'RPA任务平均处理时长', width: '420px', sortable: true },
   { key: 'prior', title: '去年同期', width: '320px' },
   { key: 'yoy', title: '同比', width: '320px', sortable: true },
 ]
@@ -43,7 +43,7 @@ export function RpaContribDrillPage() {
       <DrillMetricRow items={RPA_CONTRIB_METRICS} />
 
       <section className="flex min-h-0 flex-1 flex-col gap-2">
-        <SectionTitle className="shrink-0 px-1">数字员工任务平均处理时长</SectionTitle>
+        <SectionTitle className="shrink-0 px-1">RPA任务平均处理时长</SectionTitle>
 
         <DrillPagedTable
           columns={COLUMNS}

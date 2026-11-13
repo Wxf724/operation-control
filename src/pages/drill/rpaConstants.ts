@@ -4,7 +4,7 @@ import type { DrillTab } from './types'
 export const RPA_DRILL_BACK_PATH = '/platform/rpa'
 
 /** 返回按钮文案（与 DrillFilterBar 的默认文案区分开） */
-export const RPA_DRILL_BACK_LABEL = '返回数字员工管理平台'
+export const RPA_DRILL_BACK_LABEL = '返回RPA管理平台'
 
 /** 运行情况钻取页：点 RPA 页「运行情况」面板标题进来，对应参考图 1、2 */
 export const RPA_RUN_DRILL_PATH = '/drill/rpa-run'
@@ -20,8 +20,8 @@ export const RPA_PERIOD = { start: '2026-01-01', end: '2026-09-01' } as const
 
 /** 运行情况钻取页的页签 */
 export const RPA_RUN_VIEW_TABS: readonly DrillTab[] = [
-  { key: 'running', label: '数字员工运行情况' },
-  { key: 'idle', label: '数字员工资源闲置' },
+  { key: 'running', label: 'RPA运行情况' },
+  { key: 'idle', label: 'RPA资源闲置' },
 ]
 
 /** 单据明细钻取页的页签 */

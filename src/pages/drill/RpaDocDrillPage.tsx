@@ -49,7 +49,7 @@ export function RpaDocDrillPage() {
 
     for (const { key, label } of RPA_DOC_QUERY_KEYS) {
       const value = searchParams.get(key)
-      if (value) items.push({ label, value: key === 'source' ? value.replace(/^RPA/i, '数字员工') : value })
+      if (value) items.push({ label, value })
     }
 
     return items
@@ -70,7 +70,7 @@ export function RpaDocDrillPage() {
 
       {activeTab === 'perf' ? (
         <DrillPerfPanel
-          title="各业务环节数字员工处理效率"
+          title="各业务环节RPA处理效率"
           stages={RPA_DOC_PERF_STAGES}
           series={RPA_DOC_PERF_SERIES}
           stats={RPA_DOC_PERF_STATS}

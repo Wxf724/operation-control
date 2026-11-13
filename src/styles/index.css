@@ -365,48 +365,62 @@
 
 /* ── 大屏地图舞台 ─────────────────────────────────────────────── */
 /*
-  中部地图（世界衬底 + 中国地图 + 站点光点）整体加一层轻微透视倾斜，
-  做出「桌面摊开的地图」的立体观感。
+  中部地图（世界衬底 + 中国地图 + 管网干线 + 站点光点）为平面视图，
+  不做透视倾斜，也没有立体厚度、承影和空气透视。
 
-  为什么整块倾斜而不是只斜世界底图：
   世界底图与中国地图是两套按像素标定对齐的 geo（见 WorldBackdrop 注释），
-  只斜其中一层会让两份中国轮廓错位；两层套在同一个变换容器里则永远重合。
-
-  倾斜后画布会被 CSS 放大，因此渲染层把 devicePixelRatio 提到 2，
+  两层套在同一个变换容器里一起缩放，相对位置始终不变。
+  舞台做了横向／纵向缩放，因此渲染层把 devicePixelRatio 提到 2，
   避免城市名等小字被拉伸后发虚。
 */
 @layer components {
   .ck-map-stage {
-    /* 先抬一点再倾斜：透视会把近端（下方）放大并顶到容器边缘，抬高后南端与南海小图才不被裁 */
-    transform: translateY(-4%) perspective(2000px) rotateX(25deg) rotateZ(-1deg) scale(1.02);
-    transform-origin: 50% 52%;
+    /*
+      纯 2D 平铺：变换只有两个缩放分量，不含 perspective / rotateX / rotateZ，
+      地图正视、零倾斜、零透视。横向把两层地图一起铺宽，让轮廓更贴近两侧
+      模块列；纵向放大，让地图上下贴近播报条与指标条。
+      容器高度固定，直接放大 scaleY 会裁掉黑龙江北端与南海诸岛小图，因此
+      两张底图的 geo.zoom 先按 MAP_GEO_FIT 同步收一档，横向系数再按同比例
+      补回来：地图净高度更高、宽度不变、上下轮廓完整。
+
+      中国疆域最北点在东北（约 53°N），西北只到约 49°N，横向铺宽后北边界
+      会形成一条「左低右高」的长缓坡。这里用极小的顺时针角做视觉配平；
+      旋转放在缩放之前，是对已缩放图像的整体刚体旋转，不会额外剪切变形。
+      设为 0deg 即回到纯平铺。城市名的 DOM 文字层按舞台完整变换矩阵换算坐标，
+      因此缩放或配平角怎么调，文字都落在光点上、字形本身也不被拉伸或旋转。
+    */
+    --ck-map-scale-x: 1.54;
+    --ck-map-scale-y: 1.12;
+    --ck-map-level: 1deg;
+    /* 配平后右下角南海诸岛小图会再下沉几像素，整体微上移保证四边完整 */
+    --ck-map-offset-y: -6px;
+    transform: translateY(var(--ck-map-offset-y)) rotate(var(--ck-map-level))
+      scaleX(var(--ck-map-scale-x)) scaleY(var(--ck-map-scale-y));
+    transform-origin: 50% 50%;
     will-change: transform;
   }
 
-  /* 地图下方的承影：给倾斜的面一点「落」在屏幕上的重量 */
-  .ck-map-ground {
+  /* 城市名：独立 DOM 层，不参与舞台的横向缩放，字形保持正常比例 */
+  .ck-map-label {
     position: absolute;
-    left: 50%;
-    bottom: -2%;
-    width: 74%;
-    height: 26%;
-    transform: translateX(-50%);
+    transform: translate(6px, -50%);
+    white-space: nowrap;
+    font-family: 'Noto Sans SC, sans-serif';
+    font-size: 12px;
+    line-height: 1;
+    color: var(--text-secondary);
+    text-shadow: 0 0 2px rgba(128, 160, 200, 0.55);
     pointer-events: none;
-    background: radial-gradient(ellipse at center, rgba(80, 132, 212, 0.16), transparent 70%);
-    filter: blur(10px);
   }
 
-  /* 远处（倾斜后地图上方）渐隐，制造空气透视 */
-  .ck-map-haze {
-    position: absolute;
-    inset: 0;
-    z-index: 20;
-    pointer-events: none;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.5) 0%,
-      rgba(255, 255, 255, 0.24) 16%,
-      rgba(255, 255, 255, 0) 42%
-    );
+  .ck-map-label[data-kind='region'] {
+    color: var(--ck-map-region);
+    font-weight: 700;
+  }
+
+  .ck-map-label[data-kind='primary'] {
+    color: var(--ck-orange);
+    font-size: 13px;
+    font-weight: 700;
   }
 }

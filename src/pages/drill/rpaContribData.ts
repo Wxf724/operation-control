@@ -12,14 +12,14 @@ import type { DrillMetric } from './types'
 export const RPA_CONTRIB_METRICS: readonly DrillMetric[] = [
   {
     icon: 'ri-timer-line',
-    label: '数字员工任务平均处理时长',
+    label: 'RPA任务平均处理时长',
     value: '1',
     unit: '分钟',
     colorVar: '--ck-cyan',
   },
   {
     icon: 'ri-robot-2-line',
-    label: '数字员工自动化率',
+    label: 'RPA自动化率',
     value: '98.0%',
     colorVar: '--ck-blue',
   },

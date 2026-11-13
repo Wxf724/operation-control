@@ -27,7 +27,8 @@
 
   .ck-map-sweep {
     width: 25%;
-    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--ck-cyan) 12%, transparent), transparent);
+    /* 扫光改用清透青，和地图上的支线同色，蓝底上添一点冷色层次 */
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--ck-teal) 15%, transparent), transparent);
     animation: ck-map-scan 9s linear infinite;
   }
 

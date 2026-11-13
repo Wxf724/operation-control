@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>智慧园区运营管理驾驶舱</title>
+<style>
+:root{--bg:#03111d;--panel:#061d31;--panel2:#082840;--line:#0c5377;--cyan:#23e5ef;--blue:#1d8fd2;--green:#2ed4a2;--yellow:#f4c65a;--red:#ff6b6b;--text:#e9f7ff;--muted:#7da1b6}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#020a12;color:var(--text);font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif}
+body{background:radial-gradient(circle at 50% 35%,#0a2a43 0,#04111e 46%,#01070d 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center center;overflow:hidden;background:linear-gradient(rgba(25,120,170,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(25,120,170,.035) 1px,transparent 1px);background-size:42px 42px}
+#stage:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 47%,transparent 42%,rgba(0,5,12,.28) 100%);z-index:30}
+.header{height:78px;position:relative;z-index:20;background:linear-gradient(180deg,rgba(3,20,35,.98),rgba(3,16,28,.45));border-bottom:1px solid rgba(26,152,194,.28)}
+.header:after{content:"";position:absolute;left:610px;right:610px;bottom:4px;height:2px;background:linear-gradient(90deg,transparent,#168bc0,#36e7ef,#168bc0,transparent);box-shadow:0 0 18px rgba(49,226,239,.45)}
+.brand{position:absolute;left:24px;top:20px;font-size:14px;color:#8bb4c9}.brand b{font-size:17px;color:#eefbff}.brand span{margin-left:10px;padding:4px 9px;border:1px solid #145370;border-radius:10px;color:#41e6ef;font-size:11px}
+.title{position:absolute;left:50%;top:13px;transform:translateX(-50%);font-size:30px;font-weight:700;letter-spacing:7px;text-shadow:0 0 18px rgba(46,229,239,.55);white-space:nowrap}
+.sub{position:absolute;left:50%;top:50px;transform:translateX(-50%);font-size:9px;letter-spacing:3px;color:#5e91aa}
+.clock{position:absolute;right:22px;top:17px;height:36px;padding:0 13px;border:1px solid #135273;background:rgba(4,31,51,.88);display:flex;align-items:center;gap:9px;font-size:11px;color:#9dc5d8}.dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:blink 1.5s infinite}@keyframes blink{50%{opacity:.45;transform:scale(1.5)}}
+.top-kpis{height:82px;position:absolute;left:18px;right:18px;top:84px;display:grid;grid-template-columns:repeat(7,1fr);gap:10px;z-index:10}.top-kpi{border:1px solid #0d4c6b;background:linear-gradient(180deg,rgba(7,42,67,.92),rgba(4,25,42,.9));position:relative;padding:10px 13px;overflow:hidden}.top-kpi:after{content:"";position:absolute;left:-50%;top:0;width:32%;height:100%;background:linear-gradient(90deg,transparent,rgba(55,229,239,.08),transparent);animation:sweep 5s linear infinite}@keyframes sweep{to{left:130%}}.top-kpi .n{font-size:10px;color:#769db3}.top-kpi .v{font-size:24px;font-weight:700;margin-top:5px;color:#effcff}.top-kpi .v em{font-style:normal;font-size:10px;color:#73a3b9;margin-left:3px}.top-kpi .d{position:absolute;right:10px;bottom:9px;font-size:8px;color:#5f879d}
+.main{position:absolute;left:18px;right:18px;top:176px;bottom:18px;display:grid;grid-template-columns:430px 1fr 430px;gap:14px;z-index:9}.stack{display:flex;flex-direction:column;gap:14px;min-height:0}.panel{position:relative;min-height:0;background:linear-gradient(180deg,rgba(7,31,53,.97),rgba(4,21,37,.97));border:1px solid rgba(17,89,125,.8);box-shadow:inset 0 0 30px rgba(13,106,154,.05),0 0 18px rgba(0,0,0,.18);overflow:hidden}.panel:before{content:"";position:absolute;left:0;right:0;top:0;height:38px;background:linear-gradient(90deg,rgba(8,74,105,.48),rgba(6,31,52,.12),transparent);border-bottom:1px solid rgba(20,104,145,.25)}.pt{position:relative;height:38px;z-index:3;display:flex;align-items:center;padding:0 13px;font-size:13px;font-weight:700;color:#e0f7ff}.pt:before{content:"◆";font-size:8px;color:var(--cyan);margin-right:7px}.pt small{margin-left:auto;font-size:8px;color:#42dce6;font-weight:500;border:1px solid #11647d;padding:2px 7px;border-radius:9px}
+.left-top{height:290px}.metric-grid{padding:11px;display:grid;grid-template-columns:1fr 1fr;gap:8px}.metric{border:1px solid #0d4e70;background:linear-gradient(180deg,#082941,#061d31);padding:9px 10px;position:relative}.metric .n{font-size:9px;color:#7fa6bb}.metric .v{font-size:22px;font-weight:700;margin-top:5px}.metric .s{font-size:8px;color:#61879c;margin-top:3px}.metric .mini{position:absolute;right:9px;top:12px;font-size:8px;color:#31d9a8}
+.dining{height:270px}.dining-head{margin:10px 11px 0;padding:9px;border:1px solid rgba(31,118,150,.62);background:rgba(7,38,58,.65);display:flex;align-items:center;gap:12px}.dish-icon{width:48px;height:48px;border-radius:50%;border:1px solid rgba(47,224,233,.45);display:grid;place-items:center;font-size:25px;box-shadow:inset 0 0 18px rgba(35,229,239,.08)}.dining-head .big{font-size:22px;font-weight:700}.dining-head .small{font-size:8px;color:#749db2;margin-top:3px}.bar-list{padding:8px 12px}.barrow{display:grid;grid-template-columns:75px 1fr 48px;gap:7px;align-items:center;height:24px;font-size:9px;color:#7ea4b8}.track{height:6px;background:#0e2c3f;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#0f82b6,#29dfe8);animation:glow 3s ease-in-out infinite}@keyframes glow{50%{filter:brightness(1.4)}}.fill.g{background:linear-gradient(90deg,#168b71,#31d8a2)}.fill.y{background:linear-gradient(90deg,#9f7620,#f2c758)}
+.left-bottom{flex:1}.trend{padding:12px;height:calc(100% - 38px);position:relative}.trend svg{width:100%;height:100%}.trend .legend{position:absolute;right:13px;top:10px;font-size:8px;color:#759bb0}.trend .legend i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#27dce6;margin-right:4px}.trend .legend i.g{background:#2ed4a2;margin-left:12px}
+.center{display:flex;flex-direction:column;gap:14px;min-width:0}.space{flex:1;min-height:0}.space-body{position:absolute;left:10px;right:10px;top:47px;bottom:10px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);gap:8px}.park-card{position:relative;border:1px solid #0e5273;background:#071d2d;overflow:hidden;cursor:pointer;transition:.2s}.park-card:hover,.park-card.active{border-color:#2ce1ea;box-shadow:0 0 16px rgba(40,224,234,.16);transform:translateY(-1px)}.park-card img{width:100%;height:100%;object-fit:contain;background:#03111d;filter:none;transition:.25s;background:#04131f}.park-card:hover img,.park-card.active img{filter:brightness(1.08);transform:scale(1.012)}.park-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,9,16,.02),rgba(0,9,16,.72))}.park-label{position:absolute;left:10px;right:10px;bottom:9px;z-index:3}.park-label b{font-size:12px}.park-label .s{font-size:8px;color:#83adbf;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.park-state{position:absolute;right:8px;top:8px;z-index:4;font-size:8px;padding:3px 6px;border:1px solid rgba(46,212,162,.55);color:#4ee1ad;background:rgba(10,74,58,.36)}.park-state.attn{border-color:rgba(244,198,90,.6);color:#ffd471;background:rgba(94,71,18,.3)}.park-card.wide{grid-column:span 2}
+.center-bottom{height:235px;display:grid;grid-template-columns:1.2fr .8fr;gap:14px}.detail-panel{height:100%}.detail-inner{padding:11px;display:grid;grid-template-columns:1.25fr .75fr;gap:10px;height:calc(100% - 38px)}.detail-map{border:1px solid #0d4b68;overflow:hidden;position:relative;background:#061b2a}.detail-map img{width:100%;height:100%;object-fit:contain;background:#03111d;filter:none;background:#04131f}.radar{position:absolute;left:50%;top:50%;width:120px;height:120px;border-radius:50%;border:1px solid rgba(44,226,234,.28);transform:translate(-50%,-50%);animation:radar 3s ease-out infinite}@keyframes radar{0%{transform:translate(-50%,-50%) scale(.5);opacity:.65}100%{transform:translate(-50%,-50%) scale(1.8);opacity:0}}.detail-info .name{font-size:15px;font-weight:700;color:#effcff}.detail-info .service{font-size:9px;color:#84aabe;line-height:1.55;margin-top:6px;min-height:31px}.detail-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:8px}.dk{border:1px solid #0e4d6c;background:#071e31;padding:7px}.dk .n{font-size:8px;color:#7299ad}.dk .v{font-size:14px;font-weight:700;margin-top:3px}.ai-panel{height:100%}.ai-body{padding:11px}.ai-main{border:1px solid #0e607c;background:linear-gradient(180deg,rgba(7,50,68,.75),rgba(5,29,45,.7));padding:10px}.ai-main .ey{font-size:9px;color:#39e0e9}.ai-main .m{font-size:11px;line-height:1.65;margin-top:4px}.ai-main b{color:#ffd06b}.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.chip{font-size:8px;padding:4px 6px;border:1px solid #0f5872;color:#83b4c6;background:rgba(7,37,56,.65)}.flowline{height:2px;margin-top:10px;background:linear-gradient(90deg,transparent,#27e0e9,transparent);background-size:45% 100%;animation:flow 2.8s linear infinite}@keyframes flow{from{background-position:-50% 0}to{background-position:150% 0}}
+.right-top{height:315px}.safety-grid{padding:11px;display:grid;grid-template-columns:1fr 1fr;gap:8px}.safe-card{border:1px solid #0d4f70;background:linear-gradient(180deg,#082941,#061d31);padding:10px}.safe-card .n{font-size:9px;color:#7da4b8}.safe-card .v{font-size:22px;font-weight:700;margin-top:5px}.safe-card .s{font-size:8px;color:#648ba0;margin-top:4px}.safe-card.warn .v{color:#ffd06c}.safe-card.good .v{color:#43dfac}.ringrow{display:grid;grid-template-columns:70px 1fr;gap:8px;padding:4px 11px 10px}.ring{width:66px;height:66px;border-radius:50%;background:conic-gradient(#2adfe8 0 98%,#13374a 98%);display:grid;place-items:center}.ring:after{content:"98.0%";width:49px;height:49px;border-radius:50%;background:#061b2d;display:grid;place-items:center;font-size:10px;font-weight:700}.ringtext{font-size:9px;color:#7da5b8;line-height:1.8;padding-top:3px}.ringtext b{color:#eafaff}
+.right-mid{height:270px}.meeting-list{padding:11px}.meeting{height:46px;border:1px solid rgba(13,79,110,.75);background:rgba(7,35,55,.65);display:grid;grid-template-columns:1fr 55px;gap:6px;align-items:center;padding:0 9px;margin-bottom:7px}.meeting .n{font-size:10px}.meeting .s{font-size:8px;color:#698fa4;margin-top:3px}.meeting .state{text-align:center;font-size:8px;color:#43dda9;border:1px solid #1b6b55;padding:3px}.meeting .state.y{color:#ffd06b;border-color:#80631e}
+.right-bottom{flex:1}.events{padding:11px 13px}.event{position:relative;padding:0 0 12px 24px}.event:before{content:"";position:absolute;left:6px;top:4px;bottom:-2px;width:1px;background:rgba(40,209,220,.24)}.event:last-child:before{display:none}.event:after{content:"";position:absolute;left:1px;top:3px;width:10px;height:10px;border-radius:50%;background:#0b779c;border:2px solid #2cdde6;box-shadow:0 0 9px rgba(44,221,230,.28)}.event .time{font-size:8px;color:#3bdce5}.event .m{font-size:9px;color:#d8eef8;margin-top:2px;line-height:1.4}
+.modal{position:absolute;inset:0;z-index:50;background:rgba(0,7,13,.72);display:none;align-items:center;justify-content:center}.modal.show{display:flex}.modal-card{width:1180px;height:710px;border:1px solid #29e0e8;background:linear-gradient(180deg,#082a41,#051927);box-shadow:0 0 40px rgba(26,211,222,.16);padding:14px;display:grid;grid-template-rows:42px 1fr}.modal-head{display:flex;align-items:center;font-size:16px;font-weight:700;border-bottom:1px solid rgba(39,159,190,.35);padding:0 5px}.close{margin-left:auto;width:30px;height:30px;border:1px solid #14556f;background:#061d2e;color:#e9fbff;cursor:pointer}.modal-body{display:grid;grid-template-columns:1.45fr .55fr;gap:13px;padding-top:13px}.modal-map{border:1px solid #0d536f;background:#061726;overflow:hidden;position:relative}.modal-map img{width:100%;height:100%;object-fit:contain;background:#04131f;filter:none}.modal-side{display:flex;flex-direction:column;gap:9px}.modal-info{border:1px solid #0d506c;background:#071f31;padding:11px}.modal-info .n{font-size:10px;color:#7aa4b7}.modal-info .v{font-size:18px;font-weight:700;margin-top:4px}.modal-info .txt{font-size:9px;color:#86aebf;line-height:1.6;margin-top:5px}
+.scan{position:absolute;left:-30%;top:0;width:24%;height:100%;background:linear-gradient(90deg,transparent,rgba(48,228,236,.03),transparent);transform:skewX(-14deg);z-index:2;pointer-events:none;animation:pageScan 9s linear infinite}@keyframes pageScan{to{left:120%}}
+
+.detail-map:after,.modal-map:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 50%,rgba(34,224,235,.035),transparent 55%);box-shadow:inset 0 0 35px rgba(16,114,153,.10)}
+</style>
+</head>
+<body>
+<div id="stage"><div class="scan"></div>
+  <div class="header"><div class="brand"><b>国家管网共享运营公司 · 燕祉服务公司</b><span>智慧园区</span></div><div class="title">智慧园区运营管理驾驶舱</div><div class="sub">SMART PARK · SAFETY · SERVICE · OPERATION</div><div class="clock"><span class="dot"></span><span id="date"></span><span id="time"></span></div></div>
+  <div class="top-kpis">
+    <div class="top-kpi"><div class="n">纳管园区</div><div class="v">7<em>个</em></div><div class="d">北京 / 天津 / 西北 / 云南等</div></div>
+    <div class="top-kpi"><div class="n">今日在园人数</div><div class="v">2,486<em>人</em></div><div class="d">较昨日 +3.2%</div></div>
+    <div class="top-kpi"><div class="n">今日访客</div><div class="v">738<em>人次</em></div><div class="d">预约通行 96.8%</div></div>
+    <div class="top-kpi"><div class="n">门禁在线率</div><div class="v">98.7<em>%</em></div><div class="d">异常点位 3处</div></div>
+    <div class="top-kpi"><div class="n">在场车辆</div><div class="v">186<em>辆</em></div><div class="d">车位利用率 62%</div></div>
+    <div class="top-kpi"><div class="n">今日用餐</div><div class="v">1,676<em>人次</em></div><div class="d">高峰 11:45-12:20</div></div>
+    <div class="top-kpi"><div class="n">今日会议</div><div class="v">93<em>场</em></div><div class="d">会议室利用率 71%</div></div>
+  </div>
+  <div class="main">
+    <div class="stack">
+      <div class="panel left-top"><div class="pt">人员车辆态势<small>实时</small></div><div class="metric-grid">
+        <div class="metric"><div class="n">园区在岗人员</div><div class="v">2,486</div><div class="s">当前在园人员总量</div><div class="mini">▲ 3.2%</div></div>
+        <div class="metric"><div class="n">访客通行</div><div class="v">738</div><div class="s">今日累计访客</div><div class="mini">96.8% 预约</div></div>
+        <div class="metric"><div class="n">当前在场车辆</div><div class="v">186</div><div class="s">7园区合计</div><div class="mini">62% 车位</div></div>
+        <div class="metric"><div class="n">异常通行事件</div><div class="v" style="color:#ffd16d">14</div><div class="s">均已进入处置队列</div><div class="mini" style="color:#ffd16d">关注</div></div>
+      </div></div>
+      <div class="panel dining"><div class="pt">餐饮服务态势<small>新增</small></div><div class="dining-head"><div class="dish-icon">🍽</div><div><div class="big">1,676 <span style="font-size:10px;color:#6f97aa">人次</span></div><div class="small">今日累计就餐 · 7园区食堂/餐饮服务</div></div></div><div class="bar-list">
+        <div class="barrow"><span>餐厅开放率</span><div class="track"><div class="fill g" style="width:100%"></div></div><b>100%</b></div>
+        <div class="barrow"><span>餐位利用率</span><div class="track"><div class="fill" style="width:72%"></div></div><b>72%</b></div>
+        <div class="barrow"><span>满意度</span><div class="track"><div class="fill g" style="width:96%"></div></div><b>96.4%</b></div>
+        <div class="barrow"><span>剩餐控制率</span><div class="track"><div class="fill y" style="width:91%"></div></div><b>91%</b></div>
+      </div></div>
+      <div class="panel left-bottom"><div class="pt">近7日园区客流与就餐趋势<small>趋势</small></div><div class="trend"><div class="legend"><i></i>在园人次 <i class="g"></i>就餐人次</div><svg viewBox="0 0 390 220" preserveAspectRatio="none"><defs><linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2be0e9" stop-opacity=".36"/><stop offset="1" stop-color="#2be0e9" stop-opacity="0"/></linearGradient></defs><g stroke="rgba(93,141,165,.18)" stroke-width="1"><path d="M30 30H380M30 75H380M30 120H380M30 165H380"/></g><path d="M30 146 L85 126 L140 132 L195 94 L250 103 L305 72 L360 84 L360 190 L30 190Z" fill="url(#a)"/><polyline points="30,146 85,126 140,132 195,94 250,103 305,72 360,84" fill="none" stroke="#2be0e9" stroke-width="3"/><polyline points="30,166 85,151 140,154 195,122 250,128 305,103 360,112" fill="none" stroke="#2ed4a2" stroke-width="2"/><g fill="#6992a8" font-size="9"><text x="25" y="211">09/10</text><text x="80" y="211">09/11</text><text x="135" y="211">09/12</text><text x="190" y="211">09/13</text><text x="245" y="211">09/14</text><text x="300" y="211">09/15</text><text x="350" y="211">09/16</text></g></svg></div></div>
+    </div>
+
+    <div class="center">
+      <div class="panel space"><div class="pt">园区空间态势<small>7园区空间图 · 点击查看</small></div><div class="space-body" id="parkGrid"></div></div>
+      <div class="center-bottom">
+        <div class="panel detail-panel"><div class="pt">当前园区详情<small id="detailStatus">正常</small></div><div class="detail-inner"><div class="detail-map"><img id="detailImg"/><div class="radar"></div></div><div class="detail-info"><div class="name" id="detailName"></div><div class="service" id="detailService"></div><div class="detail-kpis"><div class="dk"><div class="n">在园人数</div><div class="v" id="dPeople"></div></div><div class="dk"><div class="n">在场车辆</div><div class="v" id="dCars"></div></div><div class="dk"><div class="n">门禁在线率</div><div class="v" id="dAccess"></div></div><div class="dk"><div class="n">设备完好率</div><div class="v" id="dDevice"></div></div></div></div></div></div>
+        <div class="panel ai-panel"><div class="pt">智能运营提示<small>AI研判</small></div><div class="ai-body"><div class="ai-main"><div class="ey">园区服务综合态势</div><div class="m">当前7个园区整体运行平稳，重点关注 <b>天津运营中心</b> 午间客流与会议高峰叠加；建议提前调配餐饮窗口与会议服务人员。</div><div class="chips"><span class="chip">门禁运行稳定</span><span class="chip">餐饮高峰预测</span><span class="chip">会议资源协同</span><span class="chip">车辆动态调度</span></div><div class="flowline"></div></div></div></div>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="panel right-top"><div class="pt">安全与设备运行<small>设备</small></div><div class="safety-grid"><div class="safe-card good"><div class="n">设备在线率</div><div class="v">98.0%</div><div class="s">门禁 / 监控 / 环境 / 消防</div></div><div class="safe-card"><div class="n">今日工单</div><div class="v">36</div><div class="s">已完成 31项</div></div><div class="safe-card warn"><div class="n">设备告警</div><div class="v">7</div><div class="s">一般告警 6 · 重点 1</div></div><div class="safe-card good"><div class="n">消防巡检完成率</div><div class="v">100%</div><div class="s">计划任务全部完成</div></div></div><div class="ringrow"><div class="ring"></div><div class="ringtext">综合设备健康度 <b>98.0%</b><br/>重点关注：天津运营中心1处空调机组能耗偏高，已进入维修观察。</div></div></div>
+      <div class="panel right-mid"><div class="pt">会议服务态势<small>今日93场</small></div><div class="meeting-list"><div class="meeting"><div><div class="n">北京城建科技大厦 · A301</div><div class="s">14:30-16:00｜集团中心会议</div></div><div class="state">服务中</div></div><div class="meeting"><div><div class="n">天津运营中心 · 201</div><div class="s">15:00-17:00｜跨单位协同会议</div></div><div class="state y">待开始</div></div><div class="meeting"><div><div class="n">云南公司综合楼 · 502</div><div class="s">13:30-15:00｜已完成</div></div><div class="state">已完成</div></div><div class="meeting"><div><div class="n">西部管道综合楼 · 306</div><div class="s">16:00-17:30｜服务准备中</div></div><div class="state y">准备中</div></div></div></div>
+      <div class="panel right-bottom"><div class="pt">园区动态事件<small>实时流</small></div><div class="events"><div class="event"><div class="time">14:26</div><div class="m">天津运营中心午间高峰结束，餐厅排队指数恢复正常。</div></div><div class="event"><div class="time">14:18</div><div class="m">北京城建科技大厦访客预约通行完成，门禁放行正常。</div></div><div class="event"><div class="time">14:05</div><div class="m">西北公司综合楼会议室服务工单已完成。</div></div><div class="event"><div class="time">13:52</div><div class="m">储运技术智能装备基地停车区车辆利用率升至71%。</div></div><div class="event"><div class="time">13:40</div><div class="m">云南公司综合楼设备巡检完成，无新增重点告警。</div></div></div></div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal"><div class="modal-card"><div class="modal-head"><span id="modalTitle"></span><button class="close" id="closeModal">×</button></div><div class="modal-body"><div class="modal-map"><img id="modalImg"/></div><div class="modal-side"><div class="modal-info"><div class="n">服务对象</div><div class="txt" id="modalService"></div></div><div class="modal-info"><div class="n">当前在园人数</div><div class="v" id="mPeople"></div></div><div class="modal-info"><div class="n">当前在场车辆</div><div class="v" id="mCars"></div></div><div class="modal-info"><div class="n">门禁在线率</div><div class="v" id="mAccess"></div></div><div class="modal-info"><div class="n">今日用餐</div><div class="v" id="mMeal"></div></div><div class="modal-info"><div class="n">今日会议</div><div class="v" id="mMeeting"></div></div></div></div></div></div>
+</div>
+<script>
+const parks=[
+  {name:"北京城建科技大厦",short:"北京中心",service:"国家管网集团中心",people:"486",cars:"72",access:"99.2%",device:"98.8%",meal:"326",meeting:"18",status:"正常",zones:["A1 办公A座","B1 办公B座","C1 办公C座","D1 配套服务区"]},
+  {name:"建达大厦项目",short:"建达大厦",service:"服务智网数科公司、油气调控中心",people:"372",cars:"51",access:"98.9%",device:"97.6%",meal:"241",meeting:"12",status:"正常",zones:["A1 综合办公区","B1 调控服务区","C1 会议服务区","D1 生活配套区"]},
+  {name:"天津运营中心项目",short:"天津中心",service:"服务LNG、储运技术、华北公司、工程技术创新公司、研究总院",people:"628",cars:"96",access:"98.4%",device:"96.9%",meal:"418",meeting:"26",status:"关注",zones:["A1 综合办公区","B1 会议服务区","C1 餐饮服务区","D1 设备运行区"]},
+  {name:"储运技术公司智能装备基地项目",short:"智能装备基地",service:"服务储运技术公司智能装备基地",people:"218",cars:"39",access:"99.5%",device:"98.3%",meal:"146",meeting:"7",status:"正常",zones:["A1 研发办公区","B1 智能装备区","C1 实验检测区","D1 生活配套区"]},
+  {name:"西北公司综合楼项目",short:"西北综合楼",service:"服务西北公司局机关、部分处级单位",people:"296",cars:"47",access:"98.7%",device:"97.8%",meal:"205",meeting:"11",status:"正常",zones:["A1 综合办公区","B1 会议服务区","C1 餐饮服务区","D1 停车服务区"]},
+  {name:"云南公司综合楼项目",short:"云南综合楼",service:"服务云南公司局机关",people:"241",cars:"33",access:"99.1%",device:"98.1%",meal:"169",meeting:"9",status:"正常",zones:["A1 综合办公区","B1 会议服务区","C1 餐饮服务区","D1 生活配套区"]},
+  {name:"西部管道公司综合楼项目",short:"西部管道综合楼",service:"服务西部管道公司局机关、质检公司乌鲁木齐质监站",people:"245",cars:"41",access:"98.8%",device:"97.4%",meal:"171",meeting:"10",status:"正常",zones:["A1 综合办公区","B1 质监服务区","C1 会议服务区","D1 生活配套区"]}
+];
+
+function mapSvg(p,i){
+  const parkLayouts=[
+    {
+      hub:[465,246,230,58],
+      outline:["M108 72 L108 270 L378 270","M406 56 L772 56 L772 448 L364 448","M772 56 L822 56 L822 438"],
+      roads:["M795 40 L795 454","M160 310 L780 310","M165 92 L165 418"],
+      minor:["M390 246 L430 246","M364 346 L364 448"],
+      poly:["438,112 676,112 676,286 438,286","128,94 344,94 344,216 128,216","380,328 588,328 588,438 380,438","126,294 314,294 314,430 126,430"],
+      labelPos:[[472,178],[165,156],[420,394],[150,362]],
+      nodePos:[[625,160],[240,145],[505,376],[250,380]]
+    },
+    {
+      hub:[455,244,226,56],
+      outline:["M78 78 L330 78 L396 174 L396 278","M468 70 L800 70 L858 196 L858 420 L600 420","M116 314 L368 314 L430 412 L250 452 L116 388 Z"],
+      roads:["M62 246 C210 170 330 178 454 242 S690 166 842 226","M156 100 C278 142 344 206 454 242 S666 310 794 392","M452 56 L452 450"],
+      minor:["M584 124 L760 124","M542 336 L732 336"],
+      poly:["102,110 300,84 372,164 246,220 96,178","528,96 766,96 818,188 676,234 522,188","114,318 314,318 390,404 240,444 114,392","544,280 774,254 838,344 734,420 566,398"],
+      labelPos:[[132,154],[590,156],[138,384],[598,350]],
+      nodePos:[[228,162],[650,168],[248,382],[706,332]]
+    },
+    {
+      hub:[452,246,236,58],
+      outline:["M92 84 L344 64 L414 156","M510 74 L760 74 L824 158","M84 304 L328 270 L416 370","M540 270 L800 254 L870 346"],
+      roads:["M42 228 C164 140 314 152 450 240 S706 150 864 234","M132 84 C240 156 344 230 452 246 S654 262 812 404","M448 42 L448 454"],
+      minor:["M316 154 L392 154","M510 154 L782 154"],
+      poly:["88,92 330,74 388,158 266,210 88,176","510,84 748,84 820,166 708,216 540,174","84,304 314,272 404,366 246,432 92,406","536,276 790,262 860,346 748,424 566,396"],
+      labelPos:[[128,146],[596,144],[138,384],[612,356]],
+      nodePos:[[252,158],[642,166],[262,378],[740,336]]
+    },
+    {
+      hub:[458,250,242,58],
+      outline:["M72 102 L286 74 L390 156 L390 246","M470 72 L834 72 L834 432","M92 314 L246 272 L370 368 L282 444","M472 302 L790 302"],
+      roads:["M54 256 C224 178 356 210 462 248 S674 226 850 156","M122 422 C282 332 360 306 462 248 S664 206 832 108","M456 48 L456 456"],
+      minor:["M520 112 L780 112","M520 158 L780 158","M520 206 L780 206"],
+      poly:["84,118 284,84 370,166 244,228 86,190","520,86 792,86 824,238 638,256 520,224","92,316 228,286 360,364 274,438 96,404","524,286 792,286 844,394 714,430 546,402"],
+      labelPos:[[124,160],[570,154],[110,388],[582,368]],
+      nodePos:[[230,166],[692,154],[216,380],[736,354]]
+    },
+    {
+      hub:[454,248,228,56],
+      outline:["M98 88 L792 88 L792 412 L98 412 Z","M188 88 L188 412","M530 88 L530 412"],
+      roads:["M98 250 L792 250","M354 88 L354 412","M630 88 L630 412"],
+      minor:["M120 160 L770 160","M120 338 L770 338"],
+      poly:["118,106 334,106 334,232 118,232","372,106 512,106 512,232 372,232","116,268 334,268 334,392 116,392","552,106 772,106 772,392 552,392"],
+      labelPos:[[152,160],[396,160],[146,330],[602,258]],
+      nodePos:[[228,168],[438,168],[228,328],[664,248]]
+    },
+    {
+      hub:[456,248,232,58],
+      outline:["M110 88 L300 88 L360 148 L360 218","M388 66 L758 66 L820 142 L820 420","M122 302 L338 302 L396 374 L298 438 L124 414"],
+      roads:["M70 254 C200 204 312 192 454 246 S692 212 840 160","M136 112 C218 170 300 230 454 246 S702 270 790 394","M454 60 L454 448"],
+      minor:["M552 108 L746 108","M548 314 L748 314"],
+      poly:["126,100 286,100 342,154 286,220 126,208","402,82 736,82 804,154 724,254 432,232","136,316 324,316 384,384 300,430 136,398","528,280 748,264 818,352 736,420 558,396"],
+      labelPos:[[154,154],[494,150],[152,378],[596,352]],
+      nodePos:[[236,162],[676,168],[246,376],[730,334]]
+    },
+    {
+      hub:[454,248,240,58],
+      outline:["M88 84 L294 84 L374 170","M450 70 L780 70 L848 154 L848 430","M88 294 L298 294 L382 378","M440 300 L772 300"],
+      roads:["M58 236 C198 150 322 174 454 242 S694 174 856 224","M140 412 C276 330 368 302 454 242 S644 182 792 96","M448 46 L448 454"],
+      minor:["M532 108 L764 108","M532 344 L764 344","M188 188 L322 188"],
+      poly:["98,102 282,86 368,172 238,226 98,192","512,84 756,84 836,164 736,238 540,196","104,308 280,308 370,386 240,440 108,406","522,292 770,292 840,390 746,426 552,398"],
+      labelPos:[[126,156],[582,150],[132,386],[590,368]],
+      nodePos:[[228,164],[650,166],[238,382],[730,338]]
+    }
+  ];
+  const L=parkLayouts[i] || parkLayouts[0];
+  const statusColor=p.status==='关注'?'#f4c65a':'#23e5ef';
+  const routeColor=i===0?'#2ed4a2':'#2da9d7';
+  const zoneColors=['#0a2436','#0b293c','#092233','#0a2738'];
+  const polys=L.poly.map((pts,idx)=>`<polygon points="${pts}" class="zone z${idx}" style="fill:${zoneColors[idx%zoneColors.length]}"/>`).join('');
+  const roads=L.roads.map(d=>`<path d="${d}" class="road"/><path d="${d}" class="roadline"/>`).join('');
+  const outlines=(L.outline||[]).map(d=>`<path d="${d}" class="outline"/>`).join('');
+  const minors=(L.minor||[]).map(d=>`<path d="${d}" class="minor"/>`).join('');
+  const labels=p.zones.map((z,idx)=>`<g transform="translate(${L.labelPos[idx][0]} ${L.labelPos[idx][1]})"><rect x="-12" y="-22" rx="3" width="158" height="36" class="labelbg"/><text x="4" y="2" class="zonetxt">${z}</text></g>`).join('');
+  const nodes=L.nodePos.map((pt,idx)=>{
+    let c='#23e5ef';
+    if(p.status==='关注' && idx===2) c='#f4c65a';
+    if(p.status==='关注' && idx===3) c='#ff5e73';
+    return `<g><circle cx="${pt[0]}" cy="${pt[1]}" r="14" fill="${c}" opacity=".10"><animate attributeName="r" values="10;24;10" dur="3.2s" repeatCount="indefinite"/></circle><circle cx="${pt[0]}" cy="${pt[1]}" r="7" fill="${c}" class="node"/></g>`
+  }).join('');
+  const hubName=p.short;
+  const [hx,hy,hw,hh]=L.hub;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
+  <defs>
+    <linearGradient id="bg${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#061a29"/><stop offset="1" stop-color="#03111d"/></linearGradient>
+    <linearGradient id="road${i}" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#0b3146"/><stop offset=".5" stop-color="#174b65"/><stop offset="1" stop-color="#0b3146"/></linearGradient>
+    <filter id="glow${i}"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <pattern id="grid${i}" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="#0c4764" stroke-width=".7" opacity=".18"/></pattern>
+  </defs>
+  <style>
+    .zone{fill-opacity:.74;stroke:#1c5974;stroke-width:2}.road{fill:none;stroke:url(#road${i});stroke-width:14;opacity:.64;filter:url(#glow${i})}.roadline{fill:none;stroke:${routeColor};stroke-width:2.2;opacity:.34;stroke-dasharray:12 12}.outline{fill:none;stroke:#1a6481;stroke-width:3;opacity:.46}.minor{fill:none;stroke:#174f68;stroke-width:2;opacity:.42}.labelbg{fill:#061522;fill-opacity:.90;stroke:#123f55;stroke-width:1}.zonetxt{font:15px 'Microsoft YaHei',sans-serif;fill:#a8c3d1}.node{filter:url(#glow${i})}.hubtxt{font:18px 'Microsoft YaHei',sans-serif;fill:#d7f5ff}.small{font:13px 'Microsoft YaHei',sans-serif;fill:#7f9fb2}.legend{font:12px 'Microsoft YaHei',sans-serif;fill:#8eb0c0}.north{font:15px Arial,sans-serif;fill:#8ba7b5}.parkname{font:16px 'Microsoft YaHei',sans-serif;fill:#d5f7ff}
+  </style>
+  <rect width="900" height="500" fill="url(#bg${i})"/><rect width="900" height="500" fill="url(#grid${i})"/>
+  ${outlines}${minors}<g opacity=".96">${roads}${polys}</g>
+  ${labels}${nodes}
+  <g transform="translate(${hx} ${hy})"><rect x="${-hw/2}" y="${-hh/2}" width="${hw}" height="${hh}" rx="5" fill="#061a29" fill-opacity=".93" stroke="#1a6481" stroke-width="2"/><rect x="${-hw/2-8}" y="${-hh/2-8}" width="${hw+16}" height="${hh+16}" rx="7" fill="none" stroke="#23e5ef" stroke-opacity=".12"/><text x="0" y="7" text-anchor="middle" class="hubtxt">${hubName}</text><circle cx="0" cy="${hh/2+7}" r="5" fill="${statusColor}" filter="url(#glow${i})"/></g>
+  <g transform="translate(812 40)"><text class="north" x="0" y="0">N ↑</text></g>
+  <g transform="translate(32 462)"><circle cx="0" cy="0" r="5" fill="#23e5ef"/><text x="11" y="4" class="legend">正常</text><circle cx="65" cy="0" r="5" fill="#f4c65a"/><text x="76" y="4" class="legend">关注</text><circle cx="136" cy="0" r="5" fill="#ff5e73"/><text x="147" y="4" class="legend">告警</text></g>
+  <text x="28" y="38" class="small">园区空间态势 · 人 / 车 / 设备 / 环境</text>
+  <text x="724" y="38" class="parkname">${p.short}</text>
+  </svg>`;
+}
+function svgUri(svg){return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg)}
+const parkImageUris=[
+  `yanzhi-assets/park-01.png`,
+  `yanzhi-assets/park-02.png`,
+  `yanzhi-assets/park-03.png`,
+  `yanzhi-assets/park-04.png`,
+  `yanzhi-assets/park-05.png`,
+  `yanzhi-assets/park-06.png`,
+  `yanzhi-assets/park-07.png`
+];
+parks.forEach((p,i)=>p.img=parkImageUris[i]);
+
+const grid=document.getElementById('parkGrid');
+function renderGrid(){grid.innerHTML='';parks.forEach((p,i)=>{const el=document.createElement('div');el.className='park-card'+(i===0?' active':'')+(i===6?' wide':'');el.innerHTML=`<img src="${p.img}"><span class="park-state ${p.status==='关注'?'attn':''}">${p.status}</span><div class="park-label"><b>${p.short}</b><div class="s">${p.service}</div></div>`;el.onclick=()=>{selectPark(i);openModal(i)};grid.appendChild(el)})}
+function selectPark(i){const p=parks[i];document.querySelectorAll('.park-card').forEach((x,j)=>x.classList.toggle('active',j===i));document.getElementById('detailImg').src=p.img;document.getElementById('detailName').textContent=p.name;document.getElementById('detailService').textContent=p.service;document.getElementById('dPeople').textContent=p.people+'人';document.getElementById('dCars').textContent=p.cars+'辆';document.getElementById('dAccess').textContent=p.access;document.getElementById('dDevice').textContent=p.device;document.getElementById('detailStatus').textContent=p.status}
+function openModal(i){const p=parks[i];document.getElementById('modalTitle').textContent=p.name+' · 空间态势图';document.getElementById('modalImg').src=p.img;document.getElementById('modalService').textContent=p.service;document.getElementById('mPeople').textContent=p.people+' 人';document.getElementById('mCars').textContent=p.cars+' 辆';document.getElementById('mAccess').textContent=p.access;document.getElementById('mMeal').textContent=p.meal+' 人次';document.getElementById('mMeeting').textContent=p.meeting+' 场';document.getElementById('modal').classList.add('show')}
+document.getElementById('closeModal').onclick=()=>document.getElementById('modal').classList.remove('show');document.getElementById('modal').onclick=e=>{if(e.target.id==='modal')e.currentTarget.classList.remove('show')};
+function resize(){const s=Math.min(innerWidth/1920,innerHeight/1080);document.getElementById('stage').style.transform=`translate(-50%,-50%) scale(${s})`}addEventListener('resize',resize);resize();
+function tick(){const d=new Date();const pad=n=>String(n).padStart(2,'0');document.getElementById('date').textContent=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;document.getElementById('time').textContent=`${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`}setInterval(tick,1000);tick();renderGrid();selectPark(0);
+</script>
+</body></html>

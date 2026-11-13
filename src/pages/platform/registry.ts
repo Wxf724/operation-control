@@ -36,7 +36,7 @@ export const PLATFORM_REGISTRY: Record<string, PlatformMeta> = {
   },
   rpa: {
     key: 'rpa',
-    title: '数字员工管理平台',
+    title: 'RPA管理平台',
     sourceNote: '_refs/live/12-RPA管理平台.png',
     theme: 'theme-cloud-light',
     Content: RpaPlatformContent,

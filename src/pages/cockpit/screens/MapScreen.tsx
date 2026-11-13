@@ -34,9 +34,12 @@ export function MapScreen({ screenLayout }: { screenLayout?: ScreenLayout }) {
   const navigate = useNavigate()
   const [activeModule, setActiveModule] = useState(DEFAULT_ACTIVE_MODULE)
 
-  const metrics = MODULE_METRICS[activeModule] ?? MODULE_METRICS.job
+  // 尚未接入指标的入口保持空态，不回落到其它模块的数据
+  const metrics = MODULE_METRICS[activeModule] ?? []
 
-  const handleOpen = (item: ModuleEntry) => navigate(item.route)
+  const handleOpen = (item: ModuleEntry) => {
+    if (item.route) navigate(item.route)
+  }
 
   return (
     <div className="theme-cloud-light">

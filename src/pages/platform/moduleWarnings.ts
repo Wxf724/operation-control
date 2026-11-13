@@ -33,16 +33,16 @@ export interface ModuleWarning {
 export const MODULE_WARNINGS: Record<string, ModuleWarning[]> = {
   rpa: [
     {
-      title: '数字员工上线率偏低',
-      description: '本期数字员工覆盖率为{coverage}，启用率为{enabled}。需核对已覆盖场景中仍未上线的流程。',
+      title: 'RPA上线率偏低',
+      description: '本期RPA覆盖率为{coverage}，启用率为{enabled}。需核对已覆盖场景中仍未上线的流程。',
       strategy: '按上线类型分布核对场景清单，优先安排已配置但未上线的机器人试运行。',
-      owner: '数字员工实施负责人',
+      owner: 'RPA实施负责人',
       task: '核对待上线场景，登记联调结果和上线批次。',
       status: '处理中',
       taskStatus: '待处理',
     },
     {
-      title: '数字员工运行利用率低',
+      title: 'RPA运行利用率低',
       description: '在线运行的机器人有{online}。初审环节仍有待处理单据，需核对在线时段与领取任务的时段。',
       strategy: '对照各环节的认领和调度数量，将空闲时段分配给积压队列。',
       owner: '调度负责人',
@@ -51,7 +51,7 @@ export const MODULE_WARNINGS: Record<string, ModuleWarning[]> = {
       taskStatus: '待处理',
     },
     {
-      title: '数字员工运行异常',
+      title: 'RPA运行异常',
       description: '初审环节的异常停用记录为6个，本期转人工率为{toHuman}。',
       strategy: '对照停用日志和转人工清单，复测异常流程并核查重跑结果。',
       owner: '机器人运维岗',
@@ -63,7 +63,7 @@ export const MODULE_WARNINGS: Record<string, ModuleWarning[]> = {
       title: '机器人转人工待复核',
       description: '转人工率为{toHuman}。',
       strategy: '按场景核查转人工原因。',
-      owner: '数字员工实施负责人',
+      owner: 'RPA实施负责人',
       task: '复核转人工样本并登记原因。',
       status: '待处理',
       taskStatus: '待处理',
@@ -72,7 +72,7 @@ export const MODULE_WARNINGS: Record<string, ModuleWarning[]> = {
       title: '机器人启用情况待核查',
       description: '本期启用率为{enabled}。',
       strategy: '按业务环节复核未启用机器人。',
-      owner: '数字员工实施负责人',
+      owner: 'RPA实施负责人',
       task: '核对启用清单并更新台账。',
       status: '已处理',
       taskStatus: '已处理',

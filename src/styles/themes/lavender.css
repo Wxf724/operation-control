@@ -121,6 +121,10 @@
   --ck-map-area: #efedfb;
   --ck-map-border: var(--lv-primary);
   --ck-map-emphasis: #dcd3fb;
+  /* 管网干线与分级站点 */
+  --ck-map-route: #6a9ed8;
+  --ck-map-trunk: #d9a04a;
+  --ck-map-region: #6f63c8;
 
   /* ── 装饰层 ── */
 

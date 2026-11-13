@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>工程质量监督管理驾驶舱</title>
+<style>
+  :root{
+    --bg:#071421;--panel:#0b1c2d;--panel2:#10263a;--line:#24435b;--text:#e8f3fa;--muted:#8ca9bc;
+    --cyan:#25d0e8;--blue:#4c8dff;--green:#33d69f;--yellow:#f6c85f;--orange:#ff9a57;--red:#ff5d6c;
+  }
+  *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 50% -10%,#12314a 0,#081724 34%,#06111c 100%);font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;color:var(--text);overflow-x:hidden}
+  .dashboard{width:100%;min-height:100vh;padding:18px 22px 24px;max-width:1920px;margin:auto}
+  .header{height:72px;display:grid;grid-template-columns:1fr 1.35fr 1fr;align-items:center;border-bottom:1px solid rgba(68,154,196,.38);position:relative}
+  .header:after{content:"";position:absolute;left:35%;right:35%;bottom:-1px;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
+  .title{text-align:center;font-weight:800;font-size:30px;letter-spacing:4px;text-shadow:0 0 18px rgba(37,208,232,.28)}
+  .subtitle{font-size:12px;color:#7da2ba;letter-spacing:1.8px;margin-top:7px}
+  .head-left,.head-right{font-size:13px;color:#9db5c6;display:flex;gap:18px;align-items:center}.head-right{justify-content:flex-end}
+  .badge{padding:6px 12px;border:1px solid rgba(37,208,232,.4);border-radius:4px;background:rgba(37,208,232,.07);color:#bdeef5}
+  .filters{display:flex;gap:8px}.filter{cursor:pointer;padding:6px 12px;border-radius:4px;border:1px solid #23445e;background:#0b2032;color:#a9c0d0;font-size:12px}.filter.active{border-color:var(--cyan);color:#dffbff;background:rgba(37,208,232,.12)}
+
+  .topcards{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:16px 0}
+  .kpi{position:relative;min-height:104px;background:linear-gradient(135deg,rgba(14,41,60,.94),rgba(7,25,39,.96));border:1px solid rgba(54,105,138,.55);border-radius:7px;padding:15px 15px 13px;overflow:hidden}
+  .kpi:before{content:"";position:absolute;left:0;top:0;width:4px;height:100%;background:var(--accent,var(--cyan));box-shadow:0 0 18px var(--accent,var(--cyan))}
+  .kpi-name{font-size:13px;color:#91adbf}.kpi-main{display:flex;align-items:baseline;gap:6px;margin-top:8px}.kpi-value{font-size:30px;font-weight:800;letter-spacing:.5px}.kpi-unit{font-size:12px;color:#7d9bad}.kpi-foot{font-size:11px;margin-top:7px;color:#6f91a8;display:flex;justify-content:space-between}.good{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}
+
+  .grid{display:grid;grid-template-columns:1.12fr 1.45fr 1.12fr;gap:14px;min-height:700px}
+  .col{display:grid;gap:14px}.left{grid-template-rows:320px 1fr}.mid{grid-template-rows:365px 1fr}.right{grid-template-rows:320px 1fr}
+  .panel{background:linear-gradient(180deg,rgba(12,34,51,.94),rgba(7,24,37,.96));border:1px solid rgba(54,105,138,.5);border-radius:8px;position:relative;overflow:hidden;box-shadow:inset 0 0 35px rgba(17,53,74,.18)}
+  .panel-title{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 14px 0 18px;border-bottom:1px solid rgba(49,90,117,.38);font-size:15px;font-weight:700;letter-spacing:.8px}
+  .panel-title:before{content:"";position:absolute;left:9px;top:15px;width:3px;height:15px;background:var(--cyan);box-shadow:0 0 9px rgba(37,208,232,.65)}
+  .panel-sub{font-weight:400;color:#68899f;font-size:11px;letter-spacing:0}.panel-body{height:calc(100% - 44px);padding:14px}
+  .station-list{display:grid;gap:9px}.station-card{display:grid;grid-template-columns:120px 1fr 62px;gap:10px;align-items:center;padding:11px 12px;background:rgba(17,46,66,.6);border:1px solid rgba(45,90,117,.42);border-radius:5px;cursor:pointer;transition:.2s}.station-card:hover,.station-card.active{border-color:rgba(37,208,232,.72);background:rgba(20,62,82,.68)}
+  .station-name{font-size:13px;font-weight:700}.bar{height:8px;border-radius:9px;background:#10283b;overflow:hidden}.bar>span{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--blue),var(--cyan));box-shadow:0 0 12px rgba(37,208,232,.3)}.station-rate{text-align:right;font-weight:800;font-size:16px}.station-small{color:#7c9baf;font-size:11px;margin-top:5px}
+  .legend{display:flex;gap:15px;font-size:11px;color:#7f9caf}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}
+
+  .radar-wrap{display:grid;grid-template-columns:1fr 160px;height:100%;gap:6px}.radar{display:flex;align-items:center;justify-content:center}.radar svg{width:100%;height:100%;max-height:260px}.radar-side{display:flex;flex-direction:column;justify-content:center;gap:9px}.radar-item{padding:9px;background:rgba(12,43,61,.68);border-left:2px solid var(--c);font-size:11px}.radar-item b{font-size:17px;display:block;margin-top:3px}
+
+  .matrix{width:100%;border-collapse:collapse;font-size:11px}.matrix th{color:#8ba8bb;font-weight:600;background:#0c2638}.matrix th,.matrix td{padding:9px 8px;border-bottom:1px solid rgba(48,87,111,.3);text-align:center}.matrix td:first-child,.matrix th:first-child{text-align:left}.rate-pill{padding:3px 7px;border-radius:9px;font-weight:700;background:rgba(51,214,159,.12);color:var(--green)}.rate-pill.mid{background:rgba(246,200,95,.12);color:var(--yellow)}.rate-pill.low{background:rgba(255,93,108,.12);color:var(--red)}
+
+  .plan-bars{display:grid;gap:12px}.plan-row{display:grid;grid-template-columns:105px 1fr 58px;gap:10px;align-items:center}.plan-label{font-size:12px;color:#a8c0cf}.plan-track{height:21px;background:#0b2335;border-radius:3px;overflow:hidden;position:relative}.plan-fill{height:100%;background:linear-gradient(90deg,#255f9f,#25d0e8);border-radius:3px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-size:10px;color:white}.plan-num{text-align:right;font-weight:700;font-size:13px}
+  .donut-area{display:grid;grid-template-columns:190px 1fr;gap:10px;height:100%;align-items:center}.donut{width:175px;height:175px;border-radius:50%;display:grid;place-items:center;margin:auto;position:relative;background:conic-gradient(var(--green) 0 93.6%, #153246 93.6% 100%)}.donut:after{content:"";width:124px;height:124px;background:#0a2031;border-radius:50%;position:absolute;box-shadow:inset 0 0 20px rgba(15,55,77,.6)}.donut-center{z-index:1;text-align:center}.donut-center b{font-size:31px;display:block}.donut-center span{font-size:11px;color:#789aae}.alerts{display:grid;gap:8px}.alert{padding:10px 11px;border-radius:5px;background:rgba(24,45,59,.7);border-left:3px solid var(--c);font-size:11px;line-height:1.65}.alert b{font-size:13px;color:#dcecf5}.alert em{font-style:normal;float:right;font-weight:700;color:var(--c)}
+
+  .trend{display:flex;flex-direction:column;height:100%}.trend-chart{flex:1;position:relative;margin-top:5px}.trend-chart svg{width:100%;height:100%}.trend-note{display:flex;gap:20px;font-size:11px;color:#7897aa;margin-top:5px}
+  .footnote{font-size:10px;color:#55778c;position:absolute;right:10px;bottom:7px}
+
+  .ai-tip{margin:0 0 14px;padding:12px 16px;border:1px solid rgba(37,208,232,.55);border-radius:8px;background:linear-gradient(90deg,rgba(37,208,232,.10),rgba(76,141,255,.06),rgba(7,24,37,.92));display:grid;grid-template-columns:120px 1fr auto;gap:14px;align-items:center;box-shadow:inset 0 0 28px rgba(37,208,232,.05)}
+  .ai-tip-title{font-size:14px;font-weight:800;color:#dffbff}.ai-tip-title span{display:block;font-size:10px;color:#65a9bf;font-weight:400;margin-top:3px;letter-spacing:1px}
+  .ai-tip-content{font-size:12px;color:#a9c7d7;line-height:1.7}.ai-tip-content b{color:#f6c85f}.ai-tip-action{font-size:11px;color:#bdeef5;padding:7px 11px;border:1px solid rgba(37,208,232,.35);border-radius:4px;background:rgba(37,208,232,.08)}
+  @media(max-width:1350px){.topcards{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}.left,.mid,.right{grid-template-rows:auto}.panel{min-height:320px}.dashboard{overflow:auto}.header{grid-template-columns:1fr}.head-left,.head-right{display:none}}
+</style>
+</head>
+<body>
+<div class="dashboard">
+  <header class="header">
+    <div class="head-left"><span class="badge">工程质量监督中心</span><span>监督业务运行总览</span></div>
+    <div class="title">工程质量监督管理驾驶舱<div class="subtitle">PROJECT QUALITY SUPERVISION MANAGEMENT DASHBOARD</div></div>
+    <div class="head-right"><div class="filters"><button class="filter active">本年度</button><button class="filter">本季度</button><button class="filter">本月</button></div><span id="clock"></span></div>
+  </header>
+
+  <section class="topcards" id="topcards"></section>
+
+  <section class="ai-tip" id="aiTip">
+    <div class="ai-tip-title">智能运营提示<span>INTELLIGENT OPS</span></div>
+    <div class="ai-tip-content" id="aiTipContent">正在分析五个监督站计划执行情况...</div>
+    <div class="ai-tip-action">实时研判 · 动态提示</div>
+  </section>
+
+  <main class="grid">
+    <div class="col left">
+      <section class="panel">
+        <div class="panel-title">五个监督站综合完成情况 <span class="panel-sub">点击监督站联动查看</span></div>
+        <div class="panel-body"><div class="station-list" id="stationList"></div></div>
+      </section>
+      <section class="panel">
+        <div class="panel-title">监督业务计划量结构 <span class="panel-sub">计划任务规模</span></div>
+        <div class="panel-body"><div class="plan-bars" id="planBars"></div><div class="footnote">* 演示数据，可对接项目管理/监督管理系统自动更新</div></div>
+      </section>
+    </div>
+
+    <div class="col mid">
+      <section class="panel">
+        <div class="panel-title">监督任务完成率对比 <span class="panel-sub" id="selectedStation">全部监督站</span></div>
+        <div class="panel-body">
+          <div class="radar-wrap">
+            <div class="radar" id="radar"></div>
+            <div class="radar-side" id="radarSide"></div>
+          </div>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel-title">监督站业务明细矩阵 <span class="panel-sub">计划量 / 完成率</span></div>
+        <div class="panel-body" style="padding:0 8px 8px"><table class="matrix" id="matrix"></table></div>
+      </section>
+    </div>
+
+    <div class="col right">
+      <section class="panel">
+        <div class="panel-title">总体计划执行进度 <span class="panel-sub">综合完成率</span></div>
+        <div class="panel-body"><div class="donut-area"><div class="donut" id="donut"><div class="donut-center"><b id="overallRate">93.6%</b><span>综合完成率</span></div></div><div class="alerts" id="alerts"></div></div></div>
+      </section>
+      <section class="panel">
+        <div class="panel-title">年度监督执行趋势 <span class="panel-sub">月度完成率</span></div>
+        <div class="panel-body"><div class="trend"><div class="trend-chart" id="trendChart"></div><div class="trend-note"><span>● 计划完成率</span><span>--- 目标线 95%</span></div></div></div>
+      </section>
+    </div>
+  </main>
+</div>
+<script>
+const stationData=[
+{name:'廊坊质量监督站',reg:78,q:{p:82,c:76},d:{p:18,c:17},s:{p:12,c:12},a:{p:36,c:34},m:{p:29,c:27}},
+{name:'徐州质量监督站',reg:65,q:{p:70,c:62},d:{p:15,c:14},s:{p:10,c:9},a:{p:31,c:29},m:{p:24,c:21}},
+{name:'广州质量监督站',reg:74,q:{p:79,c:75},d:{p:16,c:15},s:{p:13,c:12},a:{p:34,c:33},m:{p:26,c:25}},
+{name:'成都质量监督站',reg:69,q:{p:73,c:66},d:{p:17,c:16},s:{p:11,c:10},a:{p:33,c:30},m:{p:25,c:23}},
+{name:'乌鲁木齐质量监督站',reg:58,q:{p:64,c:61},d:{p:14,c:13},s:{p:9,c:9},a:{p:28,c:27},m:{p:22,c:21}}
+];
+const types=[
+{k:'q',name:'工程质量监督',short:'质量监督'},
+{k:'d',name:'工程建设督导',short:'建设督导'},
+{k:'s',name:'集团专项检查',short:'专项检查'},
+{k:'a',name:'质量安全检查',short:'质量安全'},
+{k:'m',name:'物资质量监督',short:'物资监督'}
+];
+const rate=o=>o.p?o.c/o.p*100:0; const sum=(arr,fn)=>arr.reduce((a,x)=>a+fn(x),0);
+function totals(data=stationData){let t={reg:sum(data,x=>x.reg)};types.forEach(v=>t[v.k]={p:sum(data,x=>x[v.k].p),c:sum(data,x=>x[v.k].c)});return t}
+const total=totals(); const allP=types.reduce((a,t)=>a+total[t.k].p,0),allC=types.reduce((a,t)=>a+total[t.k].c,0),overall=allC/allP*100;
+function pillClass(v){return v>=95?'':v>=90?'mid':'low'}
+function renderTop(){const cards=[
+['项目注册量',total.reg,'个','已纳入监督项目','var(--blue)'],
+['工程质量监督计划量',total.q.p,'项',rate(total.q).toFixed(1)+'% 已完成','var(--cyan)'],
+['督导监督计划量',total.d.p,'项',rate(total.d).toFixed(1)+'% 已完成','var(--green)'],
+['集团专项检查计划量',total.s.p,'项',rate(total.s).toFixed(1)+'% 已完成','var(--yellow)'],
+['质量安全检查计划量',total.a.p,'项',rate(total.a).toFixed(1)+'% 已完成','var(--orange)'],
+['物资质量监督计划量',total.m.p,'项',rate(total.m).toFixed(1)+'% 已完成','var(--cyan)']];
+ document.getElementById('topcards').innerHTML=cards.map((c,i)=>`<div class="kpi" style="--accent:${c[4]}"><div class="kpi-name">${c[0]}</div><div class="kpi-main"><span class="kpi-value">${c[1]}</span><span class="kpi-unit">${c[2]}</span></div><div class="kpi-foot"><span>${c[3]}</span><span>${i===0?'五站汇总':'计划执行'}</span></div></div>`).join('')}
+function stationOverall(s){let p=types.reduce((a,t)=>a+s[t.k].p,0),c=types.reduce((a,t)=>a+s[t.k].c,0);return c/p*100}
+function renderStations(){document.getElementById('stationList').innerHTML=stationData.map((s,i)=>{let r=stationOverall(s);return `<div class="station-card" onclick="selectStation(${i})"><div><div class="station-name">${s.name}</div><div class="station-small">注册项目 ${s.reg} 个</div></div><div><div class="bar"><span style="width:${r}%"></span></div><div class="station-small">监督计划 ${types.reduce((a,t)=>a+s[t.k].p,0)} 项</div></div><div class="station-rate ${r>=95?'good':r>=90?'warn':'bad'}">${r.toFixed(1)}%</div></div>`}).join('')}
+function renderPlanBars(){const max=Math.max(...types.map(t=>total[t.k].p));document.getElementById('planBars').innerHTML=types.map(t=>`<div class="plan-row"><div class="plan-label">${t.name}</div><div class="plan-track"><div class="plan-fill" style="width:${total[t.k].p/max*100}%">${total[t.k].c} 完成</div></div><div class="plan-num">${total[t.k].p} 项</div></div>`).join('')}
+function renderMatrix(){let h=`<tr><th>监督分站</th>${types.map(t=>`<th>${t.short}</th>`).join('')}<th>综合</th></tr>`;stationData.forEach(s=>{h+=`<tr><td><b>${s.name}</b><br><span style="color:#66879c">项目 ${s.reg}</span></td>${types.map(t=>{let r=rate(s[t.k]);return `<td>${s[t.k].p} / <span class="rate-pill ${pillClass(r)}">${r.toFixed(1)}%</span></td>`}).join('')}<td><span class="rate-pill ${pillClass(stationOverall(s))}">${stationOverall(s).toFixed(1)}%</span></td></tr>`});document.getElementById('matrix').innerHTML=h}
+function radarSVG(vals){const W=330,H=255,cx=155,cy=126,R=92,n=5,angles=[-90,-18,54,126,198].map(x=>x*Math.PI/180);let pts=(radius)=>angles.map(a=>`${cx+Math.cos(a)*radius},${cy+Math.sin(a)*radius}`).join(' ');let rings=[.25,.5,.75,1].map(x=>`<polygon points="${pts(R*x)}" fill="none" stroke="rgba(80,130,157,.33)" stroke-width="1"/>`).join('');let axes=angles.map(a=>`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(a)*R}" y2="${cy+Math.sin(a)*R}" stroke="rgba(80,130,157,.3)"/>`).join('');let p=angles.map((a,i)=>{let rr=R*Math.max(0,Math.min(100,vals[i]))/100;return `${cx+Math.cos(a)*rr},${cy+Math.sin(a)*rr}`}).join(' ');let labels=angles.map((a,i)=>{let rr=R+25,x=cx+Math.cos(a)*rr,y=cy+Math.sin(a)*rr;return `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" fill="#91adbf" font-size="11">${types[i].short}</text>`}).join('');return `<svg viewBox="0 0 ${W} ${H}">${rings}${axes}<polygon points="${p}" fill="rgba(37,208,232,.18)" stroke="#25d0e8" stroke-width="2"/>${angles.map((a,i)=>{let rr=R*vals[i]/100;return `<circle cx="${cx+Math.cos(a)*rr}" cy="${cy+Math.sin(a)*rr}" r="3.5" fill="#dffcff" stroke="#25d0e8"/>`}).join('')}${labels}</svg>`}
+function renderRadar(idx=null){const d=idx===null?total:stationData[idx],vals=types.map(t=>rate(d[t.k]));document.getElementById('radar').innerHTML=radarSVG(vals);document.getElementById('radarSide').innerHTML=types.map((t,i)=>`<div class="radar-item" style="--c:${vals[i]>=95?'var(--green)':vals[i]>=90?'var(--yellow)':'var(--red)'}">${t.short}<b>${vals[i].toFixed(1)}%</b></div>`).join('');document.getElementById('selectedStation').innerText=idx===null?'全部监督站':stationData[idx].name}
+function selectStation(i){document.querySelectorAll('.station-card').forEach((x,j)=>x.classList.toggle('active',i===j));renderRadar(i)}
+function renderAlerts(){let items=[];stationData.forEach(s=>types.forEach(t=>{let r=rate(s[t.k]);if(r<90)items.push({name:s.name+' · '+t.short,val:r,msg:`${s[t.k].p-s[t.k].c} 项计划待完成`,c:'var(--red)'})}));if(!items.length)items=[{name:'暂无红色预警',val:0,msg:'所有任务完成率均达到 90% 以上',c:'var(--green)'}];document.getElementById('alerts').innerHTML=items.slice(0,4).map(x=>`<div class="alert" style="--c:${x.c}"><b>${x.name}</b>${x.val?`<em>${x.val.toFixed(1)}%</em>`:''}<br>${x.msg}</div>`).join('');document.getElementById('overallRate').innerText=overall.toFixed(1)+'%';document.getElementById('donut').style.background=`conic-gradient(var(--green) 0 ${overall}%, #153246 ${overall}% 100%)`}
+function renderTrend(){let vals=[88.2,89.6,91.1,90.3,92.5,93.2,94.1,93.6,overall],labels=['1月','2月','3月','4月','5月','6月','7月','8月','9月'];let W=420,H=230,p={l:34,r:15,t:15,b:30},min=84,max=100;let x=i=>p.l+i*(W-p.l-p.r)/(vals.length-1),y=v=>p.t+(max-v)*(H-p.t-p.b)/(max-min);let grid=[85,90,95,100].map(v=>`<line x1="${p.l}" y1="${y(v)}" x2="${W-p.r}" y2="${y(v)}" stroke="rgba(75,118,145,.22)"/><text x="6" y="${y(v)+4}" fill="#64869a" font-size="10">${v}%</text>`).join('');let path=vals.map((v,i)=>(i?'L':'M')+x(i)+','+y(v)).join(' ');let area=`${path} L ${x(vals.length-1)},${H-p.b} L ${x(0)},${H-p.b} Z`;let labelsSvg=labels.map((l,i)=>`<text x="${x(i)}" y="${H-8}" text-anchor="middle" fill="#64869a" font-size="10">${l}</text>`).join('');document.getElementById('trendChart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${grid}<line x1="${p.l}" y1="${y(95)}" x2="${W-p.r}" y2="${y(95)}" stroke="#f6c85f" stroke-dasharray="4 5" opacity=".8"/><path d="${area}" fill="rgba(37,208,232,.08)"/><path d="${path}" fill="none" stroke="#25d0e8" stroke-width="2.5"/>${vals.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v)}" r="3" fill="#dffcff" stroke="#25d0e8"/><text x="${x(i)}" y="${y(v)-8}" text-anchor="middle" fill="#a8cfdb" font-size="9">${v.toFixed(1)}</text>`).join('')}${labelsSvg}</svg>`}
+
+function renderAITip(){let risks=[];stationData.forEach(s=>types.forEach(t=>{let r=rate(s[t.k]);if(r<90)risks.push({station:s.name,type:t.short,rate:r,gap:s[t.k].p-s[t.k].c})}));risks.sort((a,b)=>a.rate-b.rate);const box=document.getElementById('aiTipContent');if(risks.length){const x=risks[0];box.innerHTML=`智能分析发现：<b>${x.station}</b>的<b>${x.type}</b>完成率为 <b>${x.rate.toFixed(1)}%</b>，当前尚有 ${x.gap} 项计划待完成。建议优先核查任务进度、资源投入及延期项目情况，并对低于90%的监督任务持续跟踪。`;}else{box.innerHTML=`五个监督站当前各类监督任务完成率均达到90%以上，整体运行平稳。建议继续关注接近预警阈值的任务及月度计划兑现情况。`;}}
+function tick(){const d=new Date();document.getElementById('clock').innerText=d.toLocaleString('zh-CN',{hour12:false}).replaceAll('/','-')}setInterval(tick,1000);tick();
+renderTop();renderStations();renderPlanBars();renderMatrix();renderRadar();renderAlerts();renderTrend();renderAITip();
+</script>
+</body></html>

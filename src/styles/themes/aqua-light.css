@@ -127,6 +127,10 @@
   --ck-map-emphasis: var(--aq-line);
   --ck-map-world-area: #f6fafe;
   --ck-map-world-border: rgba(143, 163, 192, 0.24);
+  /* 管网干线与分级站点 */
+  --ck-map-route: #3ba9c9;
+  --ck-map-trunk: #e2a545;
+  --ck-map-region: #2f7fc4;
 
   /* ── 装饰层 ── */
 

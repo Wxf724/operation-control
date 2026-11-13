@@ -13,6 +13,11 @@ export interface MetricPillsProps {
 
 /** 地图下方的核心指标药丸，内容随选中模块切换 */
 export function MetricPills({ items, className = '', style }: MetricPillsProps) {
+  // 指标暂未接入时保留区域高度，不展示任何卡片
+  if (items.length === 0) {
+    return <div className={className} style={style} data-ck-metrics-empty aria-hidden />
+  }
+
   return (
     <div className={`grid grid-flow-col auto-cols-fr gap-3 ${className}`} style={style}>
       {items.map((pill) => (

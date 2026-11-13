@@ -25,6 +25,17 @@ export const COCKPIT_PAGE_PAD_BOTTOM = 20
 export const COCKPIT_PAGE_PAD_TOP = 20
 
 /**
+ * 平面地图的取景收缩系数。
+ *
+ * 舞台把地图纵向拉高时，容器高度固定，直接放大 scaleY 会把黑龙江北端与
+ * 右下角南海诸岛小图的下边框裁掉。所以两张底图的 geo.zoom 同步乘上这个系数，
+ * 先把取景收一档，再用更大的 scaleY 把高度补回来。
+ * 两层共用同一中心 [104, 36] 且按同一比例缩放，世界底图与中国地图仍严格重合。
+ * 调整纵向系数时需满足：地图内容高度 × MAP_GEO_FIT × scaleY < 容器高度。
+ */
+export const MAP_GEO_FIT = 0.94
+
+/**
  * 三页的顺序，与原来没拆时的「左 → 中 → 右」一致：
  *   1. 运营结果与趋势（原左栏）
  *   2. 全景座舱（原中栏 · 地图页，默认停在这一页）
@@ -236,7 +247,7 @@ export const TREND_DATA: TrendPoint[] = [
 export const LEFT_MODULES: ModuleEntry[] = [
   { key: 'job', label: '作业管理', icon: 'ri-clipboard-line', route: '/platform/job' },
   { key: 'staff', label: '员工管理', icon: 'ri-user-settings-line', route: '/platform/staff' },
-  { key: 'rpa', label: '数字员工管理', icon: 'ri-robot-2-line', route: '/platform/rpa' },
+  { key: 'rpa', label: 'RPA管理', icon: 'ri-robot-2-line', route: '/platform/rpa' },
   { key: 'rule', label: '规则管理', icon: 'ri-file-list-3-line', route: '/platform/rule' },
   { key: 'risk', label: '风险管理', icon: 'ri-shield-check-line', route: '/platform/risk' },
   {
@@ -245,11 +256,11 @@ export const LEFT_MODULES: ModuleEntry[] = [
     icon: 'ri-bar-chart-box-line',
     route: '/platform/process',
   },
+  { key: 'quality', label: '质量管理', icon: 'ri-focus-2-line', route: '/platform/quality' },
+  { key: 'credit', label: '信用管理', icon: 'ri-award-line', route: '/platform/credit' },
 ]
 
 export const RIGHT_MODULES: ModuleEntry[] = [
-  { key: 'quality', label: '质量管理', icon: 'ri-focus-2-line', route: '/platform/quality' },
-  { key: 'credit', label: '信用管理', icon: 'ri-award-line', route: '/platform/credit' },
   {
     key: 'service',
     label: '服务管理',
@@ -270,6 +281,20 @@ export const RIGHT_MODULES: ModuleEntry[] = [
     route: '/platform/travel',
   },
   { key: 'archive', label: '档案管理', icon: 'ri-archive-2-line', route: '/platform/archive' },
+  {
+    key: 'yanZhiBusiness',
+    label: '燕祉商务',
+    icon: 'ri-store-2-line',
+    tone: 'green',
+    route: '/html-view/yanzhi-business',
+  },
+  {
+    key: 'qualitySupervision',
+    label: '质量监督',
+    icon: 'ri-shield-star-line',
+    tone: 'purple',
+    route: '/html-view/quality-supervision',
+  },
 ]
 
 /** 默认高亮的模块（与截图一致：服务管理） */

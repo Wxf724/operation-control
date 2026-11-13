@@ -46,8 +46,10 @@ export interface ModuleEntry {
   key: string
   label: string
   icon: string
-  /** 双击跳转的模块平台页路由 */
-  route: string
+  /** 双击跳转的模块平台页路由；尚未接入平台页的入口留空，双击不跳转 */
+  route?: string
+  /** 入口主色：特殊业务入口用绿／紫，不填则沿用主题蓝 */
+  tone?: 'green' | 'purple'
 }
 
 /** 地图上的节点城市 */
